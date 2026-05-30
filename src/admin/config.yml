@@ -29,6 +29,7 @@ collections:
           - { label: "Stone (4)", value: "4" }
           - { label: "Sage (5)", value: "5" }
           - { label: "Moss (6)", value: "6" }
+      - { label: Cover image, name: image, widget: image, required: false, hint: "Upload a cover image — replaces the colour cover when present" }
       - { label: Order, name: order, widget: number, default: 99 }
 
   - name: articles

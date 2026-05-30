@@ -97,7 +97,11 @@ permalink: /index.html
       {% set books = collections.book | sort(false, false, "data.order") %}
       {% for book in books | first(3) %}
       <a class="book" href="/books.html">
+        {% if book.data.image %}
+        <div class="book__cover book__cover--img"><img src="{{ book.data.image }}" alt="{{ book.data.title }}" /></div>
+        {% else %}
         <div class="book__cover book__cover--{{ book.data.cover }}">{{ book.data.title }}</div>
+        {% endif %}
         <span class="book__title">{{ book.data.title }}</span>
         <span class="book__meta">{{ book.data.meta }}</span>
       </a>
