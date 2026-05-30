@@ -2,6 +2,7 @@ backend:
   name: github
   repo: martjemeyer/verdandi-weaver
   branch: main
+  base_url: https://verdandi-cms-auth.martjemeyer.workers.dev
 
 media_folder: src/assets/uploads
 public_folder: /assets/uploads
