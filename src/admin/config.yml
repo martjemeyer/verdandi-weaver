@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: GITHUB_USERNAME/verdandi-weaver
+  repo: martjemeyer/verdandi-weaver
   branch: main
 
 media_folder: src/assets/uploads
