@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+title: Articles & Reflections — Verdandi Weaver
+description: Spacious essays for slow reading. Nervous systems, awakening, emotional ecology, and the long way home.
+permalink: /articles.html
+---
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Reading</p>
+  <h1 class="t-h1 hero__title t-balance">Articles &amp; reflections</h1>
+  <p class="t-lead hero__lead t-pretty">Spacious essays for slow reading. Nervous systems, awakening, emotional ecology, and the long way home.</p>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    {% set articles = collections.articles | sort(true, false, "data.date") %}
+    {% if articles.length %}
+      <div class="stack-lg">
+        {% for article in articles %}
+        <article class="card card--quiet">
+          <div class="card__body">
+            {% if article.data.date %}<p class="t-meta">{{ article.data.date | date("DD MMMM YYYY") }}</p>{% endif %}
+            <h2 class="t-h3">{{ article.data.title }}</h2>
+            {% if article.data.description %}<p class="t-body t-pretty">{{ article.data.description }}</p>{% endif %}
+            <a class="link-chev" href="{{ article.url }}">Read →</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="container narrow center-text">
+        <p class="t-lead t-pretty">Essays and reflections are being written. They will arrive slowly.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>

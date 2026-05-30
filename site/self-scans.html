@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* Anti-flash: paint bg colour before external CSS loads */
+html                    { background: oklch(95.8% 0.008 155); }
+html[data-theme="dark"] { background: oklch(18%   0.014 160); }
+</style>
+<script>
+/* Apply stored theme before first paint so there's no flash */
+(function(){
+  var t = localStorage.getItem('vw-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Self-Scans — Verdandi Weaver</title>
+<meta name="description" content="Slow, nervous-system aware reflection. Gentle returns to yourself." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+</head>
+<body>
+
+<header class="nav" data-screen-label="04 Self-Scans">
+  <div class="container nav__inner">
+    <a href="index.html" class="nav__brand"><span class="nav__brand-mark"></span>Verdandi Weaver</a>
+    <nav>      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="self-scans.html" class="active">Self-Scans</a></li>
+        <li><a href="frameworks.html">Frameworks</a></li>
+        <li><a href="ecosystem.html">Ecosystem</a></li>
+      </ul></nav>
+    <div class="nav__tools">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="nav__toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">Menu</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Reflection tools</p>
+  <h1 class="t-h1 hero__title t-balance">A gentle return to yourself</h1>
+  <p class="t-lead hero__lead t-pretty">Self-scans are slow, nervous-system aware reflections. Not assessments. Not diagnoses. Just doorways back into noticing.</p>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Choose a scan</p>
+      <h2 class="t-h2">Six gentle entries</h2>
+      <span class="rule"></span>
+    </header>
+
+    <div class="grid grid-3">
+      <a class="frame" href="#start" onclick="startScan('nervous')"><span class="frame__num">01</span><h3 class="t-h3">Nervous System</h3><p class="t-body">A soft check-in with your body's current state.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('wholeness')"><span class="frame__num">02</span><h3 class="t-h3">Grounded Wholeness</h3><p class="t-body">What in you is left out, ignored, or pushed aside?</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('awakening')"><span class="frame__num">03</span><h3 class="t-h3">Social vs Soul Awakening</h3><p class="t-body">Tell apart three very different shifts.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('capacity')"><span class="frame__num">04</span><h3 class="t-h3">Emotional Capacity</h3><p class="t-body">How much can you hold today, honestly?</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('burnout')"><span class="frame__num">05</span><h3 class="t-h3">Burnout &amp; Fragmentation</h3><p class="t-body">Map the parts that have been carrying too much.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('safety')"><span class="frame__num">06</span><h3 class="t-h3">Relationship Safety</h3><p class="t-body">Where do you exhale? Where do you brace?</p><span class="link-chev">Begin</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="section fade-up">
+  <div class="container">
+    <div class="scan" id="scan">
+      <div class="scan__progress"><span id="scan-bar"></span></div>
+      <div id="scan-step" class="scan__step">
+        <p class="t-eyebrow" style="margin-bottom: var(--sp-3);">A note before we begin</p>
+        <p class="scan__q t-balance">There are no right answers.</p>
+        <p class="scan__hint">Take your time. If a question doesn't resonate, skip it. If you need to pause, close the page — your progress is held.</p>
+        <div class="scan__opts">
+          <button class="scan__opt" onclick="scanNext()">I'm ready · begin</button>
+        </div>
+      </div>
+      <div class="scan__nav">
+        <span class="scan__count" id="scan-count">Intro</span>
+        <button class="btn btn--link" onclick="scanReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot__inner">
+    <div><div class="foot__brand">Verdandi Weaver</div><p class="t-meta">A space for Soul Presence · Sara Leidelmeijer</p></div>
+    <ul class="foot__links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="books.html">Books</a></li><li><a href="self-scans.html">Self-Scans</a></li>
+      <li><a href="frameworks.html">Frameworks</a></li><li><a href="ecosystem.html">Ecosystem</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 · Integritetspolicy · Cookies</p>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+<script>
+  // Self-scan engine. Slow, nervous-system aware: one question at a time.
+  const SCANS = {
+    nervous: {
+      title: "Nervous System Self-Scan",
+      questions: [
+        { q: "Right now, where are you in your body?", hint: "There's no wrong answer. Just notice.", opts: ["I feel grounded and present", "Mostly here, a little wound up", "Above my body, in my head", "Bracing — protected", "I can't quite tell"] },
+        { q: "What does your breath want?", hint: "Let it choose, don't choose for it.", opts: ["A long exhale", "A slower in-breath", "More space", "To rest", "Something else"] },
+        { q: "If your body could speak in one word, what would it say?", opts: ["Tired", "Held", "Alert", "Soft", "Hungry", "Steady"] },
+        { q: "What are you needing more of in the last few days?", opts: ["Quiet", "Warmth", "Movement", "Connection", "Solitude", "Less input"] },
+        { q: "What are you needing less of?", opts: ["Stimulation", "Other people's needs", "Decisions", "Performance", "Effort", "Noise"] }
+      ],
+      close: "Thank you for staying with yourself for a few quiet minutes. There's nothing to fix in what you noticed — only to honour it."
+    },
+    wholeness: {
+      title: "Grounded Wholeness Scan",
+      questions: [
+        { q: "Which part of you have you been ignoring?", opts: ["My body", "My anger", "My grief", "My softness", "My joy", "My doubt"] },
+        { q: "Which part have you been overusing?", opts: ["My mind", "My capable self", "My helping self", "My quiet self", "My performing self", "My pleasing self"] },
+        { q: "What would 'including everything' actually feel like?", opts: ["Relief", "Disorientation", "Permission", "Heaviness", "Lightness", "I don't know yet"] }
+      ],
+      close: "Wholeness is not a finish line. It's a way of being in conversation with yourself."
+    },
+    awakening: {
+      title: "Social · Soul · Human",
+      questions: [
+        { q: "What kind of seeing has been opening in you lately?", opts: ["Seeing systems and what's 'off'", "Sensing meaning and connection", "Noticing my own patterns", "All three, tangled"] },
+        { q: "Which one feels neglected?", opts: ["The systems view", "The soul view", "The human view"] }
+      ],
+      close: "These are three different layers. None replaces the others. Wholeness lives where they meet."
+    },
+    capacity: {
+      title: "Emotional Capacity Reflection",
+      questions: [
+        { q: "How much can you hold today — honestly?", opts: ["A lot", "A medium amount", "Less than usual", "Almost nothing"] },
+        { q: "What is one thing you can put down for the next 24 hours?", opts: ["A worry", "A role", "A conversation", "An expectation", "A scroll", "Other"] }
+      ],
+      close: "Capacity is not character. It moves with the seasons of your life."
+    },
+    burnout: {
+      title: "Burnout & Fragmentation Scan",
+      questions: [
+        { q: "What part of you is most tired?", opts: ["The one who keeps things running", "The one who feels everything", "The one who shows up", "The one who holds others", "The one who hopes"] },
+        { q: "What does that part need first?", opts: ["Rest", "To be seen", "To say no", "To cry", "To be useless for a while"] }
+      ],
+      close: "Tiredness is data. Listen to which part is talking; respond to that one specifically."
+    },
+    safety: {
+      title: "Relationship Safety Reflection",
+      questions: [
+        { q: "Where do you exhale most easily?", opts: ["Alone", "In nature", "With one specific person", "In silence with someone", "In creative work"] },
+        { q: "Where do you brace?", opts: ["At work", "In family", "In groups", "Online", "When asked how I am"] }
+      ],
+      close: "Safety is a felt thing. The body knows before the mind names it."
+    }
+  };
+
+  let scanState = { key: null, i: 0, answers: [] };
+  function el(id) { return document.getElementById(id); }
+  function setBar(p) { el('scan-bar').style.width = p + '%'; }
+
+  function startScan(key) {
+    scanState = { key, i: 0, answers: [] };
+    renderQ();
+    document.getElementById('start').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function scanReset() { scanState = { key: null, i: 0, answers: [] }; renderIntro(); }
+  function renderIntro() {
+    setBar(0);
+    el('scan-count').textContent = 'Intro';
+    el('scan-step').innerHTML = `
+      <p class="t-eyebrow" style="margin-bottom: var(--sp-3);">A note before we begin</p>
+      <p class="scan__q t-balance">There are no right answers.</p>
+      <p class="scan__hint">Take your time. Pick a scan above when you're ready.</p>
+    `;
+  }
+  function renderQ() {
+    const s = SCANS[scanState.key]; if (!s) return renderIntro();
+    const q = s.questions[scanState.i];
+    if (!q) return renderClose();
+    const total = s.questions.length;
+    setBar(((scanState.i) / total) * 100);
+    el('scan-count').textContent = `${s.title} · ${scanState.i + 1} of ${total}`;
+    const step = el('scan-step');
+    step.classList.remove('scan__step'); void step.offsetWidth; step.classList.add('scan__step');
+    step.innerHTML = `
+      <p class="scan__q t-balance">${q.q}</p>
+      ${q.hint ? `<p class="scan__hint">${q.hint}</p>` : ''}
+      <div class="scan__opts">
+        ${q.opts.map(o => `<button class="scan__opt" onclick="scanAnswer('${o.replace(/'/g, "\\'")}')">${o}</button>`).join('')}
+      </div>
+    `;
+  }
+  function scanAnswer(opt) {
+    scanState.answers.push(opt);
+    scanState.i++;
+    setTimeout(renderQ, 250);
+  }
+  function scanNext() { /* legacy intro click handler — pick a scan above */ renderIntro(); }
+  function renderClose() {
+    const s = SCANS[scanState.key];
+    setBar(100);
+    el('scan-count').textContent = `${s.title} · complete`;
+    el('scan-step').innerHTML = `
+      <p class="t-eyebrow" style="margin-bottom: var(--sp-3);">A closing note</p>
+      <p class="scan__q t-balance">${s.close}</p>
+      <p class="scan__hint">You noticed: ${scanState.answers.map(a => `<em>${a}</em>`).join(' · ')}</p>
+      <div class="scan__opts">
+        <button class="scan__opt" onclick="scanReset()">Try another scan</button>
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>

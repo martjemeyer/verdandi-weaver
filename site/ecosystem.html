@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* Anti-flash: paint bg colour before external CSS loads */
+html                    { background: oklch(95.8% 0.008 155); }
+html[data-theme="dark"] { background: oklch(18%   0.014 160); }
+</style>
+<script>
+/* Apply stored theme before first paint so there's no flash */
+(function(){
+  var t = localStorage.getItem('vw-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Living Archive — Verdandi Weaver</title>
+<meta name="description" content="A living, interconnected ecology of reflections, videos, deep reads, frameworks, guides and gatherings — wander by theme, not by category." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+</head>
+<body>
+
+<header class="nav" data-screen-label="09 Living Archive">
+  <div class="container nav__inner">
+    <a href="index.html" class="nav__brand"><span class="nav__brand-mark"></span>Verdandi Weaver</a>
+    <nav>      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="self-scans.html">Self-Scans</a></li>
+        <li><a href="frameworks.html">Frameworks</a></li>
+        <li><a href="ecosystem.html" class="active">Ecosystem</a></li>
+      </ul></nav>
+    <div class="nav__tools">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="nav__toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">Menu</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">A living archive</p>
+  <h1 class="t-h1 hero__title t-balance">Wander, don't search</h1>
+  <p class="t-lead hero__lead t-pretty">Reflections, videos, deep reads, frameworks, guides and gatherings — one body, interconnected. Choose a thread, and the archive rearranges around it.</p>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+
+    <!-- Theme lens — relational chips (filter the stream below) -->
+    <div class="lens" data-lens role="tablist" aria-label="Themes">
+      <button class="lens__chip lens__chip--all" data-theme="all" aria-pressed="true">all of it</button>
+      <button class="lens__chip" data-theme="nervous-systems"  aria-pressed="false">nervous systems</button>
+      <button class="lens__chip" data-theme="fragmentation"    aria-pressed="false">fragmentation</button>
+      <button class="lens__chip" data-theme="awakening"        aria-pressed="false">awakening</button>
+      <button class="lens__chip" data-theme="society"          aria-pressed="false">society</button>
+      <button class="lens__chip" data-theme="relationships"    aria-pressed="false">relationships</button>
+      <button class="lens__chip" data-theme="emotional-ecology" aria-pressed="false">emotional ecology</button>
+      <button class="lens__chip" data-theme="grounded-wholeness" aria-pressed="false">grounded wholeness</button>
+      <button class="lens__chip" data-theme="collective-life"  aria-pressed="false">collective life</button>
+      <button class="lens__chip" data-theme="humanity"         aria-pressed="false">humanity</button>
+      <button class="lens__chip" data-theme="eco-wholeness"    aria-pressed="false">Eco-Wholeness</button>
+    </div>
+
+    <!-- In-page tabs — narrow by type when desired -->
+    <div class="tabs" data-tabs role="tablist" aria-label="Content kinds">
+      <button data-kind="all" aria-pressed="true">everything</button>
+      <button data-kind="reflect" aria-pressed="false">reflections</button>
+      <button data-kind="read" aria-pressed="false">deep reads</button>
+      <button data-kind="video" aria-pressed="false">videos</button>
+      <button data-kind="frame" aria-pressed="false">frameworks</button>
+      <button data-kind="guide" aria-pressed="false">guides &amp; PDFs</button>
+      <button data-kind="event" aria-pressed="false">gatherings</button>
+    </div>
+
+    <p class="lens-meta" data-count>showing all 18 entries</p>
+
+    <!-- Mixed-content stream -->
+    <div class="stream" data-stream>
+
+      <!-- Reflection (paper) -->
+      <a class="ent ent--reflect ent--wide" href="reflection-01.html"
+         data-kind="reflect" data-tags="nervous-systems,fragmentation,grounded-wholeness">
+        <div class="ent__media"><div class="paper">The body knows things the mind hasn't named yet.</div></div>
+        <span class="ent__type">Reflection · 4 min</span>
+        <h3 class="ent__title">The body before the story</h3>
+        <p class="ent__body">A short contemplative on letting the nervous system speak first.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>nervous systems</span><span>wholeness</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Video (cinematic) -->
+      <a class="ent ent--video" href="videos.html"
+         data-kind="video" data-tags="awakening,humanity,grounded-wholeness">
+        <div class="ent__media">
+          <div class="cine"><div class="cine__play" aria-hidden="true"></div><span class="cine__dur">04:12</span></div>
+        </div>
+        <span class="ent__type">Video reflection</span>
+        <h3 class="ent__title">Three layers, one body</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>awakening</span><span>humanity</span></div>
+          <span>Watch →</span>
+        </div>
+      </a>
+
+      <!-- Deep read (tall) -->
+      <a class="ent ent--read ent--tall" href="deep-read-01.html"
+         data-kind="read" data-tags="society,collective-life,emotional-ecology">
+        <div class="ent__media">
+          <div class="paper" style="font-size:1.2rem">Society<br/>as a<br/>nervous system.</div>
+        </div>
+        <span class="ent__type">Deep read · 14 min</span>
+        <h3 class="ent__title">The room we are all in</h3>
+        <p class="ent__body">An immersive essay on the collective nervous system — how a culture comes to live inside a body, and what wholeness asks of us now.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>society</span><span>collective</span><span>ecology</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Framework -->
+      <a class="ent ent--frame" href="framework-04.html"
+         data-kind="frame" data-tags="fragmentation,grounded-wholeness,humanity">
+        <div class="ent__media">
+          <div class="geo">
+            <svg viewBox="0 0 200 130" aria-hidden="true">
+              <g fill="none" stroke="var(--c-accent)" stroke-width="1.4" stroke-linecap="round">
+                <line x1="40" y1="30" x2="40" y2="100"/>
+                <line x1="160" y1="30" x2="160" y2="100"/>
+                <path d="M 40 65 Q 100 25 160 65" stroke-dasharray="2 4"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <span class="ent__type">Framework · 04</span>
+        <h3 class="ent__title">Fragmentation → Wholeness</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>fragmentation</span><span>wholeness</span></div>
+          <span>See →</span>
+        </div>
+      </a>
+
+      <!-- Guide / PDF -->
+      <a class="ent ent--guide" href="guides.html"
+         data-kind="guide" data-tags="nervous-systems,grounded-wholeness">
+        <div class="ent__media"><div class="folio" data-label="PDF · 24 pages"></div></div>
+        <span class="ent__type">Guide</span>
+        <h3 class="ent__title">Grounded Wholeness Workbook</h3>
+        <p class="ent__body">A slow companion — exercises, maps, blank space.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>nervous systems</span><span>wholeness</span></div>
+          <span>Download →</span>
+        </div>
+      </a>
+
+      <!-- Event -->
+      <a class="ent ent--event ent--wide" href="events.html"
+         data-kind="event" data-tags="collective-life,relationships,humanity">
+        <div class="ent__media"><div class="date-tile"><div><div class="date-tile__d">14</div><div class="date-tile__m">June · evening</div></div></div></div>
+        <span class="ent__type">Gathering · online</span>
+        <h3 class="ent__title">Soul Circle — On staying when staying is hard</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>relationships</span><span>collective</span></div>
+          <span>Hold a seat →</span>
+        </div>
+      </a>
+
+      <!-- Reflection -->
+      <a class="ent ent--reflect" href="reflection-01.html"
+         data-kind="reflect" data-tags="emotional-ecology,relationships">
+        <div class="ent__media"><div class="paper">What if feelings were weather?</div></div>
+        <span class="ent__type">Reflection · 3 min</span>
+        <h3 class="ent__title">Weather, not weakness</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>emotional ecology</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Video -->
+      <a class="ent ent--video" href="videos.html"
+         data-kind="video" data-tags="nervous-systems,grounded-wholeness">
+        <div class="ent__media">
+          <div class="cine cine--2"><div class="cine__play" aria-hidden="true"></div><span class="cine__dur">01:38</span></div>
+        </div>
+        <span class="ent__type">Video reflection</span>
+        <h3 class="ent__title">A 90-second pause</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>nervous systems</span></div>
+          <span>Watch →</span>
+        </div>
+      </a>
+
+      <!-- Framework -->
+      <a class="ent ent--frame" href="framework-07.html"
+         data-kind="frame" data-tags="society,collective-life,nervous-systems">
+        <div class="ent__media">
+          <div class="geo">
+            <svg viewBox="0 0 200 130" aria-hidden="true">
+              <g stroke="var(--c-line)" stroke-width="0.8" fill="none">
+                <line x1="55" y1="50" x2="100" y2="38"/><line x1="100" y1="38" x2="150" y2="55"/>
+                <line x1="55" y1="50" x2="65" y2="92"/><line x1="65" y1="92" x2="125" y2="98"/>
+                <line x1="125" y1="98" x2="150" y2="55"/><line x1="100" y1="38" x2="125" y2="98"/>
+              </g>
+              <g fill="var(--c-accent-soft)" stroke="var(--c-accent)" stroke-width="1.2">
+                <circle cx="55" cy="50" r="8"/><circle cx="100" cy="38" r="8"/>
+                <circle cx="150" cy="55" r="8"/><circle cx="65" cy="92" r="8"/><circle cx="125" cy="98" r="8"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <span class="ent__type">Framework · 07</span>
+        <h3 class="ent__title">Society as a Nervous System</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>society</span><span>collective</span></div>
+          <span>See →</span>
+        </div>
+      </a>
+
+      <!-- Deep read (wide) -->
+      <a class="ent ent--read ent--wide" href="deep-read-01.html"
+         data-kind="read" data-tags="nervous-systems,grounded-wholeness,emotional-ecology">
+        <div class="ent__media"><div class="paper">The ecology of exhaustion is not personal.</div></div>
+        <span class="ent__type">Deep read · 18 min</span>
+        <h3 class="ent__title">The Ecology of Exhaustion</h3>
+        <p class="ent__body">On why so many of us are tired in ways that rest does not touch — and what tending the inner ecology might mean.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>nervous systems</span><span>emotional ecology</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Reflection -->
+      <a class="ent ent--reflect" href="reflection-01.html"
+         data-kind="reflect" data-tags="awakening,humanity,eco-wholeness">
+        <div class="ent__media"><div class="paper">Awakening is not leaving. It is arriving.</div></div>
+        <span class="ent__type">Reflection · 5 min</span>
+        <h3 class="ent__title">Awakening into humanity</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>awakening</span><span>humanity</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Guide -->
+      <a class="ent ent--guide" href="guides.html"
+         data-kind="guide" data-tags="awakening,grounded-wholeness">
+        <div class="ent__media"><div class="folio" data-label="PDF · 8 pages"></div></div>
+        <span class="ent__type">Guide</span>
+        <h3 class="ent__title">Awakening Without Bypassing</h3>
+        <p class="ent__body">A short corrective for the road — gentle, practical.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>awakening</span><span>wholeness</span></div>
+          <span>Download →</span>
+        </div>
+      </a>
+
+      <!-- Video -->
+      <a class="ent ent--video ent--wide" href="videos.html"
+         data-kind="video" data-tags="relationships,emotional-ecology">
+        <div class="ent__media">
+          <div class="cine cine--3"><div class="cine__play" aria-hidden="true"></div><span class="cine__dur">06:24</span></div>
+        </div>
+        <span class="ent__type">Video reflection</span>
+        <h3 class="ent__title">Co-regulation, simply</h3>
+        <p class="ent__body">A quiet walk-through of what nervous systems do when they meet other nervous systems.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>relationships</span><span>emotional ecology</span></div>
+          <span>Watch →</span>
+        </div>
+      </a>
+
+      <!-- Event -->
+      <a class="ent ent--event" href="events.html"
+         data-kind="event" data-tags="grounded-wholeness,nervous-systems,eco-wholeness">
+        <div class="ent__media"><div class="date-tile"><div><div class="date-tile__d">02</div><div class="date-tile__m">July · weekend</div></div></div></div>
+        <span class="ent__type">Retreat · in person</span>
+        <h3 class="ent__title">Returning to the body, slowly</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>nervous systems</span><span>Eco-Wholeness</span></div>
+          <span>Read more →</span>
+        </div>
+      </a>
+
+      <!-- Framework -->
+      <a class="ent ent--frame" href="framework-01.html"
+         data-kind="frame" data-tags="awakening,humanity,grounded-wholeness">
+        <div class="ent__media">
+          <div class="geo">
+            <svg viewBox="0 0 200 130" aria-hidden="true">
+              <circle cx="70"  cy="65" r="34" fill="none" stroke="var(--c-accent)" stroke-width="1.4"/>
+              <circle cx="100" cy="65" r="34" fill="none" stroke="var(--c-blue)"   stroke-width="1.4"/>
+              <circle cx="130" cy="65" r="34" fill="none" stroke="var(--c-warm)"   stroke-width="1.4"/>
+            </svg>
+          </div>
+        </div>
+        <span class="ent__type">Framework · 01</span>
+        <h3 class="ent__title">Three Layers of Awareness</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>awakening</span><span>humanity</span></div>
+          <span>See →</span>
+        </div>
+      </a>
+
+      <!-- Reflection -->
+      <a class="ent ent--reflect" href="reflection-01.html"
+         data-kind="reflect" data-tags="society,collective-life">
+        <div class="ent__media"><div class="paper">A culture lives inside the body that hosts it.</div></div>
+        <span class="ent__type">Reflection · 6 min</span>
+        <h3 class="ent__title">Where the culture sits</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>society</span><span>collective</span></div>
+          <span>Read →</span>
+        </div>
+      </a>
+
+      <!-- Guide -->
+      <a class="ent ent--guide" href="guides.html"
+         data-kind="guide" data-tags="relationships,collective-life">
+        <div class="ent__media"><div class="folio" data-label="PDF · 10 pages"></div></div>
+        <span class="ent__type">Guide</span>
+        <h3 class="ent__title">Soul Circle Host Guide</h3>
+        <p class="ent__body">For holding a small group with care.</p>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>relationships</span><span>collective</span></div>
+          <span>Download →</span>
+        </div>
+      </a>
+
+      <!-- Video -->
+      <a class="ent ent--video" href="videos.html"
+         data-kind="video" data-tags="fragmentation,grounded-wholeness">
+        <div class="ent__media">
+          <div class="cine cine--6"><div class="cine__play" aria-hidden="true"></div><span class="cine__dur">02:55</span></div>
+        </div>
+        <span class="ent__type">Video reflection</span>
+        <h3 class="ent__title">Coming down without crashing</h3>
+        <div class="ent__foot">
+          <div class="ent__tags"><span>grounded wholeness</span></div>
+          <span>Watch →</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- The three relational spaces — surface alongside the content archive -->
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <div class="section-header" style="text-align: left; align-items: flex-start; margin-bottom: var(--sp-5);">
+      <p class="t-eyebrow">Where the archive becomes relational</p>
+      <h2 class="t-h2 t-balance">Three scales of one conversation</h2>
+      <p class="t-lead" style="text-align: left; max-width: 56ch;">Beyond the archive, three living rooms — for meeting the work in company. Different sizes of the same slow inquiry.</p>
+    </div>
+    <div class="scales">
+      <a class="scale" href="one-to-one.html">
+        <span class="scale__num">scale i</span>
+        <h3 class="scale__title">One-to-one</h3>
+        <p class="scale__sub">A quiet room, an unhurried hour.</p>
+        <span class="scale__more">Enter the room</span>
+      </a>
+      <a class="scale" href="circles.html">
+        <span class="scale__num">scale ii</span>
+        <h3 class="scale__title">Circles</h3>
+        <p class="scale__sub">Modern relational campfires. 8–10 humans.</p>
+        <span class="scale__more">Sit at the fire</span>
+      </a>
+      <a class="scale" href="events.html">
+        <span class="scale__num">scale iii</span>
+        <h3 class="scale__title">Live explorations</h3>
+        <p class="scale__sub">Wider rooms of shared looking.</p>
+        <span class="scale__more">See what's exploring</span>
+      </a>
+    </div>
+    <p class="t-meta center-text" style="margin-top: var(--sp-6); font-family: var(--font-display); font-style: italic; font-size: var(--fs-md);">
+      You are allowed to arrive as you are. <a href="spaces.html" style="color: var(--c-accent); text-decoration: none; border-bottom: 1px solid currentColor;">All three, together</a>.
+    </p>
+  </div>
+</section>
+
+<!-- Stay Near — soft newsletter band -->
+<section class="stay fade-up" aria-labelledby="stay-title">
+  <div class="container">
+    <div class="stay__inner">
+      <span class="stay__mark" aria-hidden="true"></span>
+      <h2 class="stay__title" id="stay-title">Stay near</h2>
+      <p class="stay__sub">Slow reflections, new frameworks, future gatherings, and quiet things worth sharing.</p>
+      <form class="stay__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='kept near';">
+        <input type="email" placeholder="your email, if you'd like to stay near" aria-label="Email" required />
+        <button type="submit">Stay near</button>
+      </form>
+      <p class="stay__note">A letter every few weeks. Never a funnel. Unsubscribe with one tap.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">A library is <em>not</em> a list. It is a forest.<br/>Wander until something looks back.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot__inner">
+    <div><div class="foot__brand">Verdandi Weaver</div><p class="t-meta">A space for Soul Presence · Sara Leidelmeijer</p></div>
+    <ul class="foot__links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="books.html">Books</a></li><li><a href="self-scans.html">Self-Scans</a></li>
+      <li><a href="frameworks.html">Frameworks</a></li><li><a href="articles.html">Reflections</a></li>
+      <li><a href="videos.html">Videos</a></li><li><a href="guides.html">Guides</a></li>
+      <li><a href="spaces.html">Spaces</a></li><li><a href="one-to-one.html">One-to-one</a></li>
+      <li><a href="circles.html">Circles</a></li><li><a href="events.html">Live</a></li>
+      <li><a href="ecosystem.html">Ecosystem</a></li><li><a href="stay-near.html">Stay near</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 · Integritetspolicy · Cookies</p>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+<script>
+/* Archive — theme + kind filter (no framework, just data attrs) */
+(function () {
+  const lens   = document.querySelector('[data-lens]');
+  const tabs   = document.querySelector('[data-tabs]');
+  const stream = document.querySelector('[data-stream]');
+  const count  = document.querySelector('[data-count]');
+  if (!lens || !tabs || !stream) return;
+
+  let activeTheme = 'all';
+  let activeKind  = 'all';
+  const cards = Array.from(stream.children);
+
+  function pretty(t) {
+    return t.replace(/-/g, ' ').replace(/eco wholeness/, 'Eco-Wholeness');
+  }
+
+  function applyFilter() {
+    let shown = 0;
+    cards.forEach(c => {
+      const kind = c.dataset.kind;
+      const tags = (c.dataset.tags || '').split(',');
+      const okKind  = activeKind  === 'all' || activeKind  === kind;
+      const okTheme = activeTheme === 'all' || tags.includes(activeTheme);
+      const show = okKind && okTheme;
+      c.hidden = !show;
+      if (show) shown++;
+    });
+
+    let msg = `showing ${shown} ${shown === 1 ? 'entry' : 'entries'}`;
+    const parts = [];
+    if (activeKind  !== 'all') parts.push(activeKind === 'reflect' ? 'reflections'
+                                       : activeKind === 'read'    ? 'deep reads'
+                                       : activeKind === 'video'   ? 'videos'
+                                       : activeKind === 'frame'   ? 'frameworks'
+                                       : activeKind === 'guide'   ? 'guides'
+                                       : 'gatherings');
+    if (activeTheme !== 'all') parts.push('through “' + pretty(activeTheme) + '”');
+    if (parts.length) msg += ' · ' + parts.join(' ');
+    count.textContent = msg;
+  }
+
+  lens.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-theme]');
+    if (!b) return;
+    activeTheme = b.dataset.theme;
+    lens.querySelectorAll('[data-theme]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    applyFilter();
+  });
+  tabs.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-kind]');
+    if (!b) return;
+    activeKind = b.dataset.kind;
+    tabs.querySelectorAll('[data-kind]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    applyFilter();
+  });
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>

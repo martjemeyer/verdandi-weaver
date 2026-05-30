@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+title: Self-Scans — Verdandi Weaver
+description: Slow, nervous-system aware reflection. Gentle returns to yourself.
+permalink: /self-scans.html
+---
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Reflection tools</p>
+  <h1 class="t-h1 hero__title t-balance">A gentle return to yourself</h1>
+  <p class="t-lead hero__lead t-pretty">Self-scans are slow, nervous-system aware reflections. Not assessments. Not diagnoses. Just doorways back into noticing.</p>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Choose a scan</p>
+      <h2 class="t-h2">Six gentle entries</h2>
+      <span class="rule"></span>
+    </header>
+    <div class="grid grid-3">
+      <a class="frame" href="#start" onclick="startScan('nervous')"><span class="frame__num">01</span><h3 class="t-h3">Nervous System</h3><p class="t-body">A soft check-in with your body's current state.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('wholeness')"><span class="frame__num">02</span><h3 class="t-h3">Grounded Wholeness</h3><p class="t-body">What in you is left out, ignored, or pushed aside?</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('awakening')"><span class="frame__num">03</span><h3 class="t-h3">Social vs Soul Awakening</h3><p class="t-body">Tell apart three very different shifts.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('capacity')"><span class="frame__num">04</span><h3 class="t-h3">Emotional Capacity</h3><p class="t-body">How much can you hold today, honestly?</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('burnout')"><span class="frame__num">05</span><h3 class="t-h3">Burnout &amp; Fragmentation</h3><p class="t-body">Map the parts that have been carrying too much.</p><span class="link-chev">Begin</span></a>
+      <a class="frame" href="#start" onclick="startScan('safety')"><span class="frame__num">06</span><h3 class="t-h3">Relationship Safety</h3><p class="t-body">Where do you exhale? Where do you brace?</p><span class="link-chev">Begin</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="section fade-up">
+  <div class="container">
+    <div class="scan" id="scan">
+      <div class="scan__progress"><span id="scan-bar"></span></div>
+      <div id="scan-step" class="scan__step">
+        <p class="t-eyebrow" style="margin-bottom: var(--sp-3);">A note before we begin</p>
+        <p class="scan__q t-balance">There are no right answers.</p>
+        <p class="scan__hint">Take your time. If a question doesn't resonate, skip it.</p>
+        <div class="scan__opts">
+          <button class="scan__opt" onclick="scanNext()">I'm ready · begin</button>
+        </div>
+      </div>
+      <div class="scan__nav">
+        <span class="scan__count" id="scan-count">Intro</span>
+        <button class="btn btn--link" onclick="scanReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% block extraScripts %}
+<script src="/assets/scan.js"></script>
+{% endblock %}

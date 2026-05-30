@@ -1,0 +1,145 @@
+/* =========================================================
+   Verdandi Weaver — Design Tokens
+   Edit these to retheme the entire site.
+   ========================================================= */
+
+:root {
+  /* ---------- Type ---------- */
+  --font-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", Menlo, monospace;
+
+  /* Type scale (clamp = fluid) */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.92rem;
+  --fs-base: 1.05rem;
+  --fs-md: 1.18rem;
+  --fs-lg: clamp(1.32rem, 1.1rem + 0.6vw, 1.6rem);
+  --fs-xl: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem);
+  --fs-2xl: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem);
+  --fs-3xl: clamp(2.8rem, 1.8rem + 4vw, 5rem);
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.3;
+  --lh-body: 1.65;
+  --lh-loose: 1.9;
+
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.14em;
+
+  /* ---------- Spacing ---------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* Layout */
+  --container: 1180px;
+  --container-narrow: 760px;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  /* Soft natural radii for organic feel */
+  --radius-blob: 32px 28px 36px 26px;
+
+  --border-hairline: 1px solid var(--c-line);
+
+  /* ---------- Light theme (default) — forest after rain: stone, moss, sage, deep forest ---------- */
+  --c-bg:        oklch(95.8% 0.008 155);  /* cool off-white, faint moss undertone (NOT beige) */
+  --c-bg-elev:   oklch(97.8% 0.006 155);  /* card / raised — pale mineral */
+  --c-bg-sunk:   oklch(91.5% 0.010 150);  /* sunken — soft stone with green wash */
+  --c-ink:       oklch(28%   0.014 165);  /* soft cool charcoal (slight forest tone) */
+  --c-ink-soft:  oklch(42%   0.014 160);  /* secondary */
+  --c-ink-mute:  oklch(56%   0.012 155);  /* tertiary / meta — moss grey */
+  --c-line:      oklch(83%   0.012 150);  /* hairline — stone */
+  --c-line-soft: oklch(89%   0.010 150);
+
+  --c-accent:    oklch(36%   0.055 150);  /* deep forest green */
+  --c-accent-ink: oklch(97%   0.006 155);
+  --c-accent-soft: oklch(80%  0.035 145); /* muted sage */
+
+  --c-blue:      oklch(55%   0.030 195);  /* cool stone-blue */
+  --c-gold:      oklch(60%   0.040 130);  /* olive (replaces gold — no warm spirituality) */
+  --c-warm:      oklch(50%   0.020 150);  /* moss-charcoal (replaces terracotta) */
+  --c-moss:      oklch(48%   0.045 145);  /* mid moss */
+  --c-stone:     oklch(72%   0.010 150);  /* stone grey */
+
+  --shadow-sm: 0 1px 2px oklch(22% 0.02 160 / 0.08);
+  --shadow-md: 0 8px 24px -8px oklch(22% 0.02 160 / 0.18);
+  --shadow-lg: 0 30px 80px -20px oklch(22% 0.02 160 / 0.24);
+}
+
+/* ---------- Dark theme — forest at night ---------- */
+:root[data-theme="dark"] {
+  --c-bg:        oklch(18%   0.014 160);
+  --c-bg-elev:   oklch(22%   0.016 160);
+  --c-bg-sunk:   oklch(14%   0.012 160);
+  --c-ink:       oklch(93%   0.012 150);
+  --c-ink-soft:  oklch(78%   0.012 150);
+  --c-ink-mute:  oklch(62%   0.012 150);
+  --c-line:      oklch(32%   0.012 160);
+  --c-line-soft: oklch(26%   0.010 160);
+
+  --c-accent:    oklch(72%   0.06  150);
+  --c-accent-ink: oklch(15%  0.01  150);
+  --c-accent-soft: oklch(36% 0.05  150);
+
+  --c-blue:      oklch(70%   0.04  195);
+  --c-gold:      oklch(70%   0.05  130);
+  --c-warm:      oklch(68%   0.04  150);
+  --c-moss:      oklch(64%   0.05  145);
+  --c-stone:     oklch(56%   0.010 150);
+
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.4);
+  --shadow-md: 0 12px 36px -12px oklch(0% 0 0 / 0.55);
+  --shadow-lg: 0 50px 120px -30px oklch(0% 0 0 / 0.7);
+}
+
+/* ---------- Organic / breathing motion ---------- */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.04); opacity: 1; }
+}
+@keyframes drift {
+  0%, 100% { transform: translate3d(0,0,0); }
+  50%      { transform: translate3d(0,-6px,0); }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+.is-breathing { animation: breathe 7s ease-in-out infinite; }
+.is-drifting  { animation: drift 9s ease-in-out infinite; }
+
+/* ---------- Palette variants (set via data-palette on <html>) ---------- */
+:root[data-palette="stone"] {
+  --c-bg:      oklch(94% 0.005 240);
+  --c-bg-elev: oklch(97% 0.004 240);
+  --c-bg-sunk: oklch(90% 0.006 240);
+  --c-ink:     oklch(22% 0.008 240);
+  --c-line:    oklch(82% 0.006 240);
+  --c-accent:  oklch(50% 0.04 230);
+}
+:root[data-palette="ink"] {
+  --c-bg:      oklch(96% 0 0);
+  --c-bg-elev: oklch(99% 0 0);
+  --c-bg-sunk: oklch(92% 0 0);
+  --c-ink:     oklch(15% 0 0);
+  --c-line:    oklch(82% 0 0);
+  --c-accent:  oklch(40% 0 0);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

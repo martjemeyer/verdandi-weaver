@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* Anti-flash: paint bg colour before external CSS loads */
+html                    { background: oklch(95.8% 0.008 155); }
+html[data-theme="dark"] { background: oklch(18%   0.014 160); }
+</style>
+<script>
+/* Apply stored theme before first paint so there's no flash */
+(function(){
+  var t = localStorage.getItem('vw-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fragmentation → Wholeness — Frameworks — Verdandi Weaver</title>
+<meta name="description" content="A long arc — not a leap. The work is the inclusion, not the achievement." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+</head>
+<body>
+
+<header class="nav" data-screen-label="04 Fragmentation → Wholeness">
+  <div class="container nav__inner">
+    <a href="index.html" class="nav__brand"><span class="nav__brand-mark"></span>Verdandi Weaver</a>
+    <nav>      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="self-scans.html">Self-Scans</a></li>
+        <li><a href="frameworks.html" class="active">Frameworks</a></li>
+        <li><a href="ecosystem.html">Ecosystem</a></li>
+      </ul></nav>
+    <div class="nav__tools">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="nav__toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">Menu</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Framework 04 · The long return</p>
+  <h1 class="t-h1 hero__title t-balance">Fragmentation → Wholeness</h1>
+  <p class="t-lead hero__lead t-pretty">A long arc — not a leap. The work is the inclusion, not the achievement.</p>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <div class="grid grid-2" style="align-items:center; gap: var(--sp-8);">
+      <div class="fw-art">
+      <svg viewBox="0 0 400 280" aria-hidden="true">
+        <g fill="none" stroke-linecap="round">
+          <line x1="80"  y1="60" x2="80"  y2="220" stroke="var(--c-accent)" stroke-width="1.4"/>
+          <line x1="320" y1="60" x2="320" y2="220" stroke="var(--c-accent)" stroke-width="1.4"/>
+          <path d="M 80 140 Q 200 30 320 140" stroke="var(--c-accent)" stroke-width="1.2" stroke-dasharray="3 6"/>
+          <path d="M 80 140 Q 200 250 320 140" stroke="var(--c-accent)" stroke-width="1" stroke-dasharray="3 6" opacity="0.5"/>
+        </g>
+        <g fill="var(--c-accent)" opacity="0.55">
+          <circle cx="80"  cy="80"  r="3"/>
+          <circle cx="80"  cy="140" r="3"/>
+          <circle cx="80"  cy="200" r="3"/>
+          <circle cx="320" cy="80"  r="3"/>
+          <circle cx="320" cy="140" r="3"/>
+          <circle cx="320" cy="200" r="3"/>
+        </g>
+        <g font-family="var(--font-body)" font-size="11" letter-spacing="0.22em" fill="var(--c-ink-mute)">
+          <text x="80"  y="248" text-anchor="middle">FRAGMENTATION</text>
+          <text x="320" y="248" text-anchor="middle">WHOLENESS</text>
+        </g>
+      </svg></div>
+      <div class="stack-lg">
+        <p class="t-lead t-pretty">Fragmentation is not a failure. It is what living systems do when more is asked of them than they can metabolise — the parts go quiet, go underground, split off, keep working alone. They are still loyal; they just stopped trusting the room.</p>
+        <p class="t-body t-pretty">Wholeness is not the absence of those parts. It is their return. One by one, gently, in their own time, they come back into the room. They do not need to be fixed. They need to be welcomed.</p>
+        <p class="t-body t-pretty">There is no point on the arc where the work is finished. There are only longer and longer stretches where everything in you is invited to belong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance"><em>The work is the inclusion, not the achievement.</em></p>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Related lenses</p>
+      <h2 class="t-h2 t-balance">This framework belongs to a weave</h2>
+      <p class="t-lead t-pretty">Other ways of seeing that softly touch this one.</p>
+    </header>
+    <div class="grid grid-3">
+      <a class="frame" href="framework-05.html">
+        <div class="frame__diagram">
+      <svg viewBox="0 0 400 220" height="100%" width="100%" aria-hidden="true">
+        <g fill="none" stroke="var(--c-accent)" stroke-width="1.4">
+          <circle cx="130" cy="140" r="58"/>
+          <circle cx="270" cy="140" r="58"/>
+        </g>
+        <g fill="var(--c-accent-soft)" opacity="0.45">
+          <circle cx="130" cy="140" r="40"/>
+          <circle cx="270" cy="140" r="40"/>
+        </g>
+        <line x1="188" y1="140" x2="212" y2="140" stroke="var(--c-accent)" stroke-width="1" stroke-dasharray="2 4"/>
+        <g font-family="var(--font-body)" font-size="11" letter-spacing="0.22em" fill="var(--c-ink-mute)">
+          <text x="130" y="240" text-anchor="middle">PROTECTION</text>
+          <text x="270" y="240" text-anchor="middle">PRESENCE</text>
+        </g>
+      </svg>
+        </div>
+        <span class="frame__num">05</span>
+        <h3 class="t-h3">Protection vs Presence</h3>
+        <p class="t-body">Both serve.</p>
+      </a>
+      <a class="frame" href="framework-02.html">
+        <div class="frame__diagram">
+        <svg viewBox="0 0 200 130" width="100%" height="100%" aria-hidden="true">
+            <line x1="20" y1="92" x2="180" y2="92" stroke="var(--c-line)" stroke-width="0.6" opacity="0.7"/>
+            <g fill="none" stroke="var(--c-warm)" stroke-linecap="round">
+              <g stroke-width="1"><path d="M 100 92 C 96 102, 102 114, 106 124"/><path d="M 96 93 C 86 100, 76 108, 64 114"/><path d="M 104 93 C 114 100, 124 108, 136 114"/></g>
+              <path d="M 96 92 C 94 78, 95 64, 98 50 L 102 50 C 105 64, 106 78, 104 92 Z" fill="var(--c-warm)" stroke="none"/>
+              <g stroke-width="1.4"><path d="M 98 52 C 88 42, 76 36, 64 34"/><path d="M 100 50 C 100 38, 102 26, 106 18"/><path d="M 102 52 C 112 42, 124 36, 138 34"/></g>
+            </g>
+            <g fill="var(--c-accent-soft)"><ellipse cx="64" cy="32" rx="18" ry="11"/><ellipse cx="104" cy="20" rx="16" ry="10"/><ellipse cx="140" cy="34" rx="18" ry="11"/></g>
+          </svg></div>
+        <span class="frame__num">02</span>
+        <h3 class="t-h3">The Living System</h3>
+        <p class="t-body">You are not a soul above a body.</p>
+      </a>
+      <a class="frame" href="framework-03.html">
+        <div class="frame__diagram">
+      <svg viewBox="0 0 400 220" height="100%" width="100%" aria-hidden="true">
+        <g fill="none" stroke="var(--c-accent)" stroke-linecap="round">
+          <path d="M 20 140 Q 80 80 140 140 T 260 140 T 380 140" stroke-width="1.6"/>
+          <path d="M 20 170 Q 80 110 140 170 T 260 170 T 380 170" stroke-width="1.4" opacity="0.75"/>
+          <path d="M 20 110 Q 80 50  140 110 T 260 110 T 380 110" stroke-width="1.4" opacity="0.75"/>
+          <path d="M 20 200 Q 80 140 140 200 T 260 200 T 380 200" stroke-width="1.2" opacity="0.5"/>
+          <path d="M 20 80  Q 80 20  140 80  T 260 80  T 380 80"  stroke-width="1.2" opacity="0.5"/>
+          <path d="M 20 230 Q 80 170 140 230 T 260 230 T 380 230" stroke-width="1"   opacity="0.35"/>
+          <path d="M 20 50  Q 80 -10 140 50  T 260 50  T 380 50"  stroke-width="1"   opacity="0.35"/>
+        </g>
+        <g fill="var(--c-accent)" opacity="0.6">
+          <circle cx="20"  cy="140" r="3"/>
+          <circle cx="200" cy="140" r="3"/>
+          <circle cx="380" cy="140" r="3"/>
+        </g>
+      </svg>
+        </div>
+        <span class="frame__num">03</span>
+        <h3 class="t-h3">The Ripple Effect</h3>
+        <p class="t-body">Everything affects everything.</p>
+      </a>
+    </div>
+    <div class="center-text" style="margin-top: var(--sp-7);">
+      <a class="btn btn--ghost" href="frameworks.html">← Back to the constellation</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot__inner">
+    <div><div class="foot__brand">Verdandi Weaver</div><p class="t-meta">A space for Soul Presence · Sara Leidelmeijer</p></div>
+    <ul class="foot__links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="books.html">Books</a></li><li><a href="self-scans.html">Self-Scans</a></li>
+      <li><a href="frameworks.html">Frameworks</a></li><li><a href="ecosystem.html">Ecosystem</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 · Integritetspolicy · Cookies</p>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

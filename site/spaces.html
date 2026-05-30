@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* Anti-flash: paint bg colour before external CSS loads */
+html                    { background: oklch(95.8% 0.008 155); }
+html[data-theme="dark"] { background: oklch(18%   0.014 160); }
+</style>
+<script>
+/* Apply stored theme before first paint so there's no flash */
+(function(){
+  var t = localStorage.getItem('vw-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relational Spaces — Verdandi Weaver</title>
+<meta name="description" content="One-to-one, circles, and live explorations — three scales of one slow relational conversation." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+</head>
+<body>
+
+<header class="nav" data-screen-label="12 Spaces">
+  <div class="container nav__inner">
+    <a href="index.html" class="nav__brand"><span class="nav__brand-mark"></span>Verdandi Weaver</a>
+    <nav>      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="self-scans.html">Self-Scans</a></li>
+        <li><a href="frameworks.html">Frameworks</a></li>
+        <li><a href="ecosystem.html">Ecosystem</a></li>
+      </ul></nav>
+    <div class="nav__tools">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="nav__toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">Menu</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Relational spaces</p>
+  <h1 class="t-h1 hero__title t-balance">Three scales of one conversation</h1>
+  <p class="t-lead hero__lead t-pretty">Not services. Not products. Different sizes of the same slow inquiry — what it means to be human, together, in a fragmented age.</p>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+
+    <div class="scales">
+
+      <!-- One-to-one -->
+      <a class="scale" href="one-to-one.html">
+        <div class="scale__viz" aria-hidden="true">
+          <svg viewBox="0 0 200 120">
+            <!-- soft thread -->
+            <path d="M 56 60 Q 100 50 144 60" stroke="var(--c-accent)" stroke-width="1" fill="none" stroke-dasharray="2 5" opacity="0.7"/>
+            <!-- two presences -->
+            <circle cx="56" cy="60" r="22" fill="none" stroke="var(--c-accent)" stroke-width="1.4"/>
+            <circle cx="56" cy="60" r="9" fill="var(--c-accent-soft)"/>
+            <circle cx="144" cy="60" r="22" fill="none" stroke="var(--c-accent)" stroke-width="1.4"/>
+            <circle cx="144" cy="60" r="9" fill="var(--c-accent-soft)" opacity="0.7"/>
+          </svg>
+        </div>
+        <span class="scale__num">scale i · individual depth</span>
+        <h2 class="scale__title">One-to-one</h2>
+        <p class="scale__sub">A quiet room, an unhurried hour.</p>
+        <p class="scale__body">A thoughtful human meeting another thoughtful human — for reflection, grounding, understanding, and human support through overwhelm, awakening, or the longing to know oneself more deeply.</p>
+        <span class="scale__more">Enter the room</span>
+      </a>
+
+      <!-- Circles -->
+      <a class="scale" href="circles.html">
+        <div class="scale__viz" aria-hidden="true">
+          <svg viewBox="0 0 200 120">
+            <!-- centre glow -->
+            <circle cx="100" cy="60" r="14" fill="var(--c-accent)" opacity="0.18"/>
+            <circle cx="100" cy="60" r="6" fill="var(--c-accent)" opacity="0.8"/>
+            <!-- ring of seats -->
+            <g fill="var(--c-accent-soft)" stroke="var(--c-accent)" stroke-width="1">
+              <circle cx="100" cy="22" r="6"/>
+              <circle cx="138" cy="34" r="6"/>
+              <circle cx="160" cy="60" r="6"/>
+              <circle cx="138" cy="86" r="6"/>
+              <circle cx="100" cy="98" r="6"/>
+              <circle cx="62" cy="86" r="6"/>
+              <circle cx="40" cy="60" r="6"/>
+              <circle cx="62" cy="34" r="6"/>
+            </g>
+            <!-- hairline ring -->
+            <circle cx="100" cy="60" r="38" fill="none" stroke="var(--c-line)" stroke-width="0.6" stroke-dasharray="2 4"/>
+          </svg>
+        </div>
+        <span class="scale__num">scale ii · small-group reflection</span>
+        <h2 class="scale__title">Circles</h2>
+        <p class="scale__sub">Modern relational campfires.</p>
+        <p class="scale__body">Small rooms — eight to ten — for collective reflection, shared humanity, and relational coherence. Non-performative. No forced vulnerability. A slow arc, held with care.</p>
+        <span class="scale__more">Sit at the fire</span>
+      </a>
+
+      <!-- Live explorations -->
+      <a class="scale" href="events.html">
+        <div class="scale__viz" aria-hidden="true">
+          <svg viewBox="0 0 200 120">
+            <!-- many connections -->
+            <g stroke="var(--c-line)" stroke-width="0.5" fill="none" opacity="0.7">
+              <line x1="40" y1="40" x2="80" y2="22"/>
+              <line x1="80" y1="22" x2="124" y2="30"/>
+              <line x1="124" y1="30" x2="160" y2="46"/>
+              <line x1="40" y1="40" x2="60" y2="80"/>
+              <line x1="60" y1="80" x2="100" y2="94"/>
+              <line x1="100" y1="94" x2="140" y2="90"/>
+              <line x1="140" y1="90" x2="160" y2="46"/>
+              <line x1="80" y1="22" x2="60" y2="80"/>
+              <line x1="124" y1="30" x2="100" y2="94"/>
+              <line x1="60" y1="80" x2="124" y2="30"/>
+              <line x1="100" y1="94" x2="40" y2="40"/>
+            </g>
+            <g fill="var(--c-accent-soft)" stroke="var(--c-accent)" stroke-width="1">
+              <circle cx="40"  cy="40" r="4"/>
+              <circle cx="80"  cy="22" r="4"/>
+              <circle cx="124" cy="30" r="4"/>
+              <circle cx="160" cy="46" r="4"/>
+              <circle cx="60"  cy="80" r="4"/>
+              <circle cx="100" cy="94" r="4"/>
+              <circle cx="140" cy="90" r="4"/>
+            </g>
+            <!-- ambient motes -->
+            <g fill="var(--c-accent)" opacity="0.55">
+              <circle cx="20" cy="60" r="1.5"/>
+              <circle cx="180" cy="76" r="1.5"/>
+            </g>
+          </svg>
+        </div>
+        <span class="scale__num">scale iii · collective inquiry</span>
+        <h2 class="scale__title">Live explorations</h2>
+        <p class="scale__sub">Larger rooms of shared looking.</p>
+        <p class="scale__body">Collective reflection environments exploring the relationship between humans, nervous systems, society, and the worlds we co-create. Reflection talk, visual frameworks, audience reflection, slow integration.</p>
+        <span class="scale__more">See what's exploring</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Philosophy band -->
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow" style="margin-bottom: var(--sp-4);">The relational philosophy</p>
+    <h2 class="t-h2 t-balance" style="margin-bottom: var(--sp-5);">A living relational ecology, not three services</h2>
+    <p class="t-lead t-pretty">One-to-one is individual depth. Circles are small-group relational reflection. Live explorations are collective perspective. Together they form one body — different sizes of the same conversation about what it means to be human, in this age, with each other.</p>
+    <p class="t-meta" style="margin-top: var(--sp-6); font-family: var(--font-display); font-style: italic; font-size: var(--fs-md);">
+      You are allowed to arrive as you are.
+    </p>
+  </div>
+</section>
+
+<!-- What these are NOT — softly named -->
+<section class="section fade-up">
+  <div class="container narrow">
+    <div class="section-header" style="text-align: left; align-items: flex-start; margin-bottom: var(--sp-5);">
+      <p class="t-eyebrow">A note on tone</p>
+      <h2 class="t-h2 t-balance">What these spaces are not</h2>
+    </div>
+    <p class="t-body" style="color: var(--c-ink-soft); font-family: var(--font-display); font-size: var(--fs-lg); line-height: 1.5;">
+      Not coaching. Not therapy. Not group programmes. Not webinars or motivational speaking. No countdowns. No scarcity language. No funnels that get faster the longer you stay. No experts and seekers — only humans, with each other, looking carefully at what is here.
+    </p>
+    <p class="t-body" style="margin-top: var(--sp-5);">If a space asks for money, it asks once, in plain words, with care — because the work has to be sustainable to remain itself.</p>
+  </div>
+</section>
+
+<!-- Stay near -->
+<section class="stay fade-up" aria-labelledby="stay-title">
+  <div class="container">
+    <div class="stay__inner">
+      <span class="stay__mark" aria-hidden="true"></span>
+      <h2 class="stay__title" id="stay-title">Stay near</h2>
+      <p class="stay__sub">New circles and live explorations are announced softly here, weeks before they open elsewhere.</p>
+      <form class="stay__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='kept near';">
+        <input type="email" placeholder="your email, if you'd like to stay near" aria-label="Email" required />
+        <button type="submit">Stay near</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot__inner">
+    <div><div class="foot__brand">Verdandi Weaver</div><p class="t-meta">A space for Soul Presence · Sara Leidelmeijer</p></div>
+    <ul class="foot__links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="spaces.html">Spaces</a></li><li><a href="one-to-one.html">One-to-one</a></li>
+      <li><a href="circles.html">Circles</a></li><li><a href="events.html">Live</a></li>
+      <li><a href="frameworks.html">Frameworks</a></li><li><a href="articles.html">Reflections</a></li>
+      <li><a href="ecosystem.html">Ecosystem</a></li><li><a href="stay-near.html">Stay near</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 · Integritetspolicy · Cookies</p>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

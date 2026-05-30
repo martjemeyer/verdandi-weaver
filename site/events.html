@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* Anti-flash: paint bg colour before external CSS loads */
+html                    { background: oklch(95.8% 0.008 155); }
+html[data-theme="dark"] { background: oklch(18%   0.014 160); }
+</style>
+<script>
+/* Apply stored theme before first paint so there's no flash */
+(function(){
+  var t = localStorage.getItem('vw-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live Explorations — Verdandi Weaver</title>
+<meta name="description" content="Collective reflection environments exploring humans, nervous systems, society, and the worlds we create together." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+<style>
+  /* Soft network field — wider weave for collective scale */
+  .weave-field {
+    position: relative;
+    width: 100%; max-width: 760px; margin-inline: auto;
+    aspect-ratio: 16 / 8;
+    isolation: isolate;
+  }
+  .weave-field::before {
+    content: ""; position: absolute; inset: -10% -5%;
+    background: radial-gradient(50% 60% at 50% 50%, color-mix(in oklab, var(--c-accent-soft) 20%, transparent), transparent 70%);
+    z-index: -1;
+  }
+  .weave-field svg { width: 100%; height: 100%; }
+  .weave-field .node { animation: shimmer 6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+  /* Ingredient card */
+  .ingr {
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    padding: var(--sp-6) var(--sp-5);
+    background: var(--c-bg-elev);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+    min-height: 230px;
+    position: relative;
+  }
+  .ingr__glyph {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--c-accent-soft) 55%, var(--c-bg-elev));
+    border: 1px solid color-mix(in oklab, var(--c-accent) 35%, var(--c-line));
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--fs-md);
+    color: var(--c-ink);
+    margin-bottom: var(--sp-2);
+  }
+  .ingr h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .ingr p { color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
+</style>
+</head>
+<body>
+
+<header class="nav" data-screen-label="10 Live Explorations">
+  <div class="container nav__inner">
+    <a href="index.html" class="nav__brand"><span class="nav__brand-mark"></span>Verdandi Weaver</a>
+    <nav>      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="self-scans.html">Self-Scans</a></li>
+        <li><a href="frameworks.html">Frameworks</a></li>
+        <li><a href="ecosystem.html">Ecosystem</a></li>
+      </ul></nav>
+    <div class="nav__tools">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="nav__toggle" data-nav-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">Menu</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Scale iii · collective inquiry</p>
+  <h1 class="t-h1 hero__title t-balance">Live explorations</h1>
+  <p class="t-lead hero__lead t-pretty">Not webinars. Not lectures. Live explorations of human life, together — reflection talk, visual frameworks, systems thinking, audience reflection, slow integration.</p>
+</section>
+
+<!-- The wider weave (visual) -->
+<section class="section fade-up">
+  <div class="container">
+    <div class="weave-field" aria-hidden="true">
+      <svg viewBox="0 0 800 400">
+        <!-- ambient threads -->
+        <g stroke="var(--c-line)" stroke-width="0.5" fill="none" opacity="0.55" stroke-dasharray="2 5">
+          <path d="M 60 220 Q 220 80 400 200 T 740 200"/>
+          <path d="M 60 260 Q 220 380 400 240 T 740 240"/>
+          <path d="M 60 200 Q 280 140 500 220 T 740 180"/>
+        </g>
+        <!-- centre fire -->
+        <circle cx="400" cy="220" r="38" fill="var(--c-accent)" opacity="0.10"/>
+        <circle cx="400" cy="220" r="16" fill="var(--c-accent)" opacity="0.45"/>
+        <circle cx="400" cy="220" r="6"  fill="var(--c-accent)"/>
+        <!-- many nodes radiating -->
+        <g fill="var(--c-accent-soft)" stroke="var(--c-accent)" stroke-width="1">
+          <circle class="node" cx="120" cy="120" r="5" style="animation-delay:-1s"/>
+          <circle class="node" cx="220" cy="80"  r="5" style="animation-delay:-2s"/>
+          <circle class="node" cx="320" cy="140" r="5" style="animation-delay:-3s"/>
+          <circle class="node" cx="500" cy="100" r="5" style="animation-delay:-2s"/>
+          <circle class="node" cx="600" cy="140" r="5" style="animation-delay:-4s"/>
+          <circle class="node" cx="700" cy="100" r="5" style="animation-delay:-5s"/>
+          <circle class="node" cx="120" cy="320" r="5" style="animation-delay:-3s"/>
+          <circle class="node" cx="240" cy="350" r="5" style="animation-delay:-4s"/>
+          <circle class="node" cx="380" cy="340" r="5" style="animation-delay:-2s"/>
+          <circle class="node" cx="520" cy="350" r="5" style="animation-delay:-5s"/>
+          <circle class="node" cx="640" cy="320" r="5" style="animation-delay:-1s"/>
+          <circle class="node" cx="730" cy="290" r="5" style="animation-delay:-6s"/>
+        </g>
+        <!-- thin connections to the centre -->
+        <g stroke="var(--c-accent)" stroke-width="0.5" fill="none" opacity="0.45">
+          <line x1="400" y1="220" x2="120" y2="120"/>
+          <line x1="400" y1="220" x2="220" y2="80"/>
+          <line x1="400" y1="220" x2="320" y2="140"/>
+          <line x1="400" y1="220" x2="500" y2="100"/>
+          <line x1="400" y1="220" x2="600" y2="140"/>
+          <line x1="400" y1="220" x2="700" y2="100"/>
+          <line x1="400" y1="220" x2="120" y2="320"/>
+          <line x1="400" y1="220" x2="240" y2="350"/>
+          <line x1="400" y1="220" x2="380" y2="340"/>
+          <line x1="400" y1="220" x2="520" y2="350"/>
+          <line x1="400" y1="220" x2="640" y2="320"/>
+          <line x1="400" y1="220" x2="730" y2="290"/>
+        </g>
+        <!-- drifting motes -->
+        <g fill="var(--c-accent)" opacity="0.5">
+          <circle cx="80" cy="200" r="1.5"/>
+          <circle cx="760" cy="220" r="1.5"/>
+          <circle cx="400" cy="40" r="1.5"/>
+          <circle cx="400" cy="380" r="1.5"/>
+        </g>
+      </svg>
+    </div>
+    <p class="t-meta center-text" style="margin-top: var(--sp-4); font-family: var(--font-display); font-style: italic; font-size: var(--fs-md);">
+      A wider room — 60 to 200 humans, looking at the same thing together.
+    </p>
+  </div>
+</section>
+
+<!-- What a live exploration is -->
+<section class="section section--sunk fade-up">
+  <div class="container narrow">
+    <div class="section-header" style="text-align: left; align-items: flex-start;">
+      <p class="t-eyebrow">What this is</p>
+      <h2 class="t-h2 t-balance">A live exploration, not a lecture</h2>
+    </div>
+    <p class="t-body" style="font-family: var(--font-display); font-size: var(--fs-lg); line-height: 1.55; color: var(--c-ink); margin-bottom: var(--sp-5);">
+      A live exploration is a slow, contemplative room — held online, occasionally in person — where a larger group looks together at one human question. Not as audience receiving a talk. As participants in a shared inquiry, with the speaker as one voice among many.
+    </p>
+    <p class="t-body" style="color: var(--c-ink-soft);">
+      People come to recognise themselves, understand larger systems, feel less alone, and reconnect fragmented inner and outer worlds. They leave with a quieter floor underfoot and a few small noticings to carry home.
+    </p>
+  </div>
+</section>
+
+<!-- The 5 ingredients -->
+<section class="section fade-up">
+  <div class="container">
+    <div class="section-header" style="text-align: left; align-items: flex-start;">
+      <p class="t-eyebrow">What an exploration holds</p>
+      <h2 class="t-h2 t-balance">Five quiet ingredients</h2>
+      <p class="t-lead" style="text-align: left; max-width: 56ch;">Not a fixed format. A weave. Each exploration leans on these five — in different proportions — depending on what the question asks of the room.</p>
+    </div>
+
+    <div class="grid" style="grid-template-columns: repeat(5, 1fr); gap: var(--sp-5);">
+      <div class="ingr">
+        <div class="ingr__glyph">i</div>
+        <h3>Reflection talk</h3>
+        <p>A slow, contemplative opening — a question carefully laid out, not a thesis delivered.</p>
+      </div>
+      <div class="ingr">
+        <div class="ingr__glyph">ii</div>
+        <h3>Visual frameworks</h3>
+        <p>One or two maps from the archive, used as shared scaffolding for the looking — set down when finished.</p>
+      </div>
+      <div class="ingr">
+        <div class="ingr__glyph">iii</div>
+        <h3>Systems thinking</h3>
+        <p>Zooming out — body, relationship, culture — so the room can see itself as part of a larger ecology.</p>
+      </div>
+      <div class="ingr">
+        <div class="ingr__glyph">iv</div>
+        <h3>Audience reflection</h3>
+        <p>Quiet prompts, small breakouts, written noticings — the room participates with its actual nervous systems.</p>
+      </div>
+      <div class="ingr">
+        <div class="ingr__glyph">v</div>
+        <h3>Collective integration</h3>
+        <p>A slow closing. Common threads named, small things to carry, the fire let to settle — not put out.</p>
+      </div>
+    </div>
+    <style>@media (max-width: 980px){ .grid[style*="repeat(5"]{ grid-template-columns: repeat(2, 1fr) !important; } }
+           @media (max-width: 560px){ .grid[style*="repeat(5"]{ grid-template-columns: 1fr !important; } }</style>
+  </div>
+</section>
+
+<!-- Recurring themes -->
+<section class="section section--sunk fade-up">
+  <div class="container narrow">
+    <div class="section-header" style="text-align: left; align-items: flex-start; margin-bottom: var(--sp-4);">
+      <p class="t-eyebrow">Recurring themes</p>
+      <h2 class="t-h2 t-balance">What the room often explores</h2>
+    </div>
+    <div class="themes">
+      <span>Society as a Nervous System</span>
+      <span>The Ecology of Exhaustion</span>
+      <span>Fragmentation &amp; Wholeness</span>
+      <span>Why Rest Feels Unsafe</span>
+      <span>Awakening Into Humanity</span>
+      <span>The Ripple Effect</span>
+      <span>Protection vs Presence</span>
+      <span>Emotional Ecology &amp; Collective Life</span>
+      <span>The Crisis of Disconnection</span>
+      <span>Human Beings in Survival Mode</span>
+    </div>
+    <p class="t-meta" style="margin-top: var(--sp-5);">Each theme is a question, held for an evening. Most return in a slow rotation through the year.</p>
+  </div>
+</section>
+
+<!-- Upcoming live explorations -->
+<section class="section fade-up">
+  <div class="container">
+    <div class="section-header" style="text-align: left; align-items: flex-start;">
+      <p class="t-eyebrow">Coming live</p>
+      <h2 class="t-h2 t-balance">What's exploring next</h2>
+    </div>
+    <div class="events">
+      <a class="event-row" href="#">
+        <div class="event-row__date">19<small>August · evening</small></div>
+        <div class="event-row__body">
+          <h3 class="event-row__title">The room we are all in</h3>
+          <p class="event-row__meta">Live exploration · online · 120 minutes · 200 seats · free or pay-what-you-can</p>
+        </div>
+        <span class="event-row__cta">Hold a seat</span>
+      </a>
+      <a class="event-row" href="#">
+        <div class="event-row__date">26<small>September · afternoon</small></div>
+        <div class="event-row__body">
+          <h3 class="event-row__title">Why rest feels unsafe</h3>
+          <p class="event-row__meta">Live exploration · online · 120 minutes · 150 seats · €22</p>
+        </div>
+        <span class="event-row__cta">Hold a seat</span>
+      </a>
+      <a class="event-row" href="#">
+        <div class="event-row__date">24<small>October · evening</small></div>
+        <div class="event-row__body">
+          <h3 class="event-row__title">The crisis of disconnection</h3>
+          <p class="event-row__meta">Live exploration · online · 120 minutes · 200 seats · free or pay-what-you-can</p>
+        </div>
+        <span class="event-row__cta">Hold a seat</span>
+      </a>
+      <a class="event-row" href="#">
+        <div class="event-row__date">14<small>November · weekend</small></div>
+        <div class="event-row__body">
+          <h3 class="event-row__title">Awakening into humanity — a longer afternoon</h3>
+          <p class="event-row__meta">Live exploration · online · 180 minutes · 120 seats · €38</p>
+        </div>
+        <span class="event-row__cta">Hold a seat</span>
+      </a>
+      <a class="event-row event-row--past" href="#">
+        <div class="event-row__date">07<small>March · past</small></div>
+        <div class="event-row__body">
+          <h3 class="event-row__title">Society as a nervous system</h3>
+          <p class="event-row__meta">Live exploration · online · 120 minutes · 240 humans attended</p>
+        </div>
+        <span class="event-row__cta">Read the noticings</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Sara's note -->
+<section class="section section--sunk fade-up">
+  <div class="container narrow">
+    <blockquote class="t-quote" style="border-left: 1px solid color-mix(in oklab, var(--c-accent) 50%, transparent); padding-left: var(--sp-5); margin: 0;">
+      "A good live exploration is not where I tell people something. It is where two hundred nervous systems look at one question together — and the room itself becomes the wisdom. My job is to hold the fire."
+      <footer class="t-meta" style="margin-top: var(--sp-3); font-style: normal;">— Sara Leidelmeijer</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- Connected scales -->
+<section class="threads fade-up" aria-labelledby="threads-title">
+  <div class="container">
+    <div class="threads__hd">
+      <span class="t-eyebrow">The other scales</span>
+      <h3 id="threads-title" class="t-balance">If a smaller room would serve</h3>
+    </div>
+    <div class="threads__grid">
+      <a class="thread-card" href="circles.html">
+        <span class="thread-card__type">Scale ii · 8–10 people</span>
+        <h4 class="thread-card__title">Circles</h4>
+        <p class="thread-card__why">When you'd like to look at something with fewer humans, more closely.</p>
+      </a>
+      <a class="thread-card" href="one-to-one.html">
+        <span class="thread-card__type">Scale i · individual</span>
+        <h4 class="thread-card__title">One-to-one spaces</h4>
+        <p class="thread-card__why">When the question is yours and wants a private hour.</p>
+      </a>
+      <a class="thread-card" href="framework-07.html">
+        <span class="thread-card__type">Framework · 07</span>
+        <h4 class="thread-card__title">Society as a Nervous System</h4>
+        <p class="thread-card__why">The map that recurs most often in these wider rooms.</p>
+      </a>
+      <a class="thread-card" href="deep-read-01.html">
+        <span class="thread-card__type">Deep read · 18 min</span>
+        <h4 class="thread-card__title">The Ecology of Exhaustion</h4>
+        <p class="thread-card__why">A good companion to read before or after an exploration on rest, exhaustion, or modern life.</p>
+      </a>
+      <a class="thread-card" href="ecosystem.html">
+        <span class="thread-card__type">The archive</span>
+        <h4 class="thread-card__title">The living archive</h4>
+        <p class="thread-card__why">Wander between everything that has been said before — reflections, videos, guides, the lot.</p>
+      </a>
+      <a class="thread-card" href="stay-near.html">
+        <span class="thread-card__type">Letter</span>
+        <h4 class="thread-card__title">Stay near</h4>
+        <p class="thread-card__why">New explorations are announced quietly here, weeks before they open.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">A live exploration is not a stage.<br/>It is a <em>room</em> with a fire in it<br/>and many quiet seats.</p>
+  </div>
+</section>
+
+<section class="stay fade-up" aria-labelledby="stay-title">
+  <div class="container">
+    <div class="stay__inner">
+      <span class="stay__mark" aria-hidden="true"></span>
+      <h2 class="stay__title" id="stay-title">Stay near</h2>
+      <p class="stay__sub">Live exploration dates are announced softly here, weeks before they open elsewhere.</p>
+      <form class="stay__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='kept near';">
+        <input type="email" placeholder="your email" aria-label="Email" required />
+        <button type="submit">Stay near</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="container foot__inner">
+    <div><div class="foot__brand">Verdandi Weaver</div><p class="t-meta">A space for Soul Presence · Sara Leidelmeijer</p></div>
+    <ul class="foot__links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+      <li><a href="spaces.html">Spaces</a></li><li><a href="one-to-one.html">One-to-one</a></li>
+      <li><a href="circles.html">Circles</a></li><li><a href="events.html">Live</a></li>
+      <li><a href="frameworks.html">Frameworks</a></li><li><a href="ecosystem.html">Ecosystem</a></li>
+      <li><a href="stay-near.html">Stay near</a></li><li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 · Integritetspolicy · Cookies</p>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

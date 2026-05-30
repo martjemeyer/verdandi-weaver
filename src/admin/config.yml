@@ -1,0 +1,57 @@
+backend:
+  name: github
+  repo: GITHUB_USERNAME/verdandi-weaver
+  branch: main
+
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+
+collections:
+
+  - name: books
+    label: Books
+    label_singular: Book
+    folder: src/content/books
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Tags / Meta, name: meta, widget: string, hint: "e.g. Belonging · Boundaries · Departure" }
+      - { label: Description, name: description, widget: text }
+      - label: Cover colour
+        name: cover
+        widget: select
+        options:
+          - { label: "Green (1)", value: "1" }
+          - { label: "Blue (2)", value: "2" }
+          - { label: "Warm (3)", value: "3" }
+          - { label: "Stone (4)", value: "4" }
+          - { label: "Sage (5)", value: "5" }
+          - { label: "Moss (6)", value: "6" }
+      - { label: Order, name: order, widget: number, default: 99 }
+
+  - name: articles
+    label: Articles & Reflections
+    label_singular: Article
+    folder: src/content/articles
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: frameworks
+    label: Frameworks
+    label_singular: Framework
+    folder: src/content/frameworks
+    create: true
+    slug: "framework-{{num}}"
+    fields:
+      - { label: Number, name: num, widget: string, hint: "e.g. 10" }
+      - { label: Title, name: title, widget: string }
+      - { label: Eyebrow, name: eyebrow, widget: string, hint: "e.g. Framework 10 · Topic · Subtopic" }
+      - { label: Lead text, name: lead, widget: text }
+      - { label: Body (markdown), name: body, widget: markdown }
+      - { label: Pull quote, name: pull, widget: string, required: false }

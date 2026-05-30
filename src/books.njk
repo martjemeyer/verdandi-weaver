@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: Books — Verdandi Weaver
+description: The library of Verdandi Weaver — books on grounded wholeness, awakening, and being human.
+permalink: /books.html
+---
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">A digital library</p>
+  <h1 class="t-h1 hero__title t-balance">Books</h1>
+  <p class="t-lead hero__lead t-pretty">Slow reading for the long return — being human, belonging, and the texture of wholeness.</p>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <div class="grid grid-3" style="row-gap: var(--sp-8);">
+      {% set books = collections.book | sort(false, false, "data.order") %}
+      {% for book in books %}
+      <article class="book">
+        <div class="book__cover book__cover--{{ book.data.cover }}">{{ book.data.title }}</div>
+        <h3 class="book__title">{{ book.data.title }}</h3>
+        <p class="book__meta">{{ book.data.meta }}</p>
+        <p class="book__desc">{{ book.data.description }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="pull">Each book is a doorway. Pick the one that breathes loudest in you today.</p>
+    <p class="t-meta" style="margin-top: var(--sp-5);">Audiobook editions are slowly being prepared.</p>
+  </div>
+</section>
