@@ -1,5 +1,6 @@
 /* Verdandi Weaver — app.js
-   Theme toggle · Mobile nav · Client-side navigation */
+   Theme toggle · Mobile nav · Client-side navigation
+   auto-push test 2026-05-31 */
 (function () {
   const root = document.documentElement;
 
