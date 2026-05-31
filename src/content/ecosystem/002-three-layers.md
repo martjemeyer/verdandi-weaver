@@ -1,13 +1,13 @@
 ---
 title: Three layers, one body
 kind: video
-themes: 
+type_label: Video reflection
+themes:
   - awakening
   - humanity
   - grounded-wholeness
-type_label: Video reflection
-cta: "Watch →"
-youtube_url: "https://www.youtube.com/watch?v=4mRgqdcqlTM"
-orientation: landscape
+cta: Watch →
 order: 2
+youtube_url: ""
+orientation: landscape
 ---
