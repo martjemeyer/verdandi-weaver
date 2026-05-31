@@ -43,8 +43,10 @@ permalink: /ecosystem.html
     <div class="stream" data-stream>
       {% set entries = collections.ecosystem | sort(false, false, "data.order") %}
       {% for entry in entries %}
+      {% set cardHref = entry.data.href %}
+      {% if not cardHref and entry.data.kind == 'video' %}{% set cardHref = entry.data.youtube_url %}{% endif %}
       <a class="ent ent--{{ entry.data.kind }}{% if entry.data.wide %} ent--wide{% endif %}{% if entry.data.tall %} ent--tall{% endif %}"
-         href="{{ entry.data.href }}"
+         href="{{ cardHref }}"
          data-kind="{{ entry.data.kind }}"
          data-tags="{{ entry.data.themes | join(',') }}">
 

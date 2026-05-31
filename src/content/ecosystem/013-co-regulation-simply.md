@@ -5,7 +5,6 @@ wide: true
 themes: 
   - relationships
   - emotional-ecology
-href: /videos.html
 type_label: Video reflection
 cta: "Watch →"
 body: A quiet walk-through of what nervous systems do when they meet other nervous systems.
