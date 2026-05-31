@@ -3,10 +3,15 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/admin");
 
-  // Make page.url available in templates for active-nav logic
   eleventyConfig.addFilter("activeIf", function (href, pageUrl) {
     const norm = (u) => u.replace(/\/?$/, ".html").replace("/index.html", "/");
     return norm(pageUrl) === norm(href) ? "active" : "";
+  });
+
+  eleventyConfig.addFilter("youtubeId", function (url) {
+    if (!url) return "";
+    const m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : url;
   });
 
   return {

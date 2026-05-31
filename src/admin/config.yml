@@ -46,6 +46,77 @@ collections:
       - { label: Description, name: description, widget: text }
       - { label: Body, name: body, widget: markdown }
 
+  - name: ecosystem
+    label: Living Archive
+    label_singular: Archive entry
+    folder: src/content/ecosystem
+    create: true
+    slug: "{{order}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Kind
+        name: kind
+        widget: select
+        options:
+          - { label: Reflection, value: reflect }
+          - { label: Deep read, value: read }
+          - { label: Video, value: video }
+          - { label: Framework, value: frame }
+          - { label: Guide / PDF, value: guide }
+          - { label: Gathering / Event, value: event }
+      - { label: Type label, name: type_label, widget: string, hint: "e.g. Reflection · 4 min" }
+      - label: Themes
+        name: themes
+        widget: list
+        hint: "Pick from: nervous-systems, fragmentation, awakening, society, relationships, emotional-ecology, grounded-wholeness, collective-life, humanity, eco-wholeness"
+        field: { label: Theme, name: theme, widget: string }
+      - { label: Link URL, name: href, widget: string, hint: "e.g. /videos.html" }
+      - { label: Call to action, name: cta, widget: string, hint: "e.g. Watch →" }
+      - { label: Description, name: body, widget: text, required: false }
+      - { label: Wide card (spans 2 columns), name: wide, widget: boolean, default: false, required: false }
+      - { label: Tall card (spans 2 rows), name: tall, widget: boolean, default: false, required: false }
+      - { label: Order, name: order, widget: number, default: 99 }
+      - label: "— Video fields —"
+        name: video_divider
+        widget: hidden
+        default: ""
+        required: false
+      - { label: YouTube URL, name: youtube_url, widget: string, required: false, hint: "Paste the full YouTube URL. Leave empty to show placeholder." }
+      - label: Video orientation
+        name: orientation
+        widget: select
+        required: false
+        default: landscape
+        options:
+          - { label: "Landscape (16:9)", value: landscape }
+          - { label: "Portrait (9:16)", value: portrait }
+        hint: "Only used for video entries with a YouTube URL"
+      - label: "— Reflection / Read fields —"
+        name: read_divider
+        widget: hidden
+        default: ""
+        required: false
+      - { label: Paper quote, name: paper_text, widget: string, required: false, hint: "Short quote shown on the card visual" }
+      - label: "— Guide fields —"
+        name: guide_divider
+        widget: hidden
+        default: ""
+        required: false
+      - { label: PDF page count, name: folio_pages, widget: string, required: false, hint: "e.g. PDF · 24 pages" }
+      - label: "— Event fields —"
+        name: event_divider
+        widget: hidden
+        default: ""
+        required: false
+      - { label: Event day, name: event_day, widget: string, required: false, hint: "e.g. 14" }
+      - { label: Event month / type, name: event_month, widget: string, required: false, hint: "e.g. June · evening" }
+      - label: "— Framework fields —"
+        name: frame_divider
+        widget: hidden
+        default: ""
+        required: false
+      - { label: Framework number, name: framework_num, widget: string, required: false, hint: "e.g. 7 — determines which diagram is shown" }
+
   - name: frameworks
     label: Frameworks
     label_singular: Framework

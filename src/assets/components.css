@@ -958,6 +958,7 @@ a { color: inherit; }
   overflow: hidden;
 }
 .ent--tall .ent__media { aspect-ratio: 3 / 4; }
+.ent__media--portrait { aspect-ratio: 9 / 16; }
 
 /* Cinematic video poster — full-bleed, quiet, with subtle play glyph */
 .cine {
