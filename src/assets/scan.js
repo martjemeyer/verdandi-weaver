@@ -1,4 +1,4 @@
-const SCANS = {
+var SCANS = {
   nervous: {
     title: "Nervous System Self-Scan",
     questions: [
@@ -53,7 +53,7 @@ const SCANS = {
   }
 };
 
-let scanState = { key: null, i: 0, answers: [] };
+var scanState = { key: null, i: 0, answers: [] };
 function el(id) { return document.getElementById(id); }
 function setBar(p) { el('scan-bar').style.width = p + '%'; }
 
