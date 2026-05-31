@@ -112,6 +112,13 @@
       window.scrollTo(0, 0);
       openNav(false);
       updateActiveLinks(href);
+
+      // Re-execute inline scripts from the incoming page (e.g. filter logic)
+      newDoc.body.querySelectorAll("script:not([src])").forEach((orig) => {
+        const s = document.createElement("script");
+        s.textContent = orig.textContent;
+        document.body.appendChild(s);
+      });
     }
 
     // Use View Transition if available for a smooth content fade
