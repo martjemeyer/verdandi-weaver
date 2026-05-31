@@ -95,9 +95,11 @@
       document.title = newDoc.title;
 
       // Remove every body child except the nav and this script tag
+      // Also remove any page-specific external scripts loaded by the previous page
       Array.from(document.body.children).forEach((el) => {
         if (el !== navEl && el !== appScript) el.remove();
       });
+      document.querySelectorAll("script[data-page-script]").forEach((s) => s.remove());
 
       // Collect incoming content (skip the new page's nav and any scripts)
       const frag = document.createDocumentFragment();
@@ -113,10 +115,20 @@
       openNav(false);
       updateActiveLinks(href);
 
-      // Re-execute inline scripts from the incoming page (e.g. filter logic)
+      // Re-execute inline scripts from the incoming page (e.g. ecosystem filter)
       newDoc.body.querySelectorAll("script:not([src])").forEach((orig) => {
         const s = document.createElement("script");
         s.textContent = orig.textContent;
+        document.body.appendChild(s);
+      });
+
+      // Re-load external page-specific scripts (e.g. scan.js on self-scans)
+      newDoc.body.querySelectorAll("script[src]").forEach((orig) => {
+        const src = orig.getAttribute("src");
+        if (!src || src.includes("app.js")) return;
+        const s = document.createElement("script");
+        s.src = src;
+        s.setAttribute("data-page-script", "");
         document.body.appendChild(s);
       });
     }
