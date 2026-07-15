@@ -51,7 +51,9 @@ permalink: /ecosystem.html
          data-tags="{{ entry.data.themes | join(',') }}">
 
         <div class="ent__media{% if entry.data.orientation == 'portrait' %} ent__media--portrait{% endif %}">
-          {% if entry.data.kind == 'video' and entry.data.youtube_url %}
+          {% if entry.data.image %}
+            <img src="{{ entry.data.image }}" alt="{{ entry.data.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          {% elif entry.data.kind == 'video' and entry.data.youtube_url %}
             <iframe
               src="https://www.youtube-nocookie.com/embed/{{ entry.data.youtube_url | youtubeId }}?rel=0"
               title="{{ entry.data.title }}"
