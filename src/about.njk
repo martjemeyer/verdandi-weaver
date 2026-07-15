@@ -5,7 +5,7 @@ description: About Sara Leidelmeijer and the body of work that is Verdandi Weave
 permalink: /about.html
 ---
 
-{% set about = collections.about | first %}
+{% set about = (collections.about or []) | first %}
 {% if about %}{% set d = about.data %}{% endif %}
 
 <section class="hero container fade-up">
