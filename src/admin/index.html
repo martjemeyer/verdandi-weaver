@@ -9,13 +9,108 @@
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
+    // ── Inject site styles into preview pane ──────────────────────
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&family=Fraunces:wght@400;500;600&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block');
     CMS.registerPreviewStyle('/assets/tokens.css');
     CMS.registerPreviewStyle('/assets/components.css');
-    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&family=Fraunces:wght@400;500;600&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=block');
     CMS.registerPreviewStyle(`
-      body { background: oklch(95.8% 0.008 155); padding: 2rem; }
-      img { max-width: 100%; }
+      body { padding: 2rem; }
+      .preview-wrap { max-width: 480px; }
+      .preview-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .45; margin-bottom: 1.5rem; font-family: var(--font-sans, Inter, sans-serif); }
     `, { raw: true });
+
+    var h = window.h || (window.React && window.React.createElement);
+
+    // ── Helper: YouTube ID ─────────────────────────────────────────
+    function ytId(url) {
+      if (!url) return '';
+      var m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      return m ? m[1] : '';
+    }
+
+    // ── Ecosystem card preview ─────────────────────────────────────
+    var EcosystemPreview = function(props) {
+      var data = props.entry.get('data').toJS();
+      var kind      = data.kind || 'reflect';
+      var title     = data.title || '';
+      var typeLabel = data.type_label || '';
+      var body      = data.body || '';
+      var cta       = data.cta || '';
+      var image     = data.image || '';
+      var paperText = data.paper_text || '';
+      var youtubeUrl= data.youtube_url || '';
+      var themes    = data.themes || [];
+      var wide      = data.wide;
+      var tall      = data.tall;
+
+      var videoId = ytId(youtubeUrl);
+      var imgSrc  = image ? props.getAsset(image).toString() : '';
+
+      var cardClass = 'ent ent--' + kind + (wide ? ' ent--wide' : '') + (tall ? ' ent--tall' : '');
+
+      // Media area
+      var media;
+      if (imgSrc) {
+        media = h('img', { src: imgSrc, alt: title, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' } });
+      } else if (kind === 'video' && videoId) {
+        media = h('iframe', { src: 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0', frameBorder: '0', allowFullScreen: true, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 } });
+      } else if (kind === 'reflect' || kind === 'read') {
+        media = h('div', { className: 'paper' }, paperText);
+      } else {
+        media = null;
+      }
+
+      return h('div', { className: 'preview-wrap' },
+        h('p', { className: 'preview-label' }, 'Card preview'),
+        h('a', { className: cardClass, style: { display: 'flex', flexDirection: 'column', textDecoration: 'none', color: 'inherit' } },
+          h('div', { className: 'ent__media' }, media),
+          typeLabel ? h('span', { className: 'ent__type' }, typeLabel) : null,
+          h('h3', { className: 'ent__title' }, title),
+          body ? h('p', { className: 'ent__body' }, body) : null,
+          h('div', { className: 'ent__foot' },
+            h('div', { className: 'ent__tags' },
+              themes.map(function(t, i) {
+                return h('span', { key: i }, t.replace(/-/g, ' '));
+              })
+            ),
+            cta ? h('span', {}, cta) : null
+          )
+        )
+      );
+    };
+
+    CMS.registerPreviewTemplate('ecosystem', EcosystemPreview);
+
+    // ── About preview ──────────────────────────────────────────────
+    var AboutPreview = function(props) {
+      var data = props.entry.get('data').toJS();
+      var imgSrc = data.image ? props.getAsset(data.image).toString() : '';
+
+      return h('div', { className: 'preview-wrap' },
+        h('p', { className: 'preview-label' }, 'About page preview'),
+        h('section', { style: { marginBottom: '2rem' } },
+          h('p', { className: 't-eyebrow', style: { marginBottom: '0.5rem' } }, 'About'),
+          h('h1', { className: 't-h1' }, data.hero_title || 'A space for soul presence')
+        ),
+        h('div', { className: 'stack-lg' },
+          imgSrc
+            ? h('div', { className: 'figure', style: { aspectRatio: '4/3', overflow: 'hidden', borderRadius: 'var(--radius-lg)' } },
+                h('img', { src: imgSrc, alt: 'Sara Leidelmeijer', style: { width: '100%', height: '100%', objectFit: 'cover' } })
+              )
+            : h('div', { className: 'figure', style: { aspectRatio: '4/3' } },
+                h('div', { className: 'placeholder', style: { aspectRatio: '4/3' } }, '[ portrait — Sara Leidelmeijer ]')
+              ),
+          h('p', { className: 't-lead' }, data.lead || ''),
+          data.what_it_is   ? h('div', {}, h('h2', { className: 't-h3' }, 'What this work is'), h('p', { className: 't-body' }, data.what_it_is)) : null,
+          data.what_it_isnt ? h('div', {}, h('h2', { className: 't-h3' }, "What it isn't"), h('p', { className: 't-body' }, data.what_it_isnt)) : null,
+          data.how_offered  ? h('div', {}, h('h2', { className: 't-h3' }, "How it's offered"), h('p', { className: 't-body' }, data.how_offered)) : null,
+          data.pull         ? h('p', { className: 'pull' }, data.pull) : null,
+          data.footer_note  ? h('p', { className: 't-meta', style: { textAlign: 'center' } }, data.footer_note) : null
+        )
+      );
+    };
+
+    CMS.registerPreviewTemplate('about', AboutPreview);
   </script>
 </body>
 </html>

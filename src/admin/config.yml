@@ -64,7 +64,7 @@ collections:
           - { label: "Framework", value: frame }
           - { label: "Guide / PDF", value: guide }
           - { label: "Gathering / Event", value: event }
-      - { label: Type label, name: type_label, widget: string, hint: "e.g. Reflection · 4 min  or  Video reflection" }
+      - { label: Type label, name: type_label, widget: string, required: false, hint: "e.g. Reflection · 4 min  or  Video reflection" }
       - label: Themes
         name: themes
         widget: select
@@ -81,7 +81,7 @@ collections:
           - { label: "Collective life", value: collective-life }
           - { label: "Humanity",        value: humanity }
           - { label: "Eco-Wholeness",   value: eco-wholeness }
-      - { label: Call to action, name: cta, widget: string, hint: "e.g. Read →  or  Watch →  or  Download →" }
+      - { label: Call to action, name: cta, widget: string, required: false, hint: "e.g. Read →  or  Watch →  or  Download →" }
       - { label: Description, name: body, widget: text, required: false, hint: "Optional short text shown below the title" }
       - { label: Image, name: image, widget: image, required: false, hint: "Optional card image — if set, shows instead of the quote or video. For videos, leave empty and use the YouTube URL below." }
       - { label: Wide card (spans 2 columns), name: wide, widget: boolean, default: false, required: false }
