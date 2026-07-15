@@ -16,7 +16,11 @@ permalink: /books.html
     <div class="grid grid-3" style="row-gap: var(--sp-8);">
       {% set books = collections.book | sort(false, false, "data.order") %}
       {% for book in books %}
+      {% if book.data.href %}
+      <a class="book" href="{{ book.data.href }}">
+      {% else %}
       <article class="book">
+      {% endif %}
         {% if book.data.image %}
         <div class="book__cover book__cover--img"><img src="{{ book.data.image }}" alt="{{ book.data.title }}" /></div>
         {% else %}
@@ -25,7 +29,11 @@ permalink: /books.html
         <h3 class="book__title">{{ book.data.title }}</h3>
         <p class="book__meta">{{ book.data.meta }}</p>
         <p class="book__desc">{{ book.data.description }}</p>
+      {% if book.data.href %}
+      </a>
+      {% else %}
       </article>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
