@@ -256,6 +256,8 @@ a { color: inherit; }
 }
 .link-chev:hover { border-color: var(--c-ink); }
 .link-chev::before { content: "→"; color: var(--c-accent); }
+.link-chev--after::before { content: none; }
+.link-chev--after::after { content: "→"; color: var(--c-accent); }
 
 /* ------------------ Card ------------------ */
 .card {

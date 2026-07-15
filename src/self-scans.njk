@@ -6,25 +6,26 @@ permalink: /self-scans.html
 ---
 
 <section class="hero container fade-up">
-  <p class="t-eyebrow hero__eyebrow">Reflection tools</p>
-  <h1 class="t-h1 hero__title t-balance">A gentle return to yourself</h1>
-  <p class="t-lead hero__lead t-pretty">Self-scans are slow, nervous-system aware reflections. Not assessments. Not diagnoses. Just doorways back into noticing.</p>
+  <p class="t-eyebrow hero__eyebrow">Self-scans</p>
+  <h1 class="t-h1 hero__title t-balance">A slow way to <em>listen inward.</em></h1>
+  <p class="t-lead hero__lead t-pretty">These are not quizzes. They will not score you, fix you, or tell you anything you did not already half-know. They are quiet rooms for noticing — at your own pace.</p>
+  <p class="t-body" style="margin-top: 1.5rem; opacity: .55; max-width: 540px;">Each scan takes 4–8 minutes. There are no right answers. You can stop at any moment and come back later, or never. Both are fine.</p>
 </section>
 
 <section class="section section--sunk fade-up">
   <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">Choose a scan</p>
-      <h2 class="t-h2">Six gentle entries</h2>
+      <p class="t-eyebrow">— Choose your room —</p>
+      <h2 class="t-h2">What is asking for your attention?</h2>
       <span class="rule"></span>
     </header>
     <div class="grid grid-3">
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('nervous')"><span class="frame__num">01</span><h3 class="t-h3">Nervous System</h3><p class="t-body">A soft check-in with your body's current state.</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('wholeness')"><span class="frame__num">02</span><h3 class="t-h3">Grounded Wholeness</h3><p class="t-body">What in you is left out, ignored, or pushed aside?</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('awakening')"><span class="frame__num">03</span><h3 class="t-h3">Social vs Soul Awakening</h3><p class="t-body">Tell apart three very different shifts.</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('capacity')"><span class="frame__num">04</span><h3 class="t-h3">Emotional Capacity</h3><p class="t-body">How much can you hold today, honestly?</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('burnout')"><span class="frame__num">05</span><h3 class="t-h3">Burnout &amp; Fragmentation</h3><p class="t-body">Map the parts that have been carrying too much.</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="#start" onclick="event.preventDefault();startScan('safety')"><span class="frame__num">06</span><h3 class="t-h3">Relationship Safety</h3><p class="t-body">Where do you exhale? Where do you brace?</p><span class="link-chev">Begin</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('nervous')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>5 minutes · 6 reflections</p><h3 class="t-h3">Nervous System Self-Scan</h3><p class="t-body">A gentle check-in with your current state — regulated, activated, withdrawn, or somewhere weaving between.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('burnout')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>7 minutes · 8 reflections</p><h3 class="t-h3">Burnout &amp; Fragmentation</h3><p class="t-body">Notice the small ways the self has been splitting itself across too many demands. Not to judge, only to see.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('awakening')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>6 minutes · 7 reflections</p><h3 class="t-h3">Social Awakening vs Soul Awareness</h3><p class="t-body">A subtle reflection on the difference between performing awareness and actually being changed by what you know.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('capacity')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>5 minutes · 6 reflections</p><h3 class="t-h3">Emotional Capacity Reflection</h3><p class="t-body">How much you can hold today, gently — without bypass, without performance. Just the truthful read.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('wholeness')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>8 minutes · 9 reflections</p><h3 class="t-h3">Grounded Wholeness Reflection</h3><p class="t-body">Where you currently sit on the long path back to your full, embodied, unsplit self. No verdict. Only a noticing.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
+      <a class="frame scan-frame" href="#start" onclick="event.preventDefault();startScan('safety')"><p class="scan-frame__meta"><span class="scan-frame__dot"></span>6 minutes · 6 reflections</p><h3 class="t-h3">Relationship Safety Reflection</h3><p class="t-body">A tender look at the relationships you carry — where the safety is, where the asking is, and what your nervous system already knows.</p><span class="link-chev link-chev--after scan-frame__cta">Begin softly</span></a>
     </div>
   </div>
 </section>
@@ -50,5 +51,147 @@ permalink: /self-scans.html
 </section>
 
 {% block extraScripts %}
+<style>
+/* ── Scan cards ─────────────────────────────────────────────── */
+.scan-frame__meta {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: var(--text-xs, .75rem);
+  opacity: .5;
+  letter-spacing: .04em;
+  margin: 0;
+}
+.scan-frame__dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .6;
+  flex-shrink: 0;
+}
+.scan-frame__cta {
+  margin-top: auto;
+}
+
+/* ── Reflection output ───────────────────────────────────────── */
+.scan__reflection {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.scan__reflect-label {
+  font-size: var(--text-xs, .75rem);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .5;
+  margin-bottom: var(--sp-4, 1.5rem);
+  text-align: center;
+}
+.scan__reflect-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: var(--text-2xl, 1.75rem);
+  font-weight: 400;
+  margin-bottom: var(--sp-2, .5rem);
+  line-height: 1.25;
+}
+.scan__reflect-sub {
+  font-size: var(--text-sm, .875rem);
+  opacity: .65;
+  margin-bottom: var(--sp-6, 2.25rem);
+  line-height: 1.6;
+}
+.scan__reflect-section {
+  margin-bottom: var(--sp-8, 3rem);
+}
+.scan__reflect-eyebrow {
+  font-size: var(--text-xs, .75rem);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .5;
+  margin-bottom: var(--sp-3, 1rem);
+}
+.scan__reflect-p {
+  font-size: var(--text-base, 1rem);
+  line-height: 1.75;
+  margin-bottom: var(--sp-4, 1.5rem);
+  opacity: .88;
+}
+.scan__needs {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp-3, 1rem);
+}
+.scan__need {
+  position: relative;
+  padding-left: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: var(--sp-2, .5rem);
+  font-size: var(--text-base, 1rem);
+  opacity: .88;
+}
+.scan__need::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  opacity: .5;
+}
+.scan__needs-foot {
+  font-size: var(--text-sm, .875rem);
+  opacity: .5;
+  font-style: italic;
+}
+.scan__reflect-closing {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: var(--text-lg, 1.125rem);
+  line-height: 1.7;
+  opacity: .9;
+  margin-bottom: var(--sp-2, .5rem);
+}
+.scan__reflect-sig {
+  font-size: var(--text-sm, .875rem);
+  opacity: .45;
+  margin-bottom: var(--sp-8, 3rem);
+}
+.scan__pathways-section {
+  border-top: 1px solid currentColor;
+  padding-top: var(--sp-6, 2.25rem);
+  opacity: .9;
+}
+.scan__pathways-intro {
+  font-size: var(--text-sm, .875rem);
+  opacity: .55;
+  margin-bottom: var(--sp-4, 1.5rem);
+}
+.scan__pathways {
+  display: grid;
+  gap: var(--sp-3, 1rem);
+}
+.scan__pathway {
+  display: block;
+  padding: var(--sp-4, 1.5rem);
+  border: 1px solid currentColor;
+  border-radius: var(--radius, .5rem);
+  text-decoration: none;
+  opacity: .85;
+  transition: opacity .2s;
+}
+.scan__pathway:hover { opacity: 1; }
+.scan__pathway-title {
+  display: block;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: var(--text-base, 1rem);
+  margin-bottom: var(--sp-1, .25rem);
+}
+.scan__pathway-blurb {
+  display: block;
+  font-size: var(--text-sm, .875rem);
+  opacity: .6;
+  line-height: 1.5;
+}
+@media (min-width: 600px) {
+  .scan__pathways { grid-template-columns: 1fr 1fr; }
+  .scan__pathways .scan__pathway:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+</style>
 <script src="/assets/scan.js"></script>
 {% endblock %}
