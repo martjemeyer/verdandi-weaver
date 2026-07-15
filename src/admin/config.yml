@@ -144,6 +144,22 @@ collections:
         hint: "e.g. 7 — determines which diagram is shown on the card"
         condition: { field: kind, value: frame }
 
+  - name: about
+    label: About
+    label_singular: About
+    folder: src/content/about
+    create: false
+    slug: "about"
+    fields:
+      - { label: Hero title, name: hero_title, widget: string, default: "A space for soul presence" }
+      - { label: Profile image, name: image, widget: image, required: false, hint: "Portrait photo of Sara — shown at the top of the About page" }
+      - { label: Lead text, name: lead, widget: text, hint: "The opening paragraph below the portrait" }
+      - { label: '"What this work is"', name: what_it_is, widget: text }
+      - { label: '"What it isn\'t"', name: what_it_isnt, widget: text }
+      - { label: '"How it\'s offered"', name: how_offered, widget: text }
+      - { label: Pull quote, name: pull, widget: string, required: false, hint: 'e.g. You don\'t awaken out of being human. You awaken into it.' }
+      - { label: Footer note, name: footer_note, widget: string, required: false, hint: 'e.g. Working from Sweden · in English & Swedish.' }
+
   - name: frameworks
     label: Frameworks
     label_singular: Framework

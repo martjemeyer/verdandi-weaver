@@ -4,11 +4,11 @@
     <nav>
       <ul class="nav__links">
         <li><a href="/index.html" class="{{ currentUrl | activeIf('/index.html') }}">Home</a></li>
-        <li><a href="/about.html" class="{{ currentUrl | activeIf('/about.html') }}">About</a></li>
-        <li><a href="/books.html" class="{{ currentUrl | activeIf('/books.html') }}">Books</a></li>
         <li><a href="/self-scans.html" class="{{ currentUrl | activeIf('/self-scans.html') }}">Self-Scans</a></li>
         <li><a href="/frameworks.html" class="{{ currentUrl | activeIf('/frameworks.html') }}{% if navSection == 'frameworks' %} active{% endif %}">Frameworks</a></li>
         <li><a href="/ecosystem.html" class="{{ currentUrl | activeIf('/ecosystem.html') }}">Ecosystem</a></li>
+        <li><a href="/books.html" class="{{ currentUrl | activeIf('/books.html') }}">Books</a></li>
+        <li><a href="/about.html" class="{{ currentUrl | activeIf('/about.html') }}">About</a></li>
       </ul>
     </nav>
     <div class="nav__tools">
