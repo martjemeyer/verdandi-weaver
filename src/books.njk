@@ -16,8 +16,10 @@ permalink: /books.html
     <div class="grid grid-3" style="row-gap: var(--sp-8);">
       {% set books = collections.book | sort(false, false, "data.order") %}
       {% for book in books %}
-      {% if book.data.href %}
-      <a class="book" href="{{ book.data.href }}">
+      {% if book.data.asin or book.data.href %}
+      <a class="book"
+         {% if book.data.asin %}data-asin="{{ book.data.asin }}" href="https://www.amazon.com/dp/{{ book.data.asin }}"{% else %}href="{{ book.data.href }}"{% endif %}
+         target="_blank" rel="noopener">
       {% else %}
       <article class="book">
       {% endif %}
@@ -29,7 +31,7 @@ permalink: /books.html
         <h3 class="book__title">{{ book.data.title }}</h3>
         <p class="book__meta">{{ book.data.meta }}</p>
         <p class="book__desc">{{ book.data.description }}</p>
-      {% if book.data.href %}
+      {% if book.data.asin or book.data.href %}
       </a>
       {% else %}
       </article>
@@ -45,3 +47,4 @@ permalink: /books.html
     <p class="t-meta" style="margin-top: var(--sp-5);">Audiobook editions are slowly being prepared.</p>
   </div>
 </section>
+

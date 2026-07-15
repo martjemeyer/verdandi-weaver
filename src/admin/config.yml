@@ -32,7 +32,8 @@ collections:
           - { label: "Sage (5)", value: "5" }
           - { label: "Moss (6)", value: "6" }
       - { label: Cover image, name: image, widget: image, required: false, hint: "Upload a cover image — replaces the colour cover when present" }
-      - { label: Link URL, name: href, widget: string, required: false, hint: "Where clicking the book goes — e.g. https://... or /books.html" }
+      - { label: Amazon ASIN, name: asin, widget: string, required: false, hint: "Amazon product ID — e.g. B0FX19F48V. Automatically opens the right country store for the visitor." }
+      - { label: Link URL, name: href, widget: string, required: false, hint: "Manual link — only used if no ASIN is set. e.g. https://..." }
       - { label: Order, name: order, widget: number, default: 99 }
 
   - name: articles

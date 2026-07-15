@@ -60,7 +60,9 @@ permalink: /index.html
     <div class="grid grid-3">
       {% set books = collections.book | sort(false, false, "data.order") %}
       {% for book in books | first(3) %}
-      <a class="book" href="{{ book.data.href if book.data.href else '/books.html' }}">
+      <a class="book"
+         {% if book.data.asin %}data-asin="{{ book.data.asin }}" href="https://www.amazon.com/dp/{{ book.data.asin }}"{% elif book.data.href %}href="{{ book.data.href }}"{% else %}href="/books.html"{% endif %}
+         {% if book.data.asin or book.data.href %}target="_blank" rel="noopener"{% endif %}>
         {% if book.data.image %}
         <div class="book__cover book__cover--img"><img src="{{ book.data.image }}" alt="{{ book.data.title }}" /></div>
         {% else %}

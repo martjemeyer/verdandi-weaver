@@ -167,4 +167,36 @@
     const href = location.pathname.split("/").pop() || "index.html";
     navigate(href, { pushState: false });
   });
+
+  // ----------------------------------------------------------------
+  // Amazon geo-redirect — swap data-asin links to the visitor's store
+  // ----------------------------------------------------------------
+  (function () {
+    const domains = {
+      GB: 'amazon.co.uk', AU: 'amazon.com.au', CA: 'amazon.ca',
+      DE: 'amazon.de',    AT: 'amazon.de',     CH: 'amazon.de',
+      FR: 'amazon.fr',    BE: 'amazon.fr',
+      ES: 'amazon.es',    IT: 'amazon.it',
+      JP: 'amazon.co.jp', BR: 'amazon.com.br', IN: 'amazon.in',
+      MX: 'amazon.com.mx',NL: 'amazon.nl',     PL: 'amazon.pl',
+      SE: 'amazon.se',    SG: 'amazon.sg',     AE: 'amazon.ae',
+      TR: 'amazon.com.tr',SA: 'amazon.sa',     EG: 'amazon.eg'
+    };
+    const tzMap = {
+      'Europe/Stockholm': 'SE', 'Europe/London': 'GB', 'Europe/Berlin': 'DE',
+      'Europe/Paris': 'FR', 'Europe/Amsterdam': 'NL', 'Europe/Madrid': 'ES',
+      'Europe/Rome': 'IT', 'Asia/Tokyo': 'JP', 'America/Toronto': 'CA',
+      'Australia/Sydney': 'AU', 'Asia/Kolkata': 'IN', 'America/Sao_Paulo': 'BR'
+    };
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const countryFromTz = tzMap[tz];
+      const countryFromLang = (navigator.language || '').split('-')[1] || '';
+      const country = countryFromTz || countryFromLang.toUpperCase();
+      const domain = domains[country] || 'amazon.com';
+      document.querySelectorAll('a[data-asin]').forEach(a => {
+        a.href = 'https://www.' + domain + '/dp/' + a.dataset.asin;
+      });
+    } catch (e) {}
+  })();
 })();
