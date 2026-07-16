@@ -77,5 +77,6 @@ try {
     $mail->send();
     respond($wantsJson, true, 'Thank you — your message has been sent.');
 } catch (PHPMailerException $e) {
-    respond($wantsJson, false, 'Something went wrong sending that. Please try again shortly.', 500);
+    // TEMP DEBUG — remove once delivery is confirmed working
+    respond($wantsJson, false, 'DEBUG: ' . $mail->ErrorInfo . ' | ' . $e->getMessage(), 500);
 }
