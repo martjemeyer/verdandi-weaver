@@ -15,5 +15,72 @@ permalink: /contact.html
     <p class="t-lead t-pretty">For questions about the work, collaboration inquiries, or simply to say something — write to Sara.</p>
     <span class="rule"></span>
     <p class="t-body">Working from Sweden · in English &amp; Swedish.</p>
+
+    <!--
+      Delivery: posts to /contact-handler.php, which sends mail via
+      PHP's mail() to verdandi@verdandiweaver.com (Hostinger mailbox).
+      Works once deployed to the Hostinger/cPanel host — PHP's mail()
+      isn't available on the local Eleventy dev server.
+    -->
+    <form class="form" id="contact-form" action="/contact-handler.php" method="POST" novalidate>
+      <div class="field">
+        <label for="cf-name">Name <span class="field__hint">(optional)</span></label>
+        <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="Your name" />
+      </div>
+
+      <div class="field">
+        <label for="cf-email">Email <span class="field__required">*</span></label>
+        <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="you@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="cf-message">Message <span class="field__required">*</span></label>
+        <textarea id="cf-message" name="message" rows="6" placeholder="What would you like to say?" required></textarea>
+      </div>
+
+      <!-- Honeypot field: kept off-screen, real visitors never fill it in -->
+      <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <button type="submit" class="btn btn--accent form__submit">Send message</button>
+      <p class="t-meta form__status" data-form-status role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
+
+{% block extraScripts %}
+<script>
+(function () {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+
+  var status = form.querySelector('[data-form-status]');
+  var button = form.querySelector('.form__submit');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.removeAttribute('data-state');
+    status.textContent = 'Sending…';
+    button.disabled = true;
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (res.ok) {
+        form.reset();
+        status.textContent = 'Thank you — your message has been sent.';
+        status.setAttribute('data-state', 'ok');
+      } else {
+        throw new Error('Request failed');
+      }
+    }).catch(function () {
+      status.textContent = 'Something went wrong sending that. Please try again in a moment.';
+      status.setAttribute('data-state', 'error');
+    }).finally(function () {
+      button.disabled = false;
+    });
+  });
+})();
+</script>
+{% endblock %}

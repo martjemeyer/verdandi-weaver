@@ -348,6 +348,85 @@ a { color: inherit; }
 }
 .pull em { font-style: italic; color: var(--c-accent); }
 
+/* ------------------ Form ------------------ */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  margin-top: var(--sp-2);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.field label {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--c-ink-mute);
+}
+.field__hint {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--c-ink-mute);
+}
+.field__required {
+  color: var(--c-accent);
+}
+.field input,
+.field textarea {
+  font: inherit;
+  font-size: var(--fs-base);
+  color: var(--c-ink);
+  background: var(--c-bg-elev);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3) var(--sp-4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: var(--lh-body);
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--c-ink-mute);
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c-accent) 18%, transparent);
+}
+.field input:invalid:not(:placeholder-shown),
+.field textarea:invalid:not(:placeholder-shown) {
+  border-color: color-mix(in oklab, var(--c-ink) 40%, transparent);
+}
+.form__submit {
+  align-self: flex-start;
+  margin-top: var(--sp-2);
+}
+.form__status {
+  min-height: 1.2em;
+}
+.form__status[data-state="ok"] { color: var(--c-accent); }
+.form__status[data-state="error"] { color: var(--c-warm); }
+
+/* Honeypot — hidden from real visitors, present for bots */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ------------------ Footer ------------------ */
 .foot {
   padding-block: var(--sp-7) var(--sp-6);

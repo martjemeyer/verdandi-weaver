@@ -2,6 +2,8 @@ module.exports = function (eleventyConfig) {
   // Copy static assets as-is
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.addPassthroughCopy("src/contact-handler.php");
+  eleventyConfig.addPassthroughCopy("src/vendor");
 
   eleventyConfig.addFilter("activeIf", function (href, pageUrl) {
     const norm = (u) => u.replace(/\/?$/, ".html").replace("/index.html", "/");

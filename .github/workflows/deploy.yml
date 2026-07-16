@@ -19,6 +19,22 @@ jobs:
 
       - run: npm run build
 
+      - name: Write SMTP config for contact form
+        env:
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          cat > _site/smtp-config.php <<PHP
+          <?php
+          return [
+              'host'       => 'smtp.hostinger.com',
+              'port'       => 465,
+              'encryption' => 'ssl',
+              'username'   => '${SMTP_USERNAME}',
+              'password'   => '${SMTP_PASSWORD}',
+          ];
+          PHP
+
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:

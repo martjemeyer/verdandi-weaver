@@ -2,6 +2,7 @@ node_modules/
 _site/
 .DS_Store
 old site/
+src/smtp-config.php
 
 # Explicitly track all content files (overrides any global gitignore rules)
 !src/content/**
