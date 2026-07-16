@@ -78,5 +78,7 @@ try {
     respond($wantsJson, true, 'Thank you — your message has been sent.');
 } catch (PHPMailerException $e) {
     // TEMP DEBUG — remove once delivery is confirmed working
-    respond($wantsJson, false, 'DEBUG: ' . $mail->ErrorInfo . ' | ' . $e->getMessage(), 500);
+    $u = $config['username'];
+    $plen = strlen($config['password']);
+    respond($wantsJson, false, "DEBUG: user='{$u}' passLen={$plen} | " . $mail->ErrorInfo, 500);
 }
