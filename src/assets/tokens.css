@@ -5,8 +5,13 @@
 
 :root {
   /* ---------- Type ---------- */
-  --font-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Two families, three roles: display serif for hero/page/section titles,
+     quotes and closing statements; reading sans for everything else
+     (paragraphs, nav, buttons, forms, cards, labels). See components.css
+     .t-h3/.t-eyebrow etc. for how the third "supporting title" role is
+     built from the reading font via weight/tracking, not a third family. */
+  --font-display: "Sorts Mill Goudy", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "JetBrains Mono", Menlo, monospace;
 
   /* Type scale (clamp = fluid) */

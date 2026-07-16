@@ -1,14 +1,14 @@
 ---
 layout: layouts/base.njk
 title: Verdandi Weaver — Returning to grounded wholeness
-description: A grounded body of work exploring nervous systems, awakening, emotional ecology, and the return to human wholeness.
+description: A calm body of work exploring how we become more whole, not by rising above our humanity, but by returning to the body, the heart, relationship, and the living world.
 permalink: /index.html
 ---
 
 <section class="hero container fade-up">
   <p class="t-eyebrow hero__eyebrow">Verdandi Weaver · A space for soul presence</p>
   <h1 class="t-h1 hero__title t-balance">Returning to grounded wholeness</h1>
-  <p class="t-lead hero__lead t-pretty">A calm body of work exploring nervous systems, awakening, emotional ecology, interconnectedness, and the return to human wholeness.</p>
+  <p class="t-lead hero__lead t-pretty">A calm body of work exploring how we become more whole, not by rising above our humanity, but by returning to the body, the heart, relationship, and the living world.</p>
 
   <div class="orb" aria-hidden="true" style="margin-top: var(--sp-7);">
     <div class="orb__ring"></div>
@@ -28,12 +28,17 @@ permalink: /index.html
   </div>
 </section>
 
+<section class="section compact fade-up">
+  <div class="container narrow center-text">
+    <p class="t-lead t-pretty">This work is for people who feel deeply, question inherited ways of living, or sense that healing, spirituality, society, and the living world cannot be understood separately.</p>
+  </div>
+</section>
+
 <section class="section section--sunk fade-up">
   <div class="container">
     <header class="section-header">
       <p class="t-eyebrow">The core idea</p>
       <h2 class="t-h2 t-balance">A human being is a living system, growing inside living systems</h2>
-      <p class="t-lead t-pretty">Soul, mind, nervous system, body, identity, relationships — rooted in soil, water, ancestry; reaching into air and light.</p>
       <span class="rule"></span>
     </header>
     <div class="grid grid-2" style="align-items:center; gap: var(--sp-8);">
@@ -53,106 +58,91 @@ permalink: /index.html
 <section class="section fade-up">
   <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">A library</p>
-      <h2 class="t-h2">Books</h2>
-      <p class="t-lead t-pretty">Slow reading for grounded awakening — being human, belonging, and the long return to oneself.</p>
+      <p class="t-eyebrow">Ways in</p>
+      <h2 class="t-h2 t-balance">Choose a doorway</h2>
     </header>
     <div class="grid grid-3">
-      {% set books = collections.book | sort(false, false, "data.order") %}
-      {% for book in books | first(3) %}
-      <a class="book"
-         {% if book.data.asin %}data-asin="{{ book.data.asin }}" href="https://www.amazon.com/dp/{{ book.data.asin }}"{% elif book.data.href %}href="{{ book.data.href }}"{% else %}href="/books.html"{% endif %}
-         {% if book.data.asin or book.data.href %}target="_blank" rel="noopener"{% endif %}>
-        {% if book.data.image %}
-        <div class="book__cover book__cover--img"><img src="{{ book.data.image }}" alt="{{ book.data.title }}" /></div>
-        {% else %}
-        <div class="book__cover book__cover--{{ book.data.cover }}">{{ book.data.title }}</div>
-        {% endif %}
-        <span class="book__title">{{ book.data.title }}</span>
-        <span class="book__meta">{{ book.data.meta }}</span>
-      </a>
-      {% endfor %}
-    </div>
-    <div class="center-text" style="margin-top: var(--sp-7);">
-      <a class="btn btn--ghost" href="/books.html">See all {{ collections.book | length }} titles →</a>
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">A library</p>
+          <h3 class="t-h3">Books</h3>
+          <p class="t-body t-pretty">Slow reading for grounded awakening, being human, belonging, and the long return to oneself.</p>
+          <a class="btn btn--ghost" href="/books.html" style="margin-top:auto;">Explore the books</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">Reflection tools</p>
+          <h3 class="t-h3">Self-Scans</h3>
+          <p class="t-body t-pretty">Gentle reflection tools for noticing what is happening within you. They do not diagnose, score, or tell you who you are.</p>
+          <a class="btn btn--ghost" href="/self-scans.html" style="margin-top:auto;">Begin a self-scan</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">Maps for being human</p>
+          <h3 class="t-h3">Frameworks</h3>
+          <p class="t-body t-pretty">Visual maps for understanding the larger patterns shaping inner life, relationships, culture, and the world around us.</p>
+          <a class="btn btn--ghost" href="/frameworks.html" style="margin-top:auto;">Explore the frameworks</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="section compact section--sunk fade-up">
+<section class="section section--sunk fade-up">
   <div class="container narrow center-text">
-    <p class="pull t-balance">You do not awaken out of being human.<br/><em>You awaken into it.</em></p>
+    <p class="t-eyebrow">Essays &amp; talks</p>
+    <h2 class="t-h2 t-balance">Reflections and conversations</h2>
+    <p class="t-lead t-pretty" style="margin-top: var(--sp-4);">Essays, short films, and longer talks about nervous systems, awakening, emotional ecology, society, and the work of becoming more human.</p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
+      <a class="btn btn--ghost" href="/articles.html">Read reflections</a>
+      <a class="btn btn--ghost" href="/videos.html">Watch videos</a>
+    </div>
   </div>
 </section>
 
 <section class="section fade-up">
   <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">Reflection tools</p>
-      <h2 class="t-h2 t-balance">Self-scans</h2>
-      <p class="t-lead t-pretty">Slow, nervous-system aware reflection. Not clinical quizzes — gentle returns to yourself.</p>
+      <p class="t-eyebrow">How it fits together</p>
+      <h2 class="t-h2 t-balance">A living body of work</h2>
     </header>
-    <div class="grid grid-3">
-      <a class="frame" href="/self-scans.html"><span class="frame__num">01</span><h3 class="t-h3">Nervous System Self-Scan</h3><p class="t-body">A soft check-in with your body's current state.</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="/self-scans.html"><span class="frame__num">02</span><h3 class="t-h3">Grounded Wholeness</h3><p class="t-body">Where in you is left out, ignored, or pushed aside?</p><span class="link-chev">Begin</span></a>
-      <a class="frame" href="/self-scans.html"><span class="frame__num">03</span><h3 class="t-h3">Burnout &amp; Fragmentation</h3><p class="t-body">Map the parts that have been carrying too much.</p><span class="link-chev">Begin</span></a>
+    <div class="stack center-text" style="max-width: 480px; margin-inline: auto;">
+      <p class="t-body">The books hold the deeper journeys.</p>
+      <p class="t-body">The frameworks offer orientation.</p>
+      <p class="t-body">The self-scans create places to pause.</p>
+      <p class="t-body">The guides help bring reflection into ordinary life.</p>
+      <p class="t-body">The videos open the conversation outward.</p>
+    </div>
+    <div class="eco" style="margin-top: var(--sp-6);">
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Books &amp; writings</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Self-scans</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Frameworks</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Guides &amp; PDFs</h4><p class="t-meta" style="font-style: italic;">Growing next</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Videos</h4><p class="t-meta" style="font-style: italic;">Growing next</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Future spaces</h4><p class="t-meta" style="font-style: italic;">Coming later</p></div>
+    </div>
+    <div class="center-text" style="margin-top: var(--sp-7);">
+      <a class="btn btn--ghost" href="/ecosystem.html">Explore the full ecosystem →</a>
     </div>
   </div>
 </section>
 
 <section class="section section--sunk fade-up">
-  <div class="container">
-    <header class="section-header">
-      <p class="t-eyebrow">Maps for being human</p>
-      <h2 class="t-h2">Frameworks</h2>
-      <p class="t-lead t-pretty">Visual explanations of the larger patterns — for orientation, not prescription.</p>
-    </header>
-    <div class="grid grid-3">
-      <article class="frame"><div class="frame__diagram"><svg viewBox="0 0 200 130" width="100%" height="100%" aria-hidden="true"><circle cx="60" cy="65" r="36" fill="none" stroke="var(--c-accent)" stroke-width="1"/><circle cx="100" cy="65" r="36" fill="none" stroke="var(--c-blue)" stroke-width="1"/><circle cx="140" cy="65" r="36" fill="none" stroke="var(--c-warm)" stroke-width="1"/></svg></div><h3 class="t-h3">Three Layers of Awareness</h3><p class="t-body">Social, soul, human. Three different things — often confused.</p></article>
-      <article class="frame"><div class="frame__diagram"><svg viewBox="0 0 200 130" width="100%" height="100%" aria-hidden="true"><line x1="20" y1="92" x2="180" y2="92" stroke="var(--c-line)" stroke-width="0.6" opacity="0.7"/><g fill="none" stroke="var(--c-warm)" stroke-linecap="round"><g stroke-width="1"><path d="M 100 92 C 96 102, 102 114, 106 124"/><path d="M 96 93 C 86 100, 76 108, 64 114"/><path d="M 104 93 C 114 100, 124 108, 136 114"/></g><path d="M 96 92 C 94 78, 95 64, 98 50 L 102 50 C 105 64, 106 78, 104 92 Z" fill="var(--c-warm)" stroke="none"/><g stroke-width="1.4"><path d="M 98 52 C 88 42, 76 36, 64 34"/><path d="M 100 50 C 100 38, 102 26, 106 18"/><path d="M 102 52 C 112 42, 124 36, 138 34"/></g></g><g fill="var(--c-accent-soft)"><ellipse cx="64" cy="32" rx="18" ry="11"/><ellipse cx="104" cy="20" rx="16" ry="10"/><ellipse cx="140" cy="34" rx="18" ry="11"/></g></svg></div><h3 class="t-h3">The Living System</h3><p class="t-body">Soul · nervous system · body · mind · relationships · world.</p></article>
-      <article class="frame"><div class="frame__diagram"><svg viewBox="0 0 200 130" width="100%" height="100%" aria-hidden="true"><g fill="none" stroke="var(--c-accent)" stroke-width="1"><path d="M20,65 Q60,30 100,65 T180,65"/><path d="M20,80 Q60,45 100,80 T180,80" opacity="0.6"/><path d="M20,50 Q60,15 100,50 T180,50" opacity="0.6"/></g></svg></div><h3 class="t-h3">The Ripple Effect</h3><p class="t-body">Everything affects everything. What we tend to, tends to us back.</p></article>
-    </div>
-    <div class="center-text" style="margin-top: var(--sp-7);">
-      <a class="btn btn--ghost" href="/frameworks.html">All frameworks →</a>
-    </div>
-  </div>
-</section>
-
-<section class="section fade-up">
-  <div class="container">
-    <div class="grid grid-2" style="gap: var(--sp-7);">
-      <article class="card card--quiet"><div class="card__body"><p class="t-eyebrow">Reading</p><h3 class="t-h2" style="font-size: var(--fs-xl)">Articles &amp; reflections</h3><p class="t-body t-pretty">Spacious essays for slow reading. Nervous systems, awakening, emotional ecology, and the long way home.</p><a class="btn btn--ghost" href="/articles.html" style="align-self: flex-start; margin-top: var(--sp-3);">Open the library →</a></div></article>
-      <article class="card card--quiet"><div class="card__body"><p class="t-eyebrow">Watching</p><h3 class="t-h2" style="font-size: var(--fs-xl)">Videos &amp; quiet talks</h3><p class="t-body t-pretty">Short and long-form reflections on grounded spirituality, relational healing, and collective psychology.</p><a class="btn btn--ghost" href="/videos.html" style="align-self: flex-start; margin-top: var(--sp-3);">Watch →</a></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="section section--sunk fade-up">
-  <div class="container">
-    <header class="section-header">
-      <p class="t-eyebrow">A living ecosystem</p>
-      <h2 class="t-h2 t-balance">All of it is one body of work</h2>
-      <p class="t-lead t-pretty">Books, scans, frameworks, future spaces — interconnected, breathing together.</p>
-    </header>
-    <div class="eco">
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Books &amp; writings</h4><p class="t-body">The slow, written backbone.</p></div>
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Self-scans</h4><p class="t-body">Reflective entry points.</p></div>
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Frameworks</h4><p class="t-body">Visual orientation maps.</p></div>
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Guides &amp; PDFs</h4><p class="t-body">Practical companions.</p></div>
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Videos</h4><p class="t-body">Quiet, embodied talks.</p></div>
-      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Future spaces</h4><p class="t-body">Circles, courses, community.</p></div>
-    </div>
-    <div class="center-text" style="margin-top: var(--sp-7);">
-      <a class="btn btn--ghost" href="/ecosystem.html">See the full ecosystem →</a>
-    </div>
-  </div>
-</section>
-
-<section class="section fade-up">
   <div class="container narrow center-text">
     <p class="t-eyebrow">About the work</p>
     <span class="rule"></span>
-    <p class="t-lead t-pretty">Verdandi Weaver is the body of work of <strong>Sara Leidelmeijer</strong> — a writer and systemic thinker building bridges between science, spirit, nervous systems, and relational life.</p>
+    <p class="t-lead t-pretty">Verdandi Weaver is the body of work of <strong>Sara Leidelmeijer</strong>, a writer and systemic thinker exploring how nervous systems, inner life, relationships, culture, and the living world continually shape one another.</p>
+    <p class="t-body t-pretty">Her work brings spiritual questions back into ordinary human life, where insight must eventually become relationship, choice, care, and the worlds we build together.</p>
     <a class="btn btn--ghost" href="/about.html" style="margin-top: var(--sp-5);">Read more →</a>
+  </div>
+</section>
+
+<section class="section tall fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">You do not awaken out of being human.<br/><em>You awaken more deeply into it.</em></p>
+    <p class="t-lead t-pretty" style="margin-top: var(--sp-5);">Begin wherever something in you feels quietly recognized.</p>
+    <a class="btn" href="/ecosystem.html" style="margin-top: var(--sp-6);">Explore the work</a>
   </div>
 </section>
