@@ -5,7 +5,7 @@
 // FTP upload. For local testing, copy this file to smtp-config.php
 // and fill in real values (it will stay untracked).
 return [
-    'host'       => 'smtp.hostinger.com',
+    'host'       => 'smtp.titan.email', // Hostinger's default mailboxes are Titan Mail under the hood
     'port'       => 465,
     'encryption' => 'ssl', // 'ssl' for port 465, 'tls' for port 587
     'username'   => 'verdandi@verdandiweaver.com',
