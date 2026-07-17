@@ -1,6 +1,6 @@
 ---
 hero_title: A space for grounded wholeness
-image: ""
+image: /assets/uploads/487977561_10227810407626770_2696505321929418567_n.jpg
 lead: >-
   Verdandi Weaver is a living body of work about what it means to become more
   fully human.
