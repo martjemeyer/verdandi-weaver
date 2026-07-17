@@ -4,12 +4,12 @@
    Reusable UI primitives. Pair with tokens.css.
    ========================================================= */
 
-/* Cross-document view transitions — keeps the nav visually locked while
-   only the page content fades between pages (Chrome 111+, progressive enhancement) */
-@view-transition { navigation: auto; }
-
-/* Old page disappears instantly so the two snapshots never overlap —
-   overlapping at fractional opacity causes a darker composite flash */
+/* Same-document view-transition fade for the SPA-driven content swap in
+   app.js (document.startViewTransition() there, not the CSS
+   `@view-transition` at-rule — deliberately not used: Chromium has a
+   reproducible bug where a native cross-document transition can leave
+   document.startViewTransition() permanently unresolved afterwards for
+   the rest of the tab, silently breaking all further SPA navigation). */
 ::view-transition-old(root) { animation: none; }
 ::view-transition-new(root) { animation: vw-page-in 0.18s ease both; }
 @keyframes vw-page-in { from { opacity: 0; } to { opacity: 1; } }

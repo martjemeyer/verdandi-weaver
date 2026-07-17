@@ -28,13 +28,39 @@
   });
 
   // ----------------------------------------------------------------
+  // Path normalization — mirrors the "activeIf" Nunjucks filter so
+  // client-side nav state agrees with the server-rendered state.
+  // Trailing-slash directory URLs (e.g. /rethinking-society/) must
+  // NOT collapse to the same value as "/" (the homepage) the way a
+  // naive split("/").pop() would.
+  // ----------------------------------------------------------------
+  function normPath(u) {
+    const path = u.split("?")[0].split("#")[0].replace(/%20/g, " ");
+    if (path === "/" || path === "" || path === "/index.html") return "/";
+    let v = path.endsWith("/") ? path.slice(0, -1) : path;
+    if (!v.endsWith(".html")) v += ".html";
+    return v.replace(/\/index\.html$/, "/");
+  }
+
+  // ----------------------------------------------------------------
   // Active nav link — updated on every navigation
+  // A link matches by exact normalized path OR — for links carrying
+  // data-section — whenever the current page's own data-nav-section
+  // (set on <body>, mirroring the "navSection" front matter used
+  // server-side) equals that value. Both checks apply independently
+  // (a union, not either/or) exactly like the server-side Nunjucks:
+  // the landing page itself (e.g. /frameworks.html) matches by exact
+  // path, while its sub-pages (e.g. /framework-01.html) match only via
+  // the section, and /rethinking-society/ pages match via the section
+  // since none of their nested paths equal the section link's own href.
   // ----------------------------------------------------------------
   function updateActiveLinks(href) {
-    const file = (href.split("/").pop() || "index.html").replace(/%20/g, " ");
+    const current = normPath(href);
+    const section = document.body.dataset.navSection || "";
     document.querySelectorAll(".nav__links a").forEach((a) => {
-      const linkFile = (a.getAttribute("href").split("/").pop() || "index.html");
-      const match = linkFile === file;
+      const sectionMatch = a.dataset.section && a.dataset.section === section;
+      const pathMatch = normPath(a.getAttribute("href")) === current;
+      const match = sectionMatch || pathMatch;
       a.classList.toggle("active", match);
       a.ariaCurrent = match ? "page" : null;
     });
@@ -93,6 +119,7 @@
 
     function swap() {
       document.title = newDoc.title;
+      document.body.dataset.navSection = newDoc.body.dataset.navSection || "";
 
       // Remove every body child except the nav and this script tag
       // Also remove any page-specific external scripts loaded by the previous page
@@ -111,7 +138,9 @@
       document.body.insertBefore(frag, appScript || null);
 
       if (pushState) history.pushState({}, "", href);
-      window.scrollTo(0, 0);
+      const hash = href.split("#")[1];
+      const target = hash && document.getElementById(hash);
+      if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
       openNav(false);
       updateActiveLinks(href);
       applyAmazonLinks();
@@ -148,15 +177,24 @@
     if (!link) return;
 
     const href = link.getAttribute("href");
-    // Ignore: external URLs, anchor-only, special protocols, non-html files
+    // Ignore: external URLs, anchor-only, special protocols, and anything
+    // not a same-site page reference (internal pages are either "*.html"
+    // or a clean "/section/sub-path/" directory URL, each optionally
+    // followed by a "#fragment")
+    const hrefPath = href ? href.split("#")[0] : "";
     if (!href ||
         /^(https?:|\/\/|#|mailto:|tel:)/.test(href) ||
-        !href.endsWith(".html")) return;
+        !(hrefPath.endsWith(".html") || hrefPath.endsWith("/"))) return;
 
-    // Already on this page — swallow the click silently
-    const currentFile = location.pathname.split("/").pop() || "index.html";
-    const hrefFile = href.split("/").pop();
-    if (hrefFile === currentFile) { e.preventDefault(); return; }
+    // Already on this page — scroll to the fragment if there is one,
+    // otherwise swallow the click silently (nothing to navigate to)
+    if (normPath(href) === normPath(location.pathname)) {
+      e.preventDefault();
+      const hash = href.split("#")[1];
+      const target = hash && document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
 
     e.preventDefault();
     openNav(false); // close mobile nav immediately, before the fetch
@@ -165,8 +203,7 @@
 
   // Restore content on browser back / forward
   window.addEventListener("popstate", () => {
-    const href = location.pathname.split("/").pop() || "index.html";
-    navigate(href, { pushState: false });
+    navigate(location.pathname + location.hash, { pushState: false });
   });
 
   // ----------------------------------------------------------------

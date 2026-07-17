@@ -6,7 +6,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/vendor");
 
   eleventyConfig.addFilter("activeIf", function (href, pageUrl) {
-    const norm = (u) => u.replace(/\/?$/, ".html").replace("/index.html", "/");
+    function norm(u) {
+      if (u === "/" || u === "" || u === "/index.html") return "/";
+      let v = u.endsWith("/") ? u.slice(0, -1) : u;
+      if (!v.endsWith(".html")) v += ".html";
+      return v.replace(/\/index\.html$/, "/");
+    }
     return norm(pageUrl) === norm(href) ? "active" : "";
   });
 

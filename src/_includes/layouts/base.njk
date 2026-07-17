@@ -23,7 +23,7 @@ html[data-theme="dark"] { background: oklch(18%   0.014 160); }
 <link rel="stylesheet" href="/assets/tokens.css" />
 <link rel="stylesheet" href="/assets/components.css" />
 </head>
-<body>
+<body data-nav-section="{{ navSection or '' }}">
 
 {% set currentUrl = page.url %}
 {% include "nav.njk" %}
