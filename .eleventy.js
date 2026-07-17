@@ -27,6 +27,25 @@ module.exports = function (eleventyConfig) {
     return Array.isArray(arr) && key ? arr.find((item) => item.data.translationKey === key) : undefined;
   });
 
+  // Minimal date formatter (no date library in this project). Front-matter
+  // "YYYY-MM-DD" values are parsed as UTC midnight by the YAML/front-matter
+  // parser, so read the UTC components back out — otherwise the displayed
+  // day could shift by one depending on the machine's local timezone.
+  const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  eleventyConfig.addFilter("date", function (input, format) {
+    if (!input) return "";
+    const d = new Date(input);
+    if (isNaN(d.getTime())) return "";
+    const pad = (n) => String(n).padStart(2, "0");
+    const tokens = {
+      YYYY: d.getUTCFullYear(),
+      MMMM: MONTH_NAMES[d.getUTCMonth()],
+      MM: pad(d.getUTCMonth() + 1),
+      DD: pad(d.getUTCDate()),
+    };
+    return (format || "YYYY-MM-DD").replace(/YYYY|MMMM|MM|DD/g, (m) => tokens[m]);
+  });
+
   eleventyConfig.addFilter("youtubeId", function (url) {
     if (!url) return "";
     const m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);

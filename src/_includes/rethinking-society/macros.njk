@@ -89,7 +89,7 @@
 <article class="rs-ep-section" id="{{ anchorPrefix }}-{{ ep.data.number }}">
   <div class="rs-ep-section__media">
     {% if ep.data.videoUrl %}
-      <div class="rs-video rs-yt-facade" data-yt-facade data-embed-src="{{ ep.data.videoUrl }}" role="button" tabindex="0" aria-label="{{ 'Play video' if lang == 'en' else 'Spela video' }}: {{ ep.data.title }}">
+      <div class="rs-video rs-yt-facade" data-yt-facade data-embed-src="https://www.youtube-nocookie.com/embed/{{ ep.data.videoUrl | youtubeId }}" role="button" tabindex="0" aria-label="{{ 'Play video' if lang == 'en' else 'Spela video' }}: {{ ep.data.title }}">
         {% if ep.data.thumbnail %}
           <img src="{{ ep.data.thumbnail }}" alt="" loading="lazy" />
         {% else %}
@@ -106,14 +106,51 @@
   <div class="rs-ep-section__body">
     <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
     <h2 class="t-h3">{{ ep.data.title }}</h2>
-    <p class="t-lead t-pretty">{{ ep.data.question }}</p>
-    {% if ep.data.short_description %}<p class="t-body t-pretty">{{ ep.data.short_description }}</p>{% endif %}
+
+    {% if ep.data.runtime or ep.data.date %}
+    <p class="t-meta" style="margin-top: -0.25rem;">
+      {%- if ep.data.runtime %}{{ ep.data.runtime }}{% endif -%}
+      {%- if ep.data.runtime and ep.data.date %} · {% endif -%}
+      {%- if ep.data.date %}{{ ep.data.date | date("DD MMMM YYYY") }}{% endif -%}
+    </p>
+    {% endif %}
+
+    <p class="t-lead t-pretty rs-ep-section__spaced">{{ ep.data.question }}</p>
+
+    {% if ep.data.key_questions and ep.data.key_questions.length %}
+    <ul class="rs-ep-section__list rs-ep-section__spaced">
+      {% for q in ep.data.key_questions %}<li class="t-body t-pretty">{{ q }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if ep.data.short_description %}<p class="t-body t-pretty rs-ep-section__spaced">{{ ep.data.short_description }}</p>{% endif %}
+
     {% if ep.data.topics and ep.data.topics.length %}
-    <div class="rs-tags">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    <div class="rs-tags rs-ep-section__spaced">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    {% endif %}
+
+    {% if ep.data.themes and ep.data.themes.length %}
+    <div class="rs-ep-section__spaced">
+      <p class="t-eyebrow">{{ 'Main themes' if lang == 'en' else 'Huvudteman' }}</p>
+      <ul class="rs-ep-section__list" style="margin-top: var(--sp-2);">
+        {% for theme in ep.data.themes %}<li class="t-body">{{ theme.theme }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if ep.data.quotes and ep.data.quotes.length %}
+    <div class="rs-ep-section__quotes rs-ep-section__spaced">
+      {% for q in ep.data.quotes %}
+      <blockquote class="rs-ep-section__quote">
+        <p class="t-quote">{{ q.text }}</p>
+        {% if q.mark %}<p class="t-meta">{{ q.mark }}</p>{% endif %}
+      </blockquote>
+      {% endfor %}
+    </div>
     {% endif %}
 
     {% if ep.data.resources and ep.data.resources.length %}
-    <div class="rs-ep-section__resources">
+    <div class="rs-ep-section__resources rs-ep-section__spaced">
       {% for r in ep.data.resources %}
         {% if r.url %}
           <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ resourceLabel(r.type, lang) }}</a>
@@ -124,14 +161,14 @@
     </div>
     {% endif %}
 
-    <p class="t-body t-pretty" style="font-style:italic;">
+    <p class="t-body t-pretty rs-ep-section__spaced" style="font-style:italic;">
       {% if ep.data.cta %}{{ ep.data.cta }}
       {% elif lang == 'en' %}Watch, then bring the question into a conversation.
       {% else %}Titta, och ta sedan med frågan in i ett samtal.
       {% endif %}
     </p>
 
-    <div class="rs-ep-section__actions">
+    <div class="rs-ep-section__actions rs-ep-section__spaced">
       <button class="btn btn--ghost" type="button" data-copy-link data-copy-href="#{{ anchorPrefix }}-{{ ep.data.number }}" data-copied-label="{{ 'Link copied' if lang == 'en' else 'Länk kopierad' }}">{{ 'Copy link' if lang == 'en' else 'Kopiera länk' }}</button>
       {% if translationUrl %}<a class="link-chev" href="{{ translationUrl }}">{{ translationLabel }}</a>{% endif %}
     </div>

@@ -6,6 +6,7 @@ displayOrder: 1
 slug: avsnitt-1
 title: Ett land är inte en ekonomi med människor som bihang
 question: Tjänar ekonomin människolivet, eller förväntas människolivet tjäna ekonomin?
+key_questions: []
 short_description: Vad händer när ekonomin blir viktigare än människorna den skapades för att tjäna? Avsnitt 1 bjuder in oss att sätta människolivet tillbaka i centrum och tänka om hur vi mäter ett framgångsrikt samhälle.
 topics:
   - Ekonomi

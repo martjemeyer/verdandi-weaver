@@ -44,7 +44,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, default: "2026-07-18", hint: "Defaults to today — the date picker's year scroller starts wherever this default is set, so keep it current" }
       - { label: Description, name: description, widget: text }
       - { label: Body, name: body, widget: markdown }
 
@@ -211,7 +211,12 @@ collections:
       - { label: Episode number, name: number, widget: number, hint: "Step 3 — e.g. 1" }
       - { label: Display order, name: displayOrder, widget: number, required: false, hint: "Optional — only needed if you want the display order to differ from the episode number" }
       - { label: Title, name: title, widget: string, hint: "Step 4" }
-      - { label: Central question, name: question, widget: text, hint: "Step 4" }
+      - { label: Central question, name: question, widget: text, hint: "Step 4 — just the ONE main question. Put any supporting questions in 'Key questions' below, not here." }
+      - label: Key questions
+        name: key_questions
+        widget: list
+        required: false
+        hint: "Optional — supporting questions, each as its own line (not one paragraph). They'll show as a spaced-out list on the page."
       - { label: Short description, name: short_description, widget: text, required: false, hint: "Step 5 — a sentence or two shown under the question. Leave empty until written." }
       - label: Topic tags
         name: topics
@@ -261,7 +266,7 @@ collections:
         fields:
           - { label: Label, name: label, widget: string }
           - { label: URL, name: url, widget: string }
-      - { label: Publication date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, required: false, hint: "Leave empty until the episode is actually published" }
+      - { label: Publication date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, required: false, default: "2026-07-18", hint: "Defaults to today — change it to the real publish date, or clear it if not published yet" }
       - { label: Runtime, name: runtime, widget: string, required: false, hint: "e.g. 18 min — leave empty if unknown" }
       - label: Main themes
         name: themes
@@ -269,13 +274,14 @@ collections:
         required: false
         fields:
           - { label: Theme, name: theme, widget: string }
-      - label: Key quotations
+      - label: Key quotations / chapter markers
         name: quotes
         widget: list
         required: false
+        hint: "One quote or chapter marker PER entry — click 'Add' below for each new one. Do not paste a whole list of timestamps into a single Timestamp field; each timestamp needs its own entry so they display with proper spacing."
         fields:
-          - { label: Quote, name: text, widget: text }
-          - { label: Timestamp / chapter, name: mark, widget: string, required: false }
+          - { label: Quote or chapter title, name: text, widget: text }
+          - { label: Timestamp, name: mark, widget: string, required: false, hint: "e.g. 01:08 — just this one timestamp" }
 
   - name: rethinking-events
     label: "📅 Rethinking Society — Gather Online"
@@ -289,7 +295,7 @@ collections:
         name: event_type
         widget: select
         options: ["Episode Conversation", "Open Rethinking Society Circle", "Live Q&A", "Facilitator Gathering", "Special Topic Event"]
-      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, default: "2026-07-18" }
       - { label: Time, name: time, widget: string, hint: "e.g. 19:00" }
       - { label: Time zone, name: timezone, widget: string, hint: "e.g. CET" }
       - { label: Online platform, name: platform, widget: string, hint: "e.g. Zoom" }

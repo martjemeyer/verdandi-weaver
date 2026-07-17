@@ -1844,6 +1844,20 @@ strong, b { font-weight: 600; }
 .rs-ep-section__resources { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-2); }
 .rs-ep-section__actions { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center; margin-top: var(--sp-2); }
 
+/* Extra breathing room between distinct content blocks within a section
+   (question / key questions / description / tags / themes / quotes /
+   resources / cta / actions) — on top of the body's own flex gap, so it
+   reads as separate ideas rather than one dense wall of text. */
+.rs-ep-section__spaced { margin-top: var(--sp-6) !important; }
+
+.rs-ep-section__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.rs-ep-section__list li { padding-left: 1.2em; position: relative; }
+.rs-ep-section__list li::before { content: "—"; position: absolute; left: 0; color: var(--c-ink-mute); }
+
+.rs-ep-section__quotes { display: flex; flex-direction: column; gap: var(--sp-5); }
+.rs-ep-section__quote { margin: 0; padding-left: var(--sp-4); border-left: 1px solid var(--c-line); }
+.rs-ep-section__quote .t-meta { margin-top: var(--sp-2); }
+
 /* YouTube click-to-load facade — avoids loading every embed up front */
 .rs-yt-facade { cursor: pointer; position: relative; }
 .rs-yt-facade img { width: 100%; height: 100%; object-fit: cover; }

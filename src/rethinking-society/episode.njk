@@ -31,7 +31,7 @@ eleventyComputed:
 
     <div class="rs-video">
       {% if ep.data.videoUrl %}
-        <iframe src="{{ ep.data.videoUrl }}" title="{{ ep.data.title }}" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/{{ ep.data.videoUrl | youtubeId }}" title="{{ ep.data.title }}" allowfullscreen loading="lazy"></iframe>
       {% else %}
         <div class="placeholder" style="height:100%; min-height:0;">Video coming soon</div>
       {% endif %}
@@ -49,6 +49,12 @@ eleventyComputed:
     {% endif %}
 
     <span class="rule"></span>
+
+    {% if ep.data.key_questions and ep.data.key_questions.length %}
+    <ul class="rs-ep-section__list">
+      {% for q in ep.data.key_questions %}<li class="t-body t-pretty">{{ q }}</li>{% endfor %}
+    </ul>
+    {% endif %}
 
     {% if ep.data.short_description %}
     <p class="t-lead t-pretty center-text">{{ ep.data.short_description }}</p>
