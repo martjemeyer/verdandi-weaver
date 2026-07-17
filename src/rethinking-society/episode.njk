@@ -74,12 +74,9 @@ eleventyComputed:
     {% if ep.data.quotes and ep.data.quotes.length %}
     <div>
       <h2 class="t-h3">Key quotations</h2>
-      <div class="stack-lg" style="margin-top: var(--sp-4);">
+      <div class="rs-ep-section__quotes" style="margin-top: var(--sp-4);">
         {% for q in ep.data.quotes %}
-        <blockquote style="border-left: 1px solid var(--c-line); padding-left: var(--sp-4); margin: 0;">
-          <p class="t-quote">{{ q.text }}</p>
-          {% if q.mark %}<p class="t-meta" style="margin-top: var(--sp-2);">{{ q.mark }}</p>{% endif %}
-        </blockquote>
+        <p class="rs-ep-section__quote-line">{% if q.mark %}<span class="rs-ep-section__quote-mark">{{ q.mark }}</span>{% endif %}<em>{{ q.text }}</em></p>
         {% endfor %}
       </div>
     </div>

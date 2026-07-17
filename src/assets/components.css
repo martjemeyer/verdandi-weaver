@@ -1854,9 +1854,25 @@ strong, b { font-weight: 600; }
 .rs-ep-section__list li { padding-left: 1.2em; position: relative; }
 .rs-ep-section__list li::before { content: "—"; position: absolute; left: 0; color: var(--c-ink-mute); }
 
-.rs-ep-section__quotes { display: flex; flex-direction: column; gap: var(--sp-5); }
-.rs-ep-section__quote { margin: 0; padding-left: var(--sp-4); border-left: 1px solid var(--c-line); }
-.rs-ep-section__quote .t-meta { margin-top: var(--sp-2); }
+/* Compact chapter/quote list — timestamp then italic text, one tight line each */
+.rs-ep-section__quotes { display: flex; flex-direction: column; }
+.rs-ep-section__quote-line {
+  margin: 0;
+  padding-block: 3px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--c-ink-soft);
+}
+.rs-ep-section__quote-line em { font-style: italic; }
+.rs-ep-section__quote-mark {
+  display: inline-block;
+  min-width: 3.4em;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--c-ink-mute);
+  font-style: normal;
+  margin-right: var(--sp-3);
+}
 
 /* YouTube click-to-load facade — avoids loading every embed up front */
 .rs-yt-facade { cursor: pointer; position: relative; }

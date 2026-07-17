@@ -141,10 +141,7 @@
     {% if ep.data.quotes and ep.data.quotes.length %}
     <div class="rs-ep-section__quotes rs-ep-section__spaced">
       {% for q in ep.data.quotes %}
-      <blockquote class="rs-ep-section__quote">
-        <p class="t-quote">{{ q.text }}</p>
-        {% if q.mark %}<p class="t-meta">{{ q.mark }}</p>{% endif %}
-      </blockquote>
+      <p class="rs-ep-section__quote-line">{% if q.mark %}<span class="rs-ep-section__quote-mark">{{ q.mark }}</span>{% endif %}<em>{{ q.text }}</em></p>
       {% endfor %}
     </div>
     {% endif %}
