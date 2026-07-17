@@ -1,0 +1,123 @@
+---
+layout: layouts/base.njk
+title: Rethinking Society | Verdandi Weaver
+description: A growing series of films, conversations, reflection tools, and online gatherings for people who want to question what we have accepted as normal and imagine societies built more consciously around human life, care, dignity, and the living world.
+permalink: /rethinking-society/index.html
+navSection: rethinking-society
+---
+{% from "rethinking-society/macros.njk" import subnav, episodeCard %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society</p>
+  <h1 class="t-h1 hero__title t-balance">Rethinking Society</h1>
+  <p class="t-lead hero__lead t-pretty">A growing series of films, conversations, reflection tools, and online gatherings for people who want to question what we have accepted as normal and imagine societies built more consciously around human life, care, dignity, and the living world.</p>
+  <p class="pull t-balance" style="margin-top: var(--sp-7); font-size: var(--fs-xl);">What if society were designed around human life, care, dignity, and the living world?</p>
+  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-7);">
+    <a class="btn" href="/rethinking-society/episodes/">Watch the series</a>
+    <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Enter the Gathering Library</a>
+    <a class="btn btn--ghost" href="/rethinking-society/support/">Support the work</a>
+    <a class="btn btn--ghost" href="/rethinking-society/gather-online/">Gather online</a>
+  </div>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('main') }}
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow stack-lg">
+    <header class="section-header">
+      <p class="t-eyebrow">What it is</p>
+      <h2 class="t-h2 t-balance">A question, not a finished answer</h2>
+    </header>
+    <p class="t-lead t-pretty center-text">Rethinking Society begins with a simple question: what if the systems surrounding human life were designed to serve life, rather than asking life to serve them?</p>
+    <p class="t-body t-pretty center-text">The project is taking shape as long-form episodes, short videos, discussion guides, worksheets, facilitator materials, online conversations, and — over time — gatherings and community resources.</p>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow stack-lg">
+    <header class="section-header">
+      <p class="t-eyebrow">Why it exists</p>
+      <h2 class="t-h2 t-balance">Looking together at what we've inherited</h2>
+    </header>
+    <p class="t-body t-pretty center-text">Rethinking Society exists to examine the systems and assumptions we have inherited — economy, leadership, work, care, education, power, belonging, peace, technology, and the living world.</p>
+    <p class="t-body t-pretty center-text">It does not tell people what they must think. It invites people to look together at what our systems produce, whose realities are missing, what has been accepted as inevitable, and what different choices could make possible.</p>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">What this project is not</p>
+    <span class="rule"></span>
+    <p class="t-lead t-pretty">Rethinking Society is not a political party, fixed ideology, or finished blueprint for a new world. It is a place for asking better questions, bringing more human realities into the room, and widening what we believe society can be.</p>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Featured episodes</p>
+      <h2 class="t-h2 t-balance">Begin with a question</h2>
+    </header>
+    <div class="grid grid-3">
+      {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
+      {% for ep in episodes | limit(3) %}
+        {{ episodeCard(ep) }}
+      {% endfor %}
+    </div>
+    <div class="center-text" style="margin-top: var(--sp-7);">
+      <a class="btn btn--ghost" href="/rethinking-society/episodes/">Watch all episodes →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Gather around the questions</p>
+    <h2 class="t-h2 t-balance">The Gathering Library</h2>
+    <p class="t-lead t-pretty">Each episode can become more than something we watch. The Gathering Library contains discussion guides, worksheets, facilitator resources, conversation starters, and circle materials designed to help people explore the questions together.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/gathering-library/" style="margin-top: var(--sp-5);">Explore the Gathering Library</a>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">More than a video series</p>
+      <h2 class="t-h2 t-balance">One project, several doorways</h2>
+    </header>
+    <div class="eco eco--compact">
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Watch</h4><p class="t-meta">The episodes themselves.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Reflect</h4><p class="t-meta">Sit with the question.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Discuss</h4><p class="t-meta">Bring it into conversation.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Host</h4><p class="t-meta">Gather people around it.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Gather</h4><p class="t-meta">Meet others online.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Support</h4><p class="t-meta">Help it keep growing.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Support the work</p>
+    <p class="t-lead t-pretty">Rethinking Society is independently created. Support helps fund filming, editing, website costs, subtitles, translations, accessible materials, online gatherings, and free or low-cost resources for groups.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/support/" style="margin-top: var(--sp-5);">Support Rethinking Society</a>
+  </div>
+</section>
+
+<section class="section tall fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">The future may not begin with one perfect answer.<br/><em>It may begin when more of us are willing to ask better questions together.</em></p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
+      <a class="btn" href="/rethinking-society/episodes/">Watch the series</a>
+      <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Explore the library</a>
+    </div>
+  </div>
+</section>
+
+</div>

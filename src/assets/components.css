@@ -1678,6 +1678,113 @@ strong, b { font-weight: 600; }
 }
 .arrival__d { color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.55; margin: 6px 0 0; }
 
+/* =========================================================
+   Rethinking Society — a distinct wing, same house.
+   `.rs` scopes a restrained blue-toned accent (reuses the
+   existing --c-blue token) over the shared component set below;
+   ink, background, type, spacing all stay identical to the rest
+   of the site.
+   ========================================================= */
+.rs {
+  --c-accent: var(--c-blue);
+  --c-accent-soft: color-mix(in oklab, var(--c-blue) 55%, var(--c-bg-sunk));
+  --c-accent-ink: var(--c-bg);
+}
+
+/* Local section sub-nav (About / Watch / Library / Gather / Support) */
+.rs-subnav {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.rs-subnav a {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
+}
+.rs-subnav a:hover { color: var(--c-ink); border-color: var(--c-ink-mute); }
+.rs-subnav a.active { color: var(--c-bg); background: var(--c-accent); border-color: var(--c-accent); }
+
+/* Status / price indicators — text-led, dot is reinforcement only */
+.rs-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-mute);
+}
+.rs-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.rs-status--published { color: var(--c-accent); }
+.rs-status--coming-soon { color: var(--c-gold); }
+.rs-status--in-development { color: var(--c-stone); }
+
+.rs-price {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-mute);
+}
+.rs-price--free { color: var(--c-accent); }
+
+/* Video frame — used for embeds and the "coming soon" placeholder alike */
+.rs-video {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--c-bg-sunk);
+  border: 1px solid var(--c-line);
+  display: grid; place-items: center;
+}
+.rs-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+.rs-video .placeholder { width: 100%; height: 100%; border-radius: 0; border: 0; min-height: 0; }
+
+/* Compact 6-across ecosystem row (Watch/Reflect/Discuss/Host/Gather/Support) */
+.eco--compact { grid-template-columns: repeat(6, 1fr); gap: var(--sp-4); padding-block: var(--sp-4); }
+@media (max-width: 900px) { .eco--compact { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .eco--compact { grid-template-columns: repeat(2, 1fr); } }
+
+/* Tag chips (episode topics) — quiet, reuse the pill language */
+.rs-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rs-tags span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-mute);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+}
+
+/* Prev/next episode nav */
+.rs-episode-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-5);
+}
+@media (max-width: 620px) { .rs-episode-nav { grid-template-columns: 1fr; } }
+.rs-episode-nav a {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: var(--sp-5);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.rs-episode-nav a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.rs-episode-nav .rs-episode-nav__next { text-align: right; align-items: flex-end; }
+
 /* Subtle fade-in for sections on load — only armed when the document is actually visible, so a hidden/paused preview never traps content at opacity 0. */
 .fade-up { opacity: 1; transform: none; transition: opacity 0.8s ease, transform 0.8s ease; }
 html.fade-armed .fade-up { opacity: 0; transform: translateY(12px); }

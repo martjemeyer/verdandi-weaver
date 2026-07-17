@@ -1,0 +1,110 @@
+---
+layout: layouts/base.njk
+title: Episodes | Rethinking Society
+description: Films and conversations exploring the systems, assumptions, and choices shaping human life. Each episode begins with a question rather than a finished answer.
+permalink: /rethinking-society/episodes/index.html
+navSection: rethinking-society
+---
+{% from "rethinking-society/macros.njk" import subnav, episodeCard %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society</p>
+  <h1 class="t-h1 hero__title t-balance">Watch Rethinking Society</h1>
+  <p class="t-lead hero__lead t-pretty">Films and conversations exploring the systems, assumptions, and choices shaping human life. Each episode begins with a question rather than a finished answer.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('episodes') }}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
+
+    <div class="tabs" data-status-tabs role="tablist" aria-label="Filter by status" style="margin-bottom: var(--sp-4);">
+      <button data-status="all" aria-pressed="true">all episodes</button>
+      <button data-status="published" aria-pressed="false">published</button>
+      <button data-status="coming-soon" aria-pressed="false">coming soon</button>
+      <button data-status="in-development" aria-pressed="false">in development</button>
+    </div>
+
+    <div class="lens" data-lens role="tablist" aria-label="Filter by topic">
+      <button class="lens__chip lens__chip--all" data-tag="all" aria-pressed="true">all topics</button>
+      <button class="lens__chip" data-tag="Economy" aria-pressed="false">economy</button>
+      <button class="lens__chip" data-tag="Leadership" aria-pressed="false">leadership</button>
+      <button class="lens__chip" data-tag="Care" aria-pressed="false">care</button>
+      <button class="lens__chip" data-tag="Politics" aria-pressed="false">politics</button>
+      <button class="lens__chip" data-tag="Work" aria-pressed="false">work</button>
+      <button class="lens__chip" data-tag="Education" aria-pressed="false">education</button>
+      <button class="lens__chip" data-tag="Belonging" aria-pressed="false">belonging</button>
+      <button class="lens__chip" data-tag="Peace" aria-pressed="false">peace</button>
+      <button class="lens__chip" data-tag="Technology" aria-pressed="false">technology</button>
+      <button class="lens__chip" data-tag="Environment" aria-pressed="false">environment</button>
+      <button class="lens__chip" data-tag="Power" aria-pressed="false">power</button>
+      <button class="lens__chip" data-tag="Community" aria-pressed="false">community</button>
+    </div>
+
+    <p class="lens-meta" data-count>showing all {{ episodes.length }} {{ "episode" if episodes.length == 1 else "episodes" }}</p>
+
+    <div class="grid grid-3" data-stream>
+      {% for ep in episodes %}
+      <div data-tags="{{ ep.data.topics | join(',') }}" data-status="{{ ep.data.status }}">
+        {{ episodeCard(ep) }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+</div>
+
+{% block extraScripts %}
+<script>
+(function () {
+  var lens = document.querySelector('[data-lens]');
+  var statusTabs = document.querySelector('[data-status-tabs]');
+  var stream = document.querySelector('[data-stream]');
+  var count = document.querySelector('[data-count]');
+  if (!stream) return;
+
+  var activeTag = 'all';
+  var activeStatus = 'all';
+  var cards = Array.from(stream.children);
+
+  function applyFilter() {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var tags = (c.dataset.tags || '').split(',');
+      var okTag = activeTag === 'all' || tags.indexOf(activeTag) !== -1;
+      var okStatus = activeStatus === 'all' || c.dataset.status === activeStatus;
+      c.hidden = !(okTag && okStatus);
+      if (!c.hidden) shown++;
+    });
+    count.textContent = 'showing ' + shown + ' ' + (shown === 1 ? 'episode' : 'episodes');
+  }
+
+  if (lens) {
+    lens.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-tag]');
+      if (!b) return;
+      activeTag = b.dataset.tag;
+      lens.querySelectorAll('[data-tag]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      applyFilter();
+    });
+  }
+  if (statusTabs) {
+    statusTabs.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-status]');
+      if (!b) return;
+      activeStatus = b.dataset.status;
+      statusTabs.querySelectorAll('[data-status]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      applyFilter();
+    });
+  }
+})();
+</script>
+{% endblock %}

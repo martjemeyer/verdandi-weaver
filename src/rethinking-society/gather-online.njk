@@ -1,0 +1,65 @@
+---
+layout: layouts/base.njk
+title: Gather Online | Rethinking Society
+description: Online conversations and gatherings for people who want to explore the questions raised by Rethinking Society together.
+permalink: /rethinking-society/gather-online/index.html
+navSection: rethinking-society
+---
+{% from "rethinking-society/macros.njk" import subnav %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society</p>
+  <h1 class="t-h1 hero__title t-balance">Gather Online</h1>
+  <p class="t-lead hero__lead t-pretty">Online conversations and gatherings for people who want to explore the questions raised by Rethinking Society together.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('gather') }}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    {% set events = collections.rethinkingEvent %}
+    {% if events and events.length %}
+      <div class="grid grid-3">
+        {% for event in events %}
+        <article class="card"><div class="card__body">
+          <p class="t-eyebrow">{{ event.data.event_type }}</p>
+          <h3 class="t-h3">{{ event.data.title }}</h3>
+          <p class="t-meta">{{ event.data.date | date("DD MMMM YYYY") }}{% if event.data.time %} · {{ event.data.time }}{% endif %}{% if event.data.timezone %} {{ event.data.timezone }}{% endif %}</p>
+          {% if event.data.platform %}<p class="t-meta">{{ event.data.platform }}</p>{% endif %}
+          <p class="t-body t-pretty">{{ event.data.description }}</p>
+          {% if event.data.cost %}<p class="t-meta">{{ event.data.cost }}</p>{% endif %}
+          {% if event.data.registration_url %}
+            <a class="btn btn--ghost" href="{{ event.data.registration_url }}" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Register</a>
+          {% else %}
+            <p class="t-meta" style="margin-top:auto;"><em>Registration details coming soon</em></p>
+          {% endif %}
+        </div></article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="container narrow center-text">
+        <p class="t-lead t-pretty">Online gatherings are growing next.</p>
+        <p class="t-body t-pretty" style="margin-top: var(--sp-4);">Episode conversations, open Rethinking Society circles, live Q&amp;As, facilitator gatherings, and special topic events will appear here as they're scheduled.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">In the meantime</p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-4);">
+      <a class="btn btn--ghost" href="/rethinking-society/episodes/">Watch the episodes</a>
+      <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Explore the Gathering Library</a>
+      <a class="btn btn--ghost" href="/rethinking-society/support/">Follow or support the work</a>
+    </div>
+  </div>
+</section>
+
+</div>

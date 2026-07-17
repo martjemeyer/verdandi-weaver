@@ -1,0 +1,63 @@
+---
+layout: layouts/base.njk
+title: Partners and Supporters | Rethinking Society
+description: Rethinking Society is made possible through many forms of support, including funding, collaboration, translation, production assistance, community sharing, and care.
+permalink: /rethinking-society/partners/index.html
+navSection: rethinking-society
+---
+{% from "rethinking-society/macros.njk" import subnav %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society</p>
+  <h1 class="t-h1 hero__title t-balance">Partners and Supporters</h1>
+  <p class="t-lead hero__lead t-pretty">Rethinking Society is made possible through many forms of support, including funding, collaboration, translation, production assistance, community sharing, and care.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('partners') }}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    {% set partners = collections.rethinkingPartner %}
+    {% set categories = ["Funding Partner", "Community Partner", "Creative Contributor", "Translation & Accessibility Support", "Friend of the Project"] %}
+
+    {% if partners and partners.length %}
+      {% for cat in categories %}
+        {% set inCat = partners | selectattr("data.support_type", "equalto", cat) | list %}
+        {% if inCat.length %}
+        <header class="section-header">
+          <h2 class="t-h2 t-balance">{{ cat }}s</h2>
+        </header>
+        <div class="grid grid-3" style="margin-bottom: var(--sp-8);">
+          {% for p in inCat %}
+          <article class="card"><div class="card__body">
+            {% if p.data.logo %}<img src="{{ p.data.logo }}" alt="{{ p.data.name }}" style="max-height:48px; width:auto; object-fit:contain;">{% endif %}
+            <h3 class="t-h3">{{ p.data.name }}</h3>
+            <p class="t-body">{{ p.data.description }}</p>
+            {% if p.data.website %}<a class="link-chev" href="{{ p.data.website }}" target="_blank" rel="noopener noreferrer">Visit website</a>{% endif %}
+          </div></article>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="container narrow center-text">
+        <p class="t-lead t-pretty">This page is ready to grow. As funders, collaborators, and friends join the project, they'll be introduced here.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Want to be part of this list?</p>
+    <a class="btn btn--ghost" href="/rethinking-society/support/" style="margin-top: var(--sp-4);">Explore ways to support the work</a>
+  </div>
+</section>
+
+</div>

@@ -1,0 +1,52 @@
+{# Rethinking Society — shared macros. Keeps episode cards and the local
+   section sub-nav consistent across the main page, archive, and episode
+   template without duplicating markup. #}
+
+{% macro subnav(active) %}
+<nav class="rs-subnav" aria-label="Rethinking Society sections">
+  <a href="/rethinking-society/" class="{{ 'active' if active == 'main' }}">About the Series</a>
+  <a href="/rethinking-society/episodes/" class="{{ 'active' if active == 'episodes' }}">Watch the Episodes</a>
+  <a href="/rethinking-society/gathering-library/" class="{{ 'active' if active == 'library' }}">Gathering Library</a>
+  <a href="/rethinking-society/gather-online/" class="{{ 'active' if active == 'gather' }}">Gather Online</a>
+  <a href="/rethinking-society/support/" class="{{ 'active' if active == 'support' }}">Support the Work</a>
+  <a href="/rethinking-society/partners/" class="{{ 'active' if active == 'partners' }}">Partners &amp; Supporters</a>
+</nav>
+{% endmacro %}
+
+{% macro episodeNum(n) %}{% if n < 10 %}0{{ n }}{% else %}{{ n }}{% endif %}{% endmacro %}
+
+{% macro statusLabel(status) %}{% if status == 'published' %}Published{% elif status == 'in-development' %}In development{% else %}Coming soon{% endif %}{% endmacro %}
+
+{% macro episodeCard(ep) %}
+<article class="card">
+  <div class="card__media">
+    {% if ep.data.thumbnail %}
+      <img src="{{ ep.data.thumbnail }}" alt="{{ ep.data.title }}" />
+    {% else %}
+      <div class="placeholder" style="height:100%; min-height:0;">[ episode {{ episodeNum(ep.data.number) }} thumbnail ]</div>
+    {% endif %}
+  </div>
+  <div class="card__body">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap: var(--sp-3);">
+      <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
+      <span class="rs-status rs-status--{{ ep.data.status }}">{{ statusLabel(ep.data.status) }}</span>
+    </div>
+    <h3 class="t-h3">{{ ep.data.title }}</h3>
+    <p class="t-body t-pretty">{{ ep.data.question }}</p>
+    {% if ep.data.topics and ep.data.topics.length %}
+    <div class="rs-tags">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    {% endif %}
+    <div style="display:flex; gap: var(--sp-4); flex-wrap:wrap; align-items:center; margin-top:auto; padding-top: var(--sp-2);">
+      {% if ep.data.videoUrl %}
+        <a class="btn btn--ghost" href="{{ ep.data.videoUrl }}" target="_blank" rel="noopener noreferrer">Watch</a>
+      {% else %}
+        <span class="t-meta">Video coming soon</span>
+      {% endif %}
+      <a class="link-chev" href="/rethinking-society/episodes/{{ ep.data.slug }}/">Episode page</a>
+      {% if ep.data.resources and ep.data.resources.length %}
+        <a class="link-chev" href="/rethinking-society/gathering-library/#{{ ep.data.slug }}">Resources</a>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endmacro %}

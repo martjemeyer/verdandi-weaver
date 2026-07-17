@@ -1,0 +1,120 @@
+---
+layout: layouts/base.njk
+title: Gathering Library | Rethinking Society
+description: A growing library of discussion guides, worksheets, facilitator resources, conversation starters, and circle materials created to help people explore each episode together.
+permalink: /rethinking-society/gathering-library/index.html
+navSection: rethinking-society
+---
+{% from "rethinking-society/macros.njk" import subnav, episodeNum %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society</p>
+  <h1 class="t-h1 hero__title t-balance">The Rethinking Society Gathering Library</h1>
+  <p class="t-lead hero__lead t-pretty">A growing library of discussion guides, worksheets, facilitator resources, conversation starters, and circle materials created to help people explore each episode together.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('library') }}
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Who the library is for</p>
+    <h2 class="t-h2 t-balance">You do not need to be an expert to gather people</h2>
+    <p class="t-body t-pretty" style="margin-top: var(--sp-4);">The materials are made for friends gathering online, community groups, educators, facilitators, book circles, workplaces, families, and people watching alone who want to go a little deeper.</p>
+    <div class="rs-tags" style="justify-content:center; margin-top: var(--sp-5);">
+      <span>Friends gathering online</span>
+      <span>Community groups</span>
+      <span>Educators</span>
+      <span>Facilitators</span>
+      <span>Book circles</span>
+      <span>Workplaces</span>
+      <span>Families</span>
+      <span>Watching alone</span>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">How resources are organised</p>
+      <h2 class="t-h2 t-balance">Free where it can be, deeper where you want it</h2>
+    </header>
+    <div class="grid grid-2" style="gap: var(--sp-5);">
+      <article class="card card--quiet"><div class="card__body">
+        <p class="t-eyebrow">Free</p>
+        <h3 class="t-h3">One-page conversation starter</h3>
+      </div></article>
+      <article class="card card--quiet"><div class="card__body">
+        <p class="t-eyebrow">For deeper reflection</p>
+        <h3 class="t-h3">Discussion guide and worksheet pack</h3>
+      </div></article>
+      <article class="card card--quiet"><div class="card__body">
+        <p class="t-eyebrow">For hosts and groups</p>
+        <h3 class="t-h3">Facilitator edition and circle kit</h3>
+      </div></article>
+      <article class="card card--quiet"><div class="card__body">
+        <p class="t-eyebrow">Complete collection</p>
+        <h3 class="t-h3">Episode gathering bundle</h3>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container stack-xl">
+    <header class="section-header">
+      <p class="t-eyebrow">By episode</p>
+      <h2 class="t-h2 t-balance">Materials for each episode</h2>
+    </header>
+
+    {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
+    {% for ep in episodes %}
+    <article class="card" id="{{ ep.data.slug }}" style="scroll-margin-top: 100px;">
+      <div class="card__body">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap: var(--sp-3);">
+          <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
+          <a class="link-chev link-chev--after" href="/rethinking-society/episodes/{{ ep.data.slug }}/">Episode page</a>
+        </div>
+        <h3 class="t-h3">{{ ep.data.title }}</h3>
+        <p class="t-body t-pretty">{{ ep.data.question }}</p>
+
+        {% if ep.data.resources and ep.data.resources.length %}
+          <div class="grid grid-3" style="margin-top: var(--sp-3);">
+            {% for r in ep.data.resources %}
+            <div class="card card--quiet"><div class="card__body">
+              <p class="rs-price rs-price--{{ 'free' if r.price_type == 'Free' else 'paid' }}">{{ r.price_type }}</p>
+              <h4 class="t-h4">{{ r.title or r.type }}</h4>
+              <p class="t-meta">{{ r.type }}{% if r.format %} · {{ r.format }}{% endif %}{% if r.language %} · {{ r.language }}{% endif %}</p>
+              {% if r.url %}
+                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">Get the {{ r.type }} <span class="sr-only">(opens Buy Me a Coffee in a new tab)</span></a>
+              {% else %}
+                <p class="t-meta" style="margin-top: auto;"><em>Available soon</em></p>
+              {% endif %}
+            </div></div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="t-meta" style="font-style: italic;">Resources for this episode are being prepared — available soon.</p>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Host a conversation</p>
+    <h2 class="t-h2 t-balance">You don't need all the answers</h2>
+    <p class="t-lead t-pretty">You do not need to be an expert to gather people around a meaningful question. The materials are designed to help create thoughtful, respectful conversations without requiring one person to have all the answers.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/gather-online/" style="margin-top: var(--sp-5);">Explore Gather Online</a>
+  </div>
+</section>
+
+</div>

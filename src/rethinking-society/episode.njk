@@ -1,0 +1,147 @@
+---
+layout: layouts/base.njk
+navSection: rethinking-society
+pagination:
+  data: collections.rethinkingEpisode
+  size: 1
+  alias: ep
+permalink: "/rethinking-society/episodes/{{ ep.data.slug }}/index.html"
+eleventyComputed:
+  title: "{{ ep.data.title }} | Rethinking Society"
+  description: "{{ ep.data.question }}"
+---
+{% from "rethinking-society/macros.njk" import subnav, statusLabel, episodeNum %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society · Episode {{ episodeNum(ep.data.number) }}</p>
+  <h1 class="t-h1 hero__title t-balance">{{ ep.data.title }}</h1>
+  <p class="t-lead hero__lead t-pretty">{{ ep.data.question }}</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    {{ subnav('episodes') }}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow stack-lg">
+
+    <div class="rs-video">
+      {% if ep.data.videoUrl %}
+        <iframe src="{{ ep.data.videoUrl }}" title="{{ ep.data.title }}" allowfullscreen loading="lazy"></iframe>
+      {% else %}
+        <div class="placeholder" style="height:100%; min-height:0;">Video coming soon</div>
+      {% endif %}
+    </div>
+
+    <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap: var(--sp-4);">
+      <span class="rs-status rs-status--{{ ep.data.status }}">{{ statusLabel(ep.data.status) }}</span>
+      {% if ep.data.runtime %}<span class="t-meta">{{ ep.data.runtime }}</span>{% endif %}
+      {% if ep.data.date %}<span class="t-meta">{{ ep.data.date | date("DD MMMM YYYY") }}</span>{% endif %}
+    </div>
+
+    {% if ep.data.topics and ep.data.topics.length %}
+    <div class="rs-tags" style="justify-content:center;">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    {% endif %}
+
+    <span class="rule"></span>
+
+    {% if ep.data.intro %}
+    <p class="t-lead t-pretty center-text">{{ ep.data.intro }}</p>
+    {% else %}
+    <p class="t-lead t-pretty center-text"><em>A written introduction for this episode is being prepared.</em></p>
+    {% endif %}
+
+    {% if ep.data.themes and ep.data.themes.length %}
+    <div>
+      <h2 class="t-h3">Main themes</h2>
+      <ul style="margin-top: var(--sp-3); padding-left: 1.2em;">
+        {% for theme in ep.data.themes %}<li class="t-body">{{ theme.theme }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if ep.data.quotes and ep.data.quotes.length %}
+    <div>
+      <h2 class="t-h3">Key quotations</h2>
+      <div class="stack-lg" style="margin-top: var(--sp-4);">
+        {% for q in ep.data.quotes %}
+        <blockquote style="border-left: 1px solid var(--c-line); padding-left: var(--sp-4); margin: 0;">
+          <p class="t-quote">{{ q.text }}</p>
+          {% if q.mark %}<p class="t-meta" style="margin-top: var(--sp-2);">{{ q.mark }}</p>{% endif %}
+        </blockquote>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Explore this question further</p>
+    <h2 class="t-h2 t-balance">Discussion materials for this episode</h2>
+    {% if ep.data.resources and ep.data.resources.length %}
+      <p class="t-body t-pretty">Discussion guides and worksheets for this episode are available in the Gathering Library.</p>
+      <a class="btn btn--ghost" href="/rethinking-society/gathering-library/#{{ ep.data.slug }}" style="margin-top: var(--sp-5);">Open in the Gathering Library</a>
+    {% else %}
+      <p class="t-body t-pretty">Discussion materials for this episode are being prepared.</p>
+      <a class="btn btn--ghost" href="/rethinking-society/gathering-library/" style="margin-top: var(--sp-5);">Visit the Gathering Library</a>
+    {% endif %}
+  </div>
+</section>
+
+{% set prevEp = collections.rethinkingEpisode | byNumber(ep.data.number - 1) %}
+{% set nextEp = collections.rethinkingEpisode | byNumber(ep.data.number + 1) %}
+{% if prevEp or nextEp %}
+<section class="section fade-up">
+  <div class="container narrow">
+    <div class="rs-episode-nav">
+      {% if prevEp %}
+      <a href="/rethinking-society/episodes/{{ prevEp.data.slug }}/">
+        <span class="t-meta">← Previous episode</span>
+        <span class="t-h4">{{ prevEp.data.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if nextEp %}
+      <a href="/rethinking-society/episodes/{{ nextEp.data.slug }}/" class="rs-episode-nav__next">
+        <span class="t-meta">Next episode →</span>
+        <span class="t-h4">{{ nextEp.data.title }}</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Share this episode</p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap:wrap; margin-top: var(--sp-4);">
+      <button class="btn btn--ghost" type="button" data-copy-link>Copy link</button>
+      <a class="btn btn--ghost" href="/rethinking-society/support/">Support the work</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+{% block extraScripts %}
+<script>
+(function () {
+  var btn = document.querySelector('[data-copy-link]');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(window.location.href).then(function () {
+      var original = btn.textContent;
+      btn.textContent = 'Link copied';
+      setTimeout(function () { btn.textContent = original; }, 2000);
+    });
+  });
+})();
+</script>
+{% endblock %}

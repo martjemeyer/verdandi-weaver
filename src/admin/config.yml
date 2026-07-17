@@ -162,6 +162,114 @@ collections:
       - { label: Pull quote, name: pull, widget: string, required: false, hint: "e.g. You don't awaken out of being human. You awaken into it." }
       - { label: Footer note, name: footer_note, widget: string, required: false, hint: 'e.g. Working from Sweden · in English & Swedish.' }
 
+  - name: rethinking-episodes
+    label: "Rethinking Society: Episodes"
+    label_singular: Episode
+    folder: src/content/rethinking-episodes
+    create: true
+    slug: "episode-{{fields.number}}"
+    fields:
+      - { label: Episode number, name: number, widget: number, hint: "e.g. 1" }
+      - { label: Title, name: title, widget: string }
+      - { label: Central question, name: question, widget: text }
+      - label: Status
+        name: status
+        widget: select
+        default: coming-soon
+        options:
+          - { label: Published, value: published }
+          - { label: Coming soon, value: coming-soon }
+          - { label: In development, value: in-development }
+      - { label: Publication date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, required: false, hint: "Leave empty until the episode is actually published" }
+      - { label: Runtime, name: runtime, widget: string, required: false, hint: "e.g. 18 min — leave empty if unknown" }
+      - { label: Video URL, name: videoUrl, widget: string, required: false, hint: "YouTube or video link — leave empty to show a 'Video coming soon' state" }
+      - { label: Thumbnail, name: thumbnail, widget: image, required: false }
+      - label: Topic tags
+        name: topics
+        widget: select
+        multiple: true
+        required: false
+        options: [Economy, Leadership, Care, Politics, Work, Education, Belonging, Peace, Technology, Environment, Power, Community]
+      - { label: Short introduction, name: intro, widget: text, required: false, hint: "Shown on the episode page. Leave empty until written." }
+      - label: Main themes
+        name: themes
+        widget: list
+        required: false
+        fields:
+          - { label: Theme, name: theme, widget: string }
+      - label: Key quotations
+        name: quotes
+        widget: list
+        required: false
+        fields:
+          - { label: Quote, name: text, widget: text }
+          - { label: Timestamp / chapter, name: mark, widget: string, required: false }
+      - label: Gathering Library resources
+        name: resources
+        widget: list
+        required: false
+        hint: "Discussion guides, worksheets, etc. for this episode"
+        fields:
+          - label: Resource type
+            name: type
+            widget: select
+            options: ["One-Page Conversation Starter", "Discussion Guide", "Worksheet Pack", "Facilitator Edition", "Circle Kit", "Print-Shop Edition", "Complete Episode Bundle"]
+          - { label: Title, name: title, widget: string }
+          - label: Language
+            name: language
+            widget: select
+            options: ["English", "Svenska", "Both"]
+            default: "English"
+          - { label: Format, name: format, widget: string, required: false, hint: "e.g. PDF · 6 pages" }
+          - label: Price type
+            name: price_type
+            widget: select
+            options: ["Free", "Paid", "Bundle", "Coming soon"]
+          - { label: Buy Me a Coffee / product URL, name: url, widget: string, required: false, hint: "Leave empty to show 'Available soon'" }
+
+  - name: rethinking-events
+    label: "Rethinking Society: Gather Online Events"
+    label_singular: Event
+    folder: src/content/rethinking-events
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Event title, name: title, widget: string }
+      - label: Event type
+        name: event_type
+        widget: select
+        options: ["Episode Conversation", "Open Rethinking Society Circle", "Live Q&A", "Facilitator Gathering", "Special Topic Event"]
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false }
+      - { label: Time, name: time, widget: string, hint: "e.g. 19:00" }
+      - { label: Time zone, name: timezone, widget: string, hint: "e.g. CET" }
+      - { label: Online platform, name: platform, widget: string, hint: "e.g. Zoom" }
+      - { label: Description, name: description, widget: text }
+      - { label: Registration URL, name: registration_url, widget: string, required: false }
+      - { label: Cost or donation status, name: cost, widget: string, required: false, hint: "e.g. Free · donation welcome" }
+      - { label: Recording availability, name: recording, widget: string, required: false }
+      - label: Status
+        name: status
+        widget: select
+        default: upcoming
+        options: [upcoming, past, cancelled]
+
+  - name: rethinking-partners
+    label: "Rethinking Society: Partners & Supporters"
+    label_singular: Partner
+    folder: src/content/rethinking-partners
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Logo, name: logo, widget: image, required: false }
+      - { label: Website, name: website, widget: string, required: false }
+      - { label: Short description, name: description, widget: text }
+      - label: Support type
+        name: support_type
+        widget: select
+        options: ["Funding Partner", "Community Partner", "Creative Contributor", "Translation & Accessibility Support", "Friend of the Project"]
+      - { label: Permission to display publicly confirmed, name: public_ok, widget: boolean, default: false }
+
   - name: frameworks
     label: Frameworks
     label_singular: Framework

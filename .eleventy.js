@@ -10,6 +10,14 @@ module.exports = function (eleventyConfig) {
     return norm(pageUrl) === norm(href) ? "active" : "";
   });
 
+  eleventyConfig.addFilter("limit", function (arr, n) {
+    return Array.isArray(arr) ? arr.slice(0, n) : arr;
+  });
+
+  eleventyConfig.addFilter("byNumber", function (arr, n) {
+    return Array.isArray(arr) ? arr.find((item) => item.data.number === n) : undefined;
+  });
+
   eleventyConfig.addFilter("youtubeId", function (url) {
     if (!url) return "";
     const m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
