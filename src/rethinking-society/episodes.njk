@@ -23,14 +23,7 @@ navSection: rethinking-society
 
 <section class="section fade-up">
   <div class="container">
-    {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
-
-    <div class="tabs" data-status-tabs role="tablist" aria-label="Filter by status" style="margin-bottom: var(--sp-4);">
-      <button data-status="all" aria-pressed="true">all episodes</button>
-      <button data-status="published" aria-pressed="false">published</button>
-      <button data-status="coming-soon" aria-pressed="false">coming soon</button>
-      <button data-status="in-development" aria-pressed="false">in development</button>
-    </div>
+    {% set episodes = collections.rethinkingEpisodeEN %}
 
     <div class="lens" data-lens role="tablist" aria-label="Filter by topic">
       <button class="lens__chip lens__chip--all" data-tag="all" aria-pressed="true">all topics</button>
@@ -52,7 +45,7 @@ navSection: rethinking-society
 
     <div class="grid grid-3" data-stream>
       {% for ep in episodes %}
-      <div data-tags="{{ ep.data.topics | join(',') }}" data-status="{{ ep.data.status }}">
+      <div data-tags="{{ ep.data.topics | join(',') }}">
         {{ episodeCard(ep) }}
       </div>
       {% endfor %}
@@ -66,13 +59,11 @@ navSection: rethinking-society
 <script>
 (function () {
   var lens = document.querySelector('[data-lens]');
-  var statusTabs = document.querySelector('[data-status-tabs]');
   var stream = document.querySelector('[data-stream]');
   var count = document.querySelector('[data-count]');
-  if (!stream) return;
+  if (!stream || !lens) return;
 
   var activeTag = 'all';
-  var activeStatus = 'all';
   var cards = Array.from(stream.children);
 
   function applyFilter() {
@@ -80,31 +71,19 @@ navSection: rethinking-society
     cards.forEach(function (c) {
       var tags = (c.dataset.tags || '').split(',');
       var okTag = activeTag === 'all' || tags.indexOf(activeTag) !== -1;
-      var okStatus = activeStatus === 'all' || c.dataset.status === activeStatus;
-      c.hidden = !(okTag && okStatus);
+      c.hidden = !okTag;
       if (!c.hidden) shown++;
     });
     count.textContent = 'showing ' + shown + ' ' + (shown === 1 ? 'episode' : 'episodes');
   }
 
-  if (lens) {
-    lens.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-tag]');
-      if (!b) return;
-      activeTag = b.dataset.tag;
-      lens.querySelectorAll('[data-tag]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      applyFilter();
-    });
-  }
-  if (statusTabs) {
-    statusTabs.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-status]');
-      if (!b) return;
-      activeStatus = b.dataset.status;
-      statusTabs.querySelectorAll('[data-status]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      applyFilter();
-    });
-  }
+  lens.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tag]');
+    if (!b) return;
+    activeTag = b.dataset.tag;
+    lens.querySelectorAll('[data-tag]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    applyFilter();
+  });
 })();
 </script>
 {% endblock %}

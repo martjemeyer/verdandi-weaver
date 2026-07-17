@@ -4,8 +4,14 @@ title: Rethinking Society | Verdandi Weaver
 description: A growing series of films, conversations, reflection tools, and online gatherings for people who want to question what we have accepted as normal and imagine societies built more consciously around human life, care, dignity, and the living world.
 permalink: /rethinking-society/index.html
 navSection: rethinking-society
+pageLang: en
+canonical: https://verdandiweaver.com/rethinking-society/
+hreflangAlternates:
+  en: https://verdandiweaver.com/rethinking-society/
+  sv: https://verdandiweaver.com/sv/rethinking-society/
+  x-default: https://verdandiweaver.com/rethinking-society/
 ---
-{% from "rethinking-society/macros.njk" import subnav, episodeCard %}
+{% from "rethinking-society/macros.njk" import subnav, episodeNav, episodeSection, langSwitch %}
 
 <div class="rs">
 
@@ -14,7 +20,14 @@ navSection: rethinking-society
   <h1 class="t-h1 hero__title t-balance">Rethinking Society</h1>
   <p class="t-lead hero__lead t-pretty">A growing series of films, conversations, reflection tools, and online gatherings for people who want to question what we have accepted as normal and imagine societies built more consciously around human life, care, dignity, and the living world.</p>
   <p class="pull t-balance" style="margin-top: var(--sp-7); font-size: var(--fs-xl);">What if society were designed around human life, care, dignity, and the living world?</p>
-  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-7);">
+
+  {{ langSwitch('en') }}
+
+  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-5);">
+    <a class="btn btn--accent" href="/sv/rethinking-society/" hreflang="sv" lang="sv">Se Rethinking Society på svenska</a>
+  </div>
+
+  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-5);">
     <a class="btn" href="/rethinking-society/episodes/">Watch the series</a>
     <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Enter the Gathering Library</a>
     <a class="btn btn--ghost" href="/rethinking-society/support/">Support the work</a>
@@ -58,21 +71,28 @@ navSection: rethinking-society
   </div>
 </section>
 
+{% set episodesEN = collections.rethinkingEpisodeEN %}
+{% set episodesSV = collections.rethinkingEpisodeSV %}
+
 <section class="section fade-up">
   <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">Featured episodes</p>
+      <p class="t-eyebrow">The episodes</p>
       <h2 class="t-h2 t-balance">Begin with a question</h2>
     </header>
-    <div class="grid grid-3">
-      {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
-      {% for ep in episodes | limit(3) %}
-        {{ episodeCard(ep) }}
-      {% endfor %}
-    </div>
-    <div class="center-text" style="margin-top: var(--sp-7);">
-      <a class="btn btn--ghost" href="/rethinking-society/episodes/">Watch all episodes →</a>
-    </div>
+
+    {% if episodesEN.length %}
+      {{ episodeNav(episodesEN, 'episode', 'en') }}
+      <div class="stack-xl" style="margin-top: var(--sp-7);">
+        {% for ep in episodesEN %}
+          {% set match = episodesSV | byTranslationKey(ep.data.translationKey) %}
+          {% set translationUrl = ("/sv/rethinking-society/#avsnitt-" + match.data.number|string) if match else null %}
+          {{ episodeSection(ep, 'en', 'episode', translationUrl, 'Se på svenska') }}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="t-lead t-pretty center-text">Episodes are being prepared — the first ones will appear here soon.</p>
+    {% endif %}
   </div>
 </section>
 
@@ -121,3 +141,7 @@ navSection: rethinking-society
 </section>
 
 </div>
+
+{% block extraScripts %}
+<script src="/assets/rethinking-society.js?v={{ buildVersion }}"></script>
+{% endblock %}

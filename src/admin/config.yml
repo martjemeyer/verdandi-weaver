@@ -49,8 +49,8 @@ collections:
       - { label: Body, name: body, widget: markdown }
 
   - name: ecosystem
-    label: Ecosystem
-    label_singular: Ecosystem entry
+    label: "Explore (main site)"
+    label_singular: Explore entry
     folder: src/content/ecosystem
     create: true
     slug: "{{order}}-{{slug}}"
@@ -162,35 +162,107 @@ collections:
       - { label: Pull quote, name: pull, widget: string, required: false, hint: "e.g. You don't awaken out of being human. You awaken into it." }
       - { label: Footer note, name: footer_note, widget: string, required: false, hint: 'e.g. Working from Sweden · in English & Swedish.' }
 
+  - name: frameworks
+    label: "Frameworks (main site)"
+    label_singular: Framework
+    folder: src/content/frameworks
+    create: true
+    slug: "framework-{{num}}"
+    fields:
+      - { label: Number, name: num, widget: string, hint: "e.g. 10" }
+      - { label: Title, name: title, widget: string }
+      - { label: Eyebrow, name: eyebrow, widget: string, hint: "e.g. Framework 10 · Topic · Subtopic" }
+      - { label: Lead text, name: lead, widget: text }
+      - { label: Body (markdown), name: body, widget: markdown }
+      - { label: Pull quote, name: pull, widget: string, required: false }
+
+  # ============================================================
+  # Rethinking Society — everything below lives on the
+  # /rethinking-society/ pages, not the main site.
+  # ============================================================
+
   - name: rethinking-episodes
-    label: "Rethinking Society: Episodes"
+    label: "🎬 Rethinking Society — Episodes"
     label_singular: Episode
     folder: src/content/rethinking-episodes
     create: true
-    slug: "episode-{{fields.number}}"
+    slug: "{{fields.series}}-episode-{{fields.number}}-{{fields.language}}"
+    summary: "{{fields.language}} · Ep. {{fields.number}} — {{fields.title}} ({{fields.status}})"
+    view_groups:
+      - { label: Language, field: language }
+    view_filters:
+      - { label: English, field: language, pattern: "English" }
+      - { label: Swedish, field: language, pattern: "Swedish" }
+      - { label: Published, field: status, pattern: "published" }
+      - { label: Draft, field: status, pattern: "draft" }
     fields:
-      - { label: Episode number, name: number, widget: number, hint: "e.g. 1" }
-      - { label: Title, name: title, widget: string }
-      - { label: Central question, name: question, widget: text }
+      - label: Language
+        name: language
+        widget: select
+        options: ["English", "Swedish"]
+        default: "English"
+        hint: "Step 1 — which language is this episode entry written in?"
+      - label: Series
+        name: series
+        widget: select
+        options: ["Rethinking Society"]
+        default: "Rethinking Society"
+        hint: "Step 2 — which series does this belong to?"
+      - { label: Episode number, name: number, widget: number, hint: "Step 3 — e.g. 1" }
+      - { label: Display order, name: displayOrder, widget: number, required: false, hint: "Optional — only needed if you want the display order to differ from the episode number" }
+      - { label: Title, name: title, widget: string, hint: "Step 4" }
+      - { label: Central question, name: question, widget: text, hint: "Step 4" }
+      - { label: Short description, name: short_description, widget: text, required: false, hint: "Step 5 — a sentence or two shown under the question. Leave empty until written." }
+      - label: Topic tags
+        name: topics
+        widget: list
+        required: false
+        hint: "Step 5 — type any tags, in the same language as this episode, one per line"
+      - { label: Thumbnail, name: thumbnail, widget: image, required: false, hint: "Step 6" }
+      - { label: YouTube video URL, name: videoUrl, widget: string, required: false, hint: "Step 7 — leave empty to show a 'Video coming soon' state" }
+      - label: PDF resources
+        name: resources
+        widget: list
+        required: false
+        hint: "Step 8 — discussion guides, worksheets, etc. for this episode"
+        fields:
+          - label: Resource type
+            name: type
+            widget: select
+            options: ["One-Page Conversation Starter", "Discussion Guide", "Worksheet Pack", "Facilitator Edition", "Circle Kit", "Print-Shop Edition", "Complete Episode Bundle"]
+          - { label: Title, name: title, widget: string }
+          - label: Language
+            name: language
+            widget: select
+            options: ["English", "Swedish", "Both"]
+            default: "English"
+            hint: "This resource's own language — can differ from the episode's language above"
+          - { label: Format, name: format, widget: string, required: false, hint: "e.g. PDF · 6 pages" }
+          - label: Price type
+            name: price_type
+            widget: select
+            options: ["Free", "Paid", "Bundle", "Coming soon"]
+          - { label: Buy Me a Coffee / product URL, name: url, widget: string, required: false, hint: "Leave empty to show 'Available soon'" }
+      - { label: Translation key, name: translationKey, widget: string, hint: "Step 9 — the SAME value on both the English and Swedish version of this episode connects them, e.g. rethinking-society-episode-1" }
       - label: Status
         name: status
         widget: select
-        default: coming-soon
+        default: draft
         options:
           - { label: Published, value: published }
-          - { label: Coming soon, value: coming-soon }
-          - { label: In development, value: in-development }
+          - { label: Draft, value: draft }
+        hint: "Step 10 — only Published episodes appear on the live page"
+      - { label: Short call to action, name: cta, widget: string, required: false, hint: "Optional — e.g. 'Watch, then bring it to your next conversation.'" }
+      - label: Support links
+        name: support_links
+        widget: list
+        required: false
+        hint: "Optional — extra links shown with this episode (beyond the default Support page link)"
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
       - { label: Publication date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, required: false, hint: "Leave empty until the episode is actually published" }
       - { label: Runtime, name: runtime, widget: string, required: false, hint: "e.g. 18 min — leave empty if unknown" }
-      - { label: Video URL, name: videoUrl, widget: string, required: false, hint: "YouTube or video link — leave empty to show a 'Video coming soon' state" }
-      - { label: Thumbnail, name: thumbnail, widget: image, required: false }
-      - label: Topic tags
-        name: topics
-        widget: select
-        multiple: true
-        required: false
-        options: [Economy, Leadership, Care, Politics, Work, Education, Belonging, Peace, Technology, Environment, Power, Community]
-      - { label: Short introduction, name: intro, widget: text, required: false, hint: "Shown on the episode page. Leave empty until written." }
       - label: Main themes
         name: themes
         widget: list
@@ -204,31 +276,9 @@ collections:
         fields:
           - { label: Quote, name: text, widget: text }
           - { label: Timestamp / chapter, name: mark, widget: string, required: false }
-      - label: Gathering Library resources
-        name: resources
-        widget: list
-        required: false
-        hint: "Discussion guides, worksheets, etc. for this episode"
-        fields:
-          - label: Resource type
-            name: type
-            widget: select
-            options: ["One-Page Conversation Starter", "Discussion Guide", "Worksheet Pack", "Facilitator Edition", "Circle Kit", "Print-Shop Edition", "Complete Episode Bundle"]
-          - { label: Title, name: title, widget: string }
-          - label: Language
-            name: language
-            widget: select
-            options: ["English", "Svenska", "Both"]
-            default: "English"
-          - { label: Format, name: format, widget: string, required: false, hint: "e.g. PDF · 6 pages" }
-          - label: Price type
-            name: price_type
-            widget: select
-            options: ["Free", "Paid", "Bundle", "Coming soon"]
-          - { label: Buy Me a Coffee / product URL, name: url, widget: string, required: false, hint: "Leave empty to show 'Available soon'" }
 
   - name: rethinking-events
-    label: "Rethinking Society: Gather Online Events"
+    label: "📅 Rethinking Society — Gather Online"
     label_singular: Event
     folder: src/content/rethinking-events
     create: true
@@ -254,7 +304,7 @@ collections:
         options: [upcoming, past, cancelled]
 
   - name: rethinking-partners
-    label: "Rethinking Society: Partners & Supporters"
+    label: "🤝 Rethinking Society — Partners & Supporters"
     label_singular: Partner
     folder: src/content/rethinking-partners
     create: true
@@ -269,17 +319,3 @@ collections:
         widget: select
         options: ["Funding Partner", "Community Partner", "Creative Contributor", "Translation & Accessibility Support", "Friend of the Project"]
       - { label: Permission to display publicly confirmed, name: public_ok, widget: boolean, default: false }
-
-  - name: frameworks
-    label: Frameworks
-    label_singular: Framework
-    folder: src/content/frameworks
-    create: true
-    slug: "framework-{{num}}"
-    fields:
-      - { label: Number, name: num, widget: string, hint: "e.g. 10" }
-      - { label: Title, name: title, widget: string }
-      - { label: Eyebrow, name: eyebrow, widget: string, hint: "e.g. Framework 10 · Topic · Subtopic" }
-      - { label: Lead text, name: lead, widget: text }
-      - { label: Body (markdown), name: body, widget: markdown }
-      - { label: Pull quote, name: pull, widget: string, required: false }

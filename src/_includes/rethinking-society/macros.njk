@@ -1,6 +1,6 @@
-{# Rethinking Society — shared macros. Keeps episode cards and the local
-   section sub-nav consistent across the main page, archive, and episode
-   template without duplicating markup. #}
+{# Rethinking Society — shared macros. Keeps episode markup, the local
+   section sub-nav, and the language switch consistent across every
+   Rethinking Society page without duplicating markup. #}
 
 {% macro subnav(active) %}
 <nav class="rs-subnav" aria-label="Rethinking Society sections">
@@ -15,22 +15,20 @@
 
 {% macro episodeNum(n) %}{% if n < 10 %}0{{ n }}{% else %}{{ n }}{% endif %}{% endmacro %}
 
-{% macro statusLabel(status) %}{% if status == 'published' %}Published{% elif status == 'in-development' %}In development{% else %}Coming soon{% endif %}{% endmacro %}
+{% macro statusLabel(status) %}{% if status == 'published' %}Published{% else %}Draft{% endif %}{% endmacro %}
 
+{# Compact card — used on the /episodes/ archive and the old featured-3 grid #}
 {% macro episodeCard(ep) %}
 <article class="card">
   <div class="card__media">
     {% if ep.data.thumbnail %}
-      <img src="{{ ep.data.thumbnail }}" alt="{{ ep.data.title }}" />
+      <img src="{{ ep.data.thumbnail }}" alt="{{ ep.data.title }}" loading="lazy" />
     {% else %}
       <div class="placeholder" style="height:100%; min-height:0;">[ episode {{ episodeNum(ep.data.number) }} thumbnail ]</div>
     {% endif %}
   </div>
   <div class="card__body">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap: var(--sp-3);">
-      <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
-      <span class="rs-status rs-status--{{ ep.data.status }}">{{ statusLabel(ep.data.status) }}</span>
-    </div>
+    <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
     <h3 class="t-h3">{{ ep.data.title }}</h3>
     <p class="t-body t-pretty">{{ ep.data.question }}</p>
     {% if ep.data.topics and ep.data.topics.length %}
@@ -46,6 +44,96 @@
       {% if ep.data.resources and ep.data.resources.length %}
         <a class="link-chev" href="/rethinking-society/gathering-library/#{{ ep.data.slug }}">Resources</a>
       {% endif %}
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+{# English/Swedish PDF resource button label, by canonical resource type #}
+{% macro resourceLabel(type, lang) %}
+  {%- set labels = {
+    "One-Page Conversation Starter": { en: "Get the Conversation Starter", sv: "Samtalsstartare" },
+    "Discussion Guide":              { en: "Get the Discussion Guide",     sv: "Samtalsguide" },
+    "Worksheet Pack":                { en: "Get the Worksheet Pack",       sv: "Arbetsbladspaket" },
+    "Facilitator Edition":           { en: "Get the Facilitator Edition",  sv: "Handledarutgåva" },
+    "Circle Kit":                    { en: "Get the Circle Kit",           sv: "Material för samtalscirklar" },
+    "Print-Shop Edition":            { en: "Get the Print-Shop Edition",   sv: "Tryckeri- och Etsy-utgåva" },
+    "Complete Episode Bundle":       { en: "Get the Complete Bundle",      sv: "Komplett paket" }
+  } -%}
+  {%- if labels[type] -%}{{ labels[type][lang] }}{%- else -%}{{ type }}{%- endif -%}
+{% endmacro %}
+
+{# Compact "jump to an episode" row, near the top of each language page #}
+{% macro episodeNav(episodes, anchorPrefix, lang) %}
+<nav class="rs-ep-nav" aria-label="{{ 'Jump to an episode' if lang == 'en' else 'Hoppa till ett avsnitt' }}">
+  {% for ep in episodes %}
+  <a href="#{{ anchorPrefix }}-{{ ep.data.number }}">{{ episodeNum(ep.data.number) }}</a>
+  {% endfor %}
+</nav>
+{% endmacro %}
+
+{# English | Svenska switcher #}
+{% macro langSwitch(current) %}
+<p class="rs-lang-switch">
+  <a href="/rethinking-society/" class="{{ 'active' if current == 'en' }}" lang="en">English</a>
+  <span aria-hidden="true">|</span>
+  <a href="/sv/rethinking-society/" class="{{ 'active' if current == 'sv' }}" lang="sv">Svenska</a>
+</p>
+{% endmacro %}
+
+{# Full inline episode section — the core unit of the bilingual main page.
+   translationUrl/translationLabel are pre-computed by the calling page
+   (look up the OTHER language's collection by translationKey) so this
+   macro stays a stateless renderer. #}
+{% macro episodeSection(ep, lang, anchorPrefix, translationUrl, translationLabel) %}
+<article class="rs-ep-section" id="{{ anchorPrefix }}-{{ ep.data.number }}">
+  <div class="rs-ep-section__media">
+    {% if ep.data.videoUrl %}
+      <div class="rs-video rs-yt-facade" data-yt-facade data-embed-src="{{ ep.data.videoUrl }}" role="button" tabindex="0" aria-label="{{ 'Play video' if lang == 'en' else 'Spela video' }}: {{ ep.data.title }}">
+        {% if ep.data.thumbnail %}
+          <img src="{{ ep.data.thumbnail }}" alt="" loading="lazy" />
+        {% else %}
+          <div class="placeholder" style="height:100%; min-height:0;">[ {{ 'thumbnail' if lang == 'en' else 'miniatyrbild' }} ]</div>
+        {% endif %}
+        <span class="rs-yt-facade__play" aria-hidden="true"></span>
+      </div>
+    {% else %}
+      <div class="rs-video">
+        <div class="placeholder" style="height:100%; min-height:0;">{{ 'Video coming soon' if lang == 'en' else 'Video kommer snart' }}</div>
+      </div>
+    {% endif %}
+  </div>
+  <div class="rs-ep-section__body">
+    <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
+    <h2 class="t-h3">{{ ep.data.title }}</h2>
+    <p class="t-lead t-pretty">{{ ep.data.question }}</p>
+    {% if ep.data.short_description %}<p class="t-body t-pretty">{{ ep.data.short_description }}</p>{% endif %}
+    {% if ep.data.topics and ep.data.topics.length %}
+    <div class="rs-tags">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    {% endif %}
+
+    {% if ep.data.resources and ep.data.resources.length %}
+    <div class="rs-ep-section__resources">
+      {% for r in ep.data.resources %}
+        {% if r.url %}
+          <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ resourceLabel(r.type, lang) }}</a>
+        {% else %}
+          <span class="t-meta">{{ resourceLabel(r.type, lang) }} — {{ 'available soon' if lang == 'en' else 'kommer snart' }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <p class="t-body t-pretty" style="font-style:italic;">
+      {% if ep.data.cta %}{{ ep.data.cta }}
+      {% elif lang == 'en' %}Watch, then bring the question into a conversation.
+      {% else %}Titta, och ta sedan med frågan in i ett samtal.
+      {% endif %}
+    </p>
+
+    <div class="rs-ep-section__actions">
+      <button class="btn btn--ghost" type="button" data-copy-link data-copy-href="#{{ anchorPrefix }}-{{ ep.data.number }}" data-copied-label="{{ 'Link copied' if lang == 'en' else 'Länk kopierad' }}">{{ 'Copy link' if lang == 'en' else 'Kopiera länk' }}</button>
+      {% if translationUrl %}<a class="link-chev" href="{{ translationUrl }}">{{ translationLabel }}</a>{% endif %}
     </div>
   </div>
 </article>

@@ -1,0 +1,140 @@
+---
+layout: layouts/base.njk
+title: Rethinking Society på svenska | Verdandi Weaver
+description: En svensk samlingsplats för videor, samtalsguider, arbetsblad och material för människor som vill tänka om samhället tillsammans.
+permalink: /sv/rethinking-society/index.html
+navSection: rethinking-society
+pageLang: sv
+canonical: https://verdandiweaver.com/sv/rethinking-society/
+hreflangAlternates:
+  en: https://verdandiweaver.com/rethinking-society/
+  sv: https://verdandiweaver.com/sv/rethinking-society/
+  x-default: https://verdandiweaver.com/rethinking-society/
+---
+{% from "rethinking-society/macros.njk" import episodeNav, episodeSection, langSwitch %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society · på svenska</p>
+  <h1 class="t-h1 hero__title t-balance">Rethinking Society på svenska</h1>
+  <p class="t-lead hero__lead t-pretty">En svensk samlingsplats för videor, samtalsguider, arbetsblad och material för människor som vill tänka om samhället tillsammans.</p>
+  <p class="pull t-balance" style="margin-top: var(--sp-7); font-size: var(--fs-xl);">Tänk om samhället var utformat kring människoliv, omsorg, värdighet och den levande världen?</p>
+
+  {{ langSwitch('sv') }}
+
+  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-5);">
+    <a class="btn btn--accent" href="/rethinking-society/" hreflang="en" lang="en">View Rethinking Society in English</a>
+  </div>
+
+  <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-5);">
+    <a class="btn" href="#avsnitt-1">Se serien</a>
+    <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Samlingsbiblioteket (på engelska)</a>
+    <a class="btn btn--ghost" href="/rethinking-society/support/">Stöd arbetet (på engelska)</a>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow stack-lg">
+    <header class="section-header">
+      <p class="t-eyebrow">Vad det är</p>
+      <h2 class="t-h2 t-balance">En fråga, inte ett färdigt svar</h2>
+    </header>
+    <p class="t-lead t-pretty center-text">Rethinking Society börjar med en enkel fråga: tänk om systemen som omger människolivet var utformade för att tjäna livet, istället för att livet förväntas tjäna dem?</p>
+    <p class="t-body t-pretty center-text">Projektet växer fram som längre avsnitt, korta videor, samtalsguider, arbetsblad, handledarmaterial, samtal online och – med tiden – samlingar och gemensamma resurser.</p>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow stack-lg">
+    <header class="section-header">
+      <p class="t-eyebrow">Varför det finns</p>
+      <h2 class="t-h2 t-balance">Att tillsammans se på det vi har ärvt</h2>
+    </header>
+    <p class="t-body t-pretty center-text">Rethinking Society finns för att undersöka de system och antaganden vi har ärvt – ekonomi, ledarskap, arbete, omsorg, utbildning, makt, tillhörighet, fred, teknik och den levande världen.</p>
+    <p class="t-body t-pretty center-text">Det talar inte om för människor vad de måste tycka. Det bjuder in människor att tillsammans se på vad våra system faktiskt skapar, vilka verkligheter som saknas, vad som har accepterats som oundvikligt, och vad andra val skulle kunna möjliggöra.</p>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Vad detta projekt inte är</p>
+    <span class="rule"></span>
+    <p class="t-lead t-pretty">Rethinking Society är inte ett politiskt parti, en fast ideologi eller en färdig ritning för en ny värld. Det är en plats för att ställa bättre frågor, föra in fler mänskliga verkligheter i rummet, och vidga vad vi tror att samhället kan vara.</p>
+  </div>
+</section>
+
+{% set episodesSV = collections.rethinkingEpisodeSV %}
+{% set episodesEN = collections.rethinkingEpisodeEN %}
+
+<section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Avsnitten</p>
+      <h2 class="t-h2 t-balance">Börja med en fråga</h2>
+    </header>
+
+    {% if episodesSV.length %}
+      {{ episodeNav(episodesSV, 'avsnitt', 'sv') }}
+      <div class="stack-xl" style="margin-top: var(--sp-7);">
+        {% for ep in episodesSV %}
+          {% set match = episodesEN | byTranslationKey(ep.data.translationKey) %}
+          {% set translationUrl = ("/rethinking-society/#episode-" + match.data.number|string) if match else null %}
+          {{ episodeSection(ep, 'sv', 'avsnitt', translationUrl, 'View in English') }}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="t-lead t-pretty center-text">Fler avsnitt på svenska är på väg.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Samlas kring frågorna</p>
+    <h2 class="t-h2 t-balance">Samlingsbiblioteket</h2>
+    <p class="t-lead t-pretty">Varje avsnitt kan bli mer än något vi bara tittar på. Samlingsbiblioteket innehåller samtalsguider, arbetsblad, handledarresurser, samtalsstartare och cirkelmaterial som är gjorda för att hjälpa människor utforska frågorna tillsammans.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/gathering-library/" style="margin-top: var(--sp-5);">Utforska samlingsbiblioteket (på engelska)</a>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Mer än en videoserie</p>
+      <h2 class="t-h2 t-balance">Ett projekt, flera dörrar</h2>
+    </header>
+    <div class="eco eco--compact">
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Titta</h4><p class="t-meta">Avsnitten själva.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Reflektera</h4><p class="t-meta">Sitt kvar med frågan.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Diskutera</h4><p class="t-meta">Ta in det i ett samtal.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Var värd</h4><p class="t-meta">Samla människor kring det.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Samlas</h4><p class="t-meta">Möt andra online.</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Stöd</h4><p class="t-meta">Hjälp det att fortsätta växa.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Stöd arbetet</p>
+    <p class="t-lead t-pretty">Rethinking Society skapas självständigt. Stöd hjälper till att finansiera filmning, redigering, webbkostnader, undertexter, översättningar, tillgängligt material, samlingar online, samt gratis eller lågkostnadsresurser för grupper.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/support/" style="margin-top: var(--sp-5);">Stöd Rethinking Society (på engelska)</a>
+  </div>
+</section>
+
+<section class="section tall fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">Framtiden behöver kanske inte börja med ett perfekt svar.<br/><em>Den kan börja när fler av oss är villiga att ställa bättre frågor tillsammans.</em></p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
+      <a class="btn" href="#avsnitt-1">Se serien</a>
+      <a class="btn btn--ghost" href="/rethinking-society/gathering-library/">Utforska biblioteket (på engelska)</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+{% block extraScripts %}
+<script src="/assets/rethinking-society.js?v={{ buildVersion }}"></script>
+{% endblock %}

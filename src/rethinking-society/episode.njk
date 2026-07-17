@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 navSection: rethinking-society
 pagination:
-  data: collections.rethinkingEpisode
+  data: collections.rethinkingEpisodeEN
   size: 1
   alias: ep
 permalink: "/rethinking-society/episodes/{{ ep.data.slug }}/index.html"
@@ -10,7 +10,7 @@ eleventyComputed:
   title: "{{ ep.data.title }} | Rethinking Society"
   description: "{{ ep.data.question }}"
 ---
-{% from "rethinking-society/macros.njk" import subnav, statusLabel, episodeNum %}
+{% from "rethinking-society/macros.njk" import subnav, episodeNum %}
 
 <div class="rs">
 
@@ -37,11 +37,12 @@ eleventyComputed:
       {% endif %}
     </div>
 
+    {% if ep.data.runtime or ep.data.date %}
     <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap: var(--sp-4);">
-      <span class="rs-status rs-status--{{ ep.data.status }}">{{ statusLabel(ep.data.status) }}</span>
       {% if ep.data.runtime %}<span class="t-meta">{{ ep.data.runtime }}</span>{% endif %}
       {% if ep.data.date %}<span class="t-meta">{{ ep.data.date | date("DD MMMM YYYY") }}</span>{% endif %}
     </div>
+    {% endif %}
 
     {% if ep.data.topics and ep.data.topics.length %}
     <div class="rs-tags" style="justify-content:center;">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
@@ -49,8 +50,8 @@ eleventyComputed:
 
     <span class="rule"></span>
 
-    {% if ep.data.intro %}
-    <p class="t-lead t-pretty center-text">{{ ep.data.intro }}</p>
+    {% if ep.data.short_description %}
+    <p class="t-lead t-pretty center-text">{{ ep.data.short_description }}</p>
     {% else %}
     <p class="t-lead t-pretty center-text"><em>A written introduction for this episode is being prepared.</em></p>
     {% endif %}
@@ -95,8 +96,8 @@ eleventyComputed:
   </div>
 </section>
 
-{% set prevEp = collections.rethinkingEpisode | byNumber(ep.data.number - 1) %}
-{% set nextEp = collections.rethinkingEpisode | byNumber(ep.data.number + 1) %}
+{% set prevEp = collections.rethinkingEpisodeEN | byNumber(ep.data.number - 1) %}
+{% set nextEp = collections.rethinkingEpisodeEN | byNumber(ep.data.number + 1) %}
 {% if prevEp or nextEp %}
 <section class="section fade-up">
   <div class="container narrow">
@@ -131,17 +132,5 @@ eleventyComputed:
 </div>
 
 {% block extraScripts %}
-<script>
-(function () {
-  var btn = document.querySelector('[data-copy-link]');
-  if (!btn) return;
-  btn.addEventListener('click', function () {
-    navigator.clipboard.writeText(window.location.href).then(function () {
-      var original = btn.textContent;
-      btn.textContent = 'Link copied';
-      setTimeout(function () { btn.textContent = original; }, 2000);
-    });
-  });
-})();
-</script>
+<script src="/assets/rethinking-society.js?v={{ buildVersion }}"></script>
 {% endblock %}

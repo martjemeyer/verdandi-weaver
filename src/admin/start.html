@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Start Here — Verdandi Weaver Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=block" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/tokens.css" />
+<link rel="stylesheet" href="/assets/components.css" />
+<style>
+  body { padding: var(--sp-8) var(--sp-5); max-width: 900px; margin-inline: auto; }
+  .start-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-6); margin-top: var(--sp-7); }
+  @media (max-width: 720px) { .start-grid { grid-template-columns: 1fr; } }
+  .start-links { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-5); }
+  .start-links a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--c-line); border-radius: var(--radius-md);
+    text-decoration: none; color: var(--c-ink);
+    font-family: var(--font-body); font-size: var(--fs-sm);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .start-links a:hover { border-color: var(--c-accent); background: var(--c-bg-elev); }
+  .start-links a span:last-child { color: var(--c-ink-mute); font-size: var(--fs-xs); }
+</style>
+</head>
+<body>
+
+  <p class="t-eyebrow">Verdandi Weaver Editor</p>
+  <h1 class="t-h1 t-balance">What would you like to work on?</h1>
+  <p class="t-lead t-pretty" style="margin-top: var(--sp-4);">Pick a section below to jump straight to adding or editing that kind of content. This is a shortcut into the same editor. <a class="link-chev" href="/admin/">Open the full editor</a> any time to see everything at once.</p>
+
+  <div class="start-grid">
+
+    <section class="card">
+      <div class="card__body">
+        <p class="t-eyebrow">🎬 Rethinking Society</p>
+        <h2 class="t-h3">The video series &amp; its pages</h2>
+        <p class="t-meta">Everything here lives on /rethinking-society/ (English) and /sv/rethinking-society/ (Swedish) — episodes, gatherings, and partners.</p>
+        <p class="t-meta" style="margin-top: var(--sp-2);"><strong>Adding an episode:</strong> the very first field you'll see is <strong>Language</strong> (English or Swedish) — pick that before anything else. To connect an English and Swedish version of the same episode, give both the same <strong>Translation key</strong> (e.g. <code>rethinking-society-episode-1</code>).</p>
+        <div class="start-links">
+          <a href="/admin/#/collections/rethinking-episodes/new"><span>Add a new episode (choose language first)</span><span>Episodes</span></a>
+          <a href="/admin/#/collections/rethinking-episodes"><span>Manage episodes — grouped &amp; filterable by language</span><span>Episodes</span></a>
+          <a href="/admin/#/collections/rethinking-events/new"><span>Add a Gather Online event</span><span>Gather Online</span></a>
+          <a href="/admin/#/collections/rethinking-events"><span>Manage Gather Online events</span><span>Gather Online</span></a>
+          <a href="/admin/#/collections/rethinking-partners/new"><span>Add a partner or supporter</span><span>Partners</span></a>
+          <a href="/admin/#/collections/rethinking-partners"><span>Manage partners &amp; supporters</span><span>Partners</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__body">
+        <p class="t-eyebrow">Main site</p>
+        <h2 class="t-h3">Books, Explore, About &amp; Frameworks</h2>
+        <p class="t-meta">Everything here lives on the rest of verdandiweaver.com.</p>
+        <div class="start-links">
+          <a href="/admin/#/collections/books/new"><span>Add a book</span><span>Books</span></a>
+          <a href="/admin/#/collections/books"><span>Manage books</span><span>Books</span></a>
+          <a href="/admin/#/collections/articles/new"><span>Add an article</span><span>Articles</span></a>
+          <a href="/admin/#/collections/articles"><span>Manage articles</span><span>Articles</span></a>
+          <a href="/admin/#/collections/ecosystem/new"><span>Add to Explore</span><span>Explore</span></a>
+          <a href="/admin/#/collections/ecosystem"><span>Manage Explore entries</span><span>Explore</span></a>
+          <a href="/admin/#/collections/frameworks/new"><span>Add a framework</span><span>Frameworks</span></a>
+          <a href="/admin/#/collections/frameworks"><span>Manage frameworks</span><span>Frameworks</span></a>
+          <a href="/admin/#/collections/about"><span>Edit the About page</span><span>About</span></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="t-meta center-text" style="margin-top: var(--sp-8);">Bookmark this page as your starting point — it always brings you here first.</p>
+
+</body>
+</html>
