@@ -101,7 +101,7 @@
   // is fetched, and only the body content is swapped — the nav
   // element is never touched so it never flickers or re-renders.
   // ----------------------------------------------------------------
-  const appScript = document.querySelector("script[src='/assets/app.js']");
+  const appScript = document.querySelector("script[src^='/assets/app.js']");
 
   async function navigate(href, { pushState = true } = {}) {
     let html;
