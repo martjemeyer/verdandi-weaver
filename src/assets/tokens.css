@@ -63,7 +63,7 @@
   --c-bg:        oklch(95.8% 0.008 155);  /* cool off-white, faint moss undertone (NOT beige) */
   --c-bg-elev:   oklch(97.8% 0.006 155);  /* card / raised — pale mineral */
   --c-bg-sunk:   oklch(91.5% 0.010 150);  /* sunken — soft stone with green wash */
-  --c-ink:       oklch(28%   0.014 165);  /* soft cool charcoal (slight forest tone) */
+  --c-ink:       oklch(34%   0.02  155);  /* softened deep olive-charcoal — 10.3:1 vs bg, AAA with room to spare */
   --c-ink-soft:  oklch(42%   0.014 160);  /* secondary */
   --c-ink-mute:  oklch(56%   0.012 155);  /* tertiary / meta — moss grey */
   --c-line:      oklch(83%   0.012 150);  /* hairline — stone */

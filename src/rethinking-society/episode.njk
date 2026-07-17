@@ -103,14 +103,14 @@ eleventyComputed:
     <div class="rs-episode-nav">
       {% if prevEp %}
       <a href="/rethinking-society/episodes/{{ prevEp.data.slug }}/">
-        <span class="t-meta">← Previous episode</span>
-        <span class="t-h4">{{ prevEp.data.title }}</span>
+        <span class="rs-episode-nav__label">Previous episode</span>
+        <span class="rs-episode-nav__title"><span aria-hidden="true">←</span> {{ prevEp.data.title }}</span>
       </a>
       {% else %}<span></span>{% endif %}
       {% if nextEp %}
       <a href="/rethinking-society/episodes/{{ nextEp.data.slug }}/" class="rs-episode-nav__next">
-        <span class="t-meta">Next episode →</span>
-        <span class="t-h4">{{ nextEp.data.title }}</span>
+        <span class="rs-episode-nav__label">Next episode</span>
+        <span class="rs-episode-nav__title">{{ nextEp.data.title }} <span aria-hidden="true">→</span></span>
       </a>
       {% endif %}
     </div>
