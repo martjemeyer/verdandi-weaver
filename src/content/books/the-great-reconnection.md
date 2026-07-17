@@ -1,7 +1,10 @@
 ---
 title: The Great Reconnection
 meta: Society · Relational · Repair
-description: A grounded look at the slow re-knitting of self, body, others, and world after a long age of disconnection.
+description: A gentle journey back to yourself, the Earth, and one another,
+  restoring connection, presence, and a more human way of living.
 cover: 2
-order: 2
+image: /assets/uploads/kindle-3.jpg
+href: https://www.amazon.com/dp/B0FZZT7CDF
+order: 1
 ---
