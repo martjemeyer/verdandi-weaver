@@ -38,7 +38,8 @@ resources:
     price_type: Free
     format: PDF
     type: One-Page Conversation Starter
-    title: Gratis Startpaket Avsnitt 1
+    title: Gratis startpaket · Avsnitt 1 | Ett land är inte en ekonomi med människor
+      som bihang
 translationKey: rethinking-society-episode-1
 status: published
 cta: Watch, then bring it to your next conversation.
