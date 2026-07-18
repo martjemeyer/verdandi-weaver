@@ -3,7 +3,7 @@ language: English
 series: Rethinking Society
 number: 2
 displayOrder: 2
-title: Maybe We Do Not Need Leaders. Maybe We Need Councils.
+title: Maybe We Do Not Need Leaders. Maybe We Need Councils | Rethinking Society Ep. 2
 question: >-
   What changes when more human realities are present before decisions are made?
 
