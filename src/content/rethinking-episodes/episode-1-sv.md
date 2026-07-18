@@ -26,7 +26,7 @@ thumbnail: null
 videoUrl: https://youtu.be/DT885HKSy7s
 resources:
   - language: Swedish
-    url: buymeacoffee.com/verdandiq/e/558033
+    url: https://buymeacoffee.com/verdandiq/e/558033
     price_type: Free
     format: PDF
     type: One-Page Conversation Starter

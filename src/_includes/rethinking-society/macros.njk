@@ -170,7 +170,7 @@
     <div class="rs-ep-section__resources rs-ep-section__spaced">
       {% for r in ep.data.resources %}
         {% if r.url %}
-          <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ resourceLabel(r.type, lang) }}</a>
+          <a class="btn btn--ghost" href="{{ r.url | absUrl }}" target="_blank" rel="noopener noreferrer">{{ resourceLabel(r.type, lang) }}</a>
         {% else %}
           <span class="t-meta">{{ resourceLabel(r.type, lang) }} — {{ 'available soon' if lang == 'en' else 'kommer snart' }}</span>
         {% endif %}

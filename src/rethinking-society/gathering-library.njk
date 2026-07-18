@@ -93,7 +93,7 @@ navSection: rethinking-society
               <h4 class="t-h4">{{ r.title or r.type }}</h4>
               <p class="t-meta">{{ r.type }}{% if r.format %} · {{ r.format }}{% endif %}{% if r.language %} · {{ r.language }}{% endif %}</p>
               {% if r.url %}
-                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">{{ resourceLabel(r.type, 'en') }} <span class="sr-only">(opens Buy Me a Coffee in a new tab)</span></a>
+                <a class="btn btn--ghost" href="{{ r.url | absUrl }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">{{ resourceLabel(r.type, 'en') }} <span class="sr-only">(opens Buy Me a Coffee in a new tab)</span></a>
               {% else %}
                 <p class="t-meta" style="margin-top: auto;"><em>Available soon</em></p>
               {% endif %}

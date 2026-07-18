@@ -27,7 +27,7 @@ resources:
     type: One-Page Conversation Starter
     format: PDF
     price_type: Free
-    url: buymeacoffee.com/verdandiq/e/558075
+    url: https://buymeacoffee.com/verdandiq/e/558075
     title: Gratis startpaket · Avsnitt 2 | Kanske behöver vi inte ledare. Kanske
       behöver vi råd
 translationKey: rethinking-society-episode-2

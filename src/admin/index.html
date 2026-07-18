@@ -175,13 +175,15 @@
     // With direct publish (no editorial workflow), Decap otherwise just
     // shows a small toast and leaves you on the same entry, which reads
     // as "did this actually save?" — this makes the result visible.
-    CMS.registerEventListener({
-      name: 'postSave',
-      handler: function () {
-        var match = window.location.hash.match(/^#\/collections\/[^/]+/);
-        if (match) window.location.hash = match[0];
-      },
-    });
+    // Registered under both event names since it isn't confirmed which
+    // one this Decap version actually fires for a direct "Publish now"
+    // on a brand-new entry — harmless to register both.
+    var goToCollectionList = function () {
+      var match = window.location.hash.match(/^#\/collections\/[^/]+/);
+      if (match) window.location.hash = match[0];
+    };
+    CMS.registerEventListener({ name: 'postSave', handler: goToCollectionList });
+    CMS.registerEventListener({ name: 'postPublish', handler: goToCollectionList });
 
     // ── Floating link back to the "Start Here" section chooser ─────
     // Appended directly to <body>, outside Decap's own mounted root,

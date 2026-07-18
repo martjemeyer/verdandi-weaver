@@ -53,6 +53,18 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : url;
   });
 
+  // CMS-entered external URLs (e.g. resource purchase links) sometimes
+  // get pasted without a protocol — "buymeacoffee.com/..." instead of
+  // "https://buymeacoffee.com/...". Without this, the browser treats
+  // it as a path relative to the current page and 404s on our own
+  // domain instead of leaving it. Absolute paths ("/foo") and
+  // mailto:/tel: links are left untouched.
+  eleventyConfig.addFilter("absUrl", function (url) {
+    if (!url) return "";
+    if (/^(https?:|mailto:|tel:|\/)/i.test(url)) return url;
+    return "https://" + url;
+  });
+
   // Turns free-typed tag text into a URL-safe slug for /tags/{slug}/.
   // Keeps å/ä/ö (not just a-z) since Swedish tags are first-class here.
   function slugify(input) {

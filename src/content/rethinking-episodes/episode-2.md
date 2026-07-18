@@ -23,7 +23,7 @@ resources:
   - language: English
     type: One-Page Conversation Starter
     price_type: Free
-    url: buymeacoffee.com/verdandiq/e/558071
+    url: https://buymeacoffee.com/verdandiq/e/558071
     format: PDF
     title: Free Starter Pack · Episode 2 | Maybe We Do Not Need Leaders. Maybe We
       Need Councils

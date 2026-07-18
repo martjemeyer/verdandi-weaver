@@ -247,7 +247,7 @@ collections:
             name: price_type
             widget: select
             options: ["Free", "Paid", "Bundle", "Coming soon"]
-          - { label: Buy Me a Coffee / product URL, name: url, widget: string, required: false, hint: "Leave empty to show 'Available soon'" }
+          - { label: Buy Me a Coffee / product URL, name: url, widget: string, required: false, hint: "Leave empty to show 'Available soon'. Must start with https:// — a bare address like buymeacoffee.com/... will 404 on the site.", pattern: ["^(https?://).+", "Must start with http:// or https://"] }
       - { label: Translation key, name: translationKey, widget: string, hint: "Step 9 — the SAME value on both the English and Swedish version of this episode connects them, e.g. rethinking-society-episode-1" }
       - label: Status
         name: status
@@ -282,11 +282,15 @@ collections:
         fields:
           - { label: Quote, name: text, widget: text }
           - { label: Timestamp, name: mark, widget: string, required: false, hint: "Optional — only if this exact quote also marks a moment in the video, e.g. 01:08" }
+        collapsed: true
+        summary: "{{fields.mark}} {{fields.text}}"
       - label: Timestamps
         name: timestamps
         widget: list
         required: false
         hint: "Chapter markers for the video — just a time and a short label PER entry. Click 'Add' below for each new one; don't paste a whole list into a single entry."
+        collapsed: true
+        summary: "{{fields.time}} — {{fields.label}}"
         fields:
           - { label: Time, name: time, widget: string, hint: "e.g. 01:08" }
           - { label: Label, name: label, widget: string, hint: "A short chapter title for this moment" }
