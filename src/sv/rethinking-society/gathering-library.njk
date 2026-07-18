@@ -1,0 +1,85 @@
+---
+layout: layouts/base.njk
+title: Samlingsbiblioteket på svenska | Rethinking Society
+description: Samtalsguider, arbetsblad, handledarresurser, samtalsstartare och cirkelmaterial på svenska, gjorda för att hjälpa människor utforska varje avsnitt tillsammans.
+permalink: /sv/rethinking-society/gathering-library/index.html
+navSection: rethinking-society
+pageLang: sv
+canonical: https://verdandiweaver.com/sv/rethinking-society/gathering-library/
+hreflangAlternates:
+  en: https://verdandiweaver.com/rethinking-society/gathering-library/
+  sv: https://verdandiweaver.com/sv/rethinking-society/gathering-library/
+  x-default: https://verdandiweaver.com/rethinking-society/gathering-library/
+---
+{% from "rethinking-society/macros.njk" import episodeNum %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society · på svenska</p>
+  <h1 class="t-h1 hero__title t-balance">Samlingsbiblioteket på svenska</h1>
+  <p class="t-lead hero__lead t-pretty">Samtalsguider, arbetsblad, handledarresurser, samtalsstartare och cirkelmaterial på svenska, gjorda för att hjälpa människor utforska varje avsnitt tillsammans.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    <a class="link-chev" href="/sv/rethinking-society/">Tillbaka till Rethinking Society på svenska</a>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container stack-xl">
+    <header class="section-header">
+      <p class="t-eyebrow">Per avsnitt</p>
+      <h2 class="t-h2 t-balance">Material för varje avsnitt</h2>
+    </header>
+
+    {% set episodes = collections.rethinkingEpisodeSV | sort(false, false, "data.number") %}
+    {% if episodes.length %}
+    {% for ep in episodes %}
+    <article class="card" id="{{ ep.data.slug }}" style="scroll-margin-top: 100px;">
+      <div class="card__body">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap: var(--sp-3);">
+          <span class="frame__num">{{ episodeNum(ep.data.number) }}</span>
+          <a class="link-chev link-chev--after" href="/sv/rethinking-society/#avsnitt-{{ ep.data.number }}">Till avsnittet</a>
+        </div>
+        <h3 class="t-h3">{{ ep.data.title }}</h3>
+        <p class="t-body t-pretty">{{ ep.data.question }}</p>
+
+        {% if ep.data.resources and ep.data.resources.length %}
+          <div class="grid grid-3" style="margin-top: var(--sp-3);">
+            {% for r in ep.data.resources %}
+            <div class="card card--quiet"><div class="card__body">
+              <p class="rs-price rs-price--{{ 'free' if r.price_type == 'Free' else 'paid' }}">{{ r.price_type }}</p>
+              <h4 class="t-h4">{{ r.title or r.type }}</h4>
+              <p class="t-meta">{{ r.type }}{% if r.format %} · {{ r.format }}{% endif %}</p>
+              {% if r.url %}
+                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">Hämta {{ r.type }} <span class="sr-only">(öppnar Buy Me a Coffee i en ny flik)</span></a>
+              {% else %}
+                <p class="t-meta" style="margin-top: auto;"><em>Kommer snart</em></p>
+              {% endif %}
+            </div></div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="t-meta" style="font-style: italic;">Material för detta avsnitt förbereds — kommer snart.</p>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+    {% else %}
+      <p class="t-lead t-pretty center-text">Fler material på svenska är på väg.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Var värd för ett samtal</p>
+    <h2 class="t-h2 t-balance">Du behöver inte ha alla svar</h2>
+    <p class="t-lead t-pretty">Du behöver inte vara expert för att samla människor kring en meningsfull fråga. Materialet är gjort för att hjälpa till att skapa genomtänkta, respektfulla samtal utan att en person behöver ha alla svaren.</p>
+    <a class="btn btn--ghost" href="/sv/rethinking-society/" style="margin-top: var(--sp-5);">Tillbaka till Rethinking Society på svenska</a>
+  </div>
+</section>
+
+</div>

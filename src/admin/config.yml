@@ -274,14 +274,22 @@ collections:
         required: false
         fields:
           - { label: Theme, name: theme, widget: string }
-      - label: Key quotations / chapter markers
+      - label: Key quotations
         name: quotes
         widget: list
         required: false
-        hint: "One quote or chapter marker PER entry — click 'Add' below for each new one. Do not paste a whole list of timestamps into a single Timestamp field; each timestamp needs its own entry so they display with proper spacing."
+        hint: "Genuine pull-quotes only — one PER entry, click 'Add' below for each new one. For simple chapter markers (just a time and a short label), use 'Timestamps' below instead — you don't need a quote to add a timestamp."
         fields:
-          - { label: Quote or chapter title, name: text, widget: text }
-          - { label: Timestamp, name: mark, widget: string, required: false, hint: "e.g. 01:08 — just this one timestamp" }
+          - { label: Quote, name: text, widget: text }
+          - { label: Timestamp, name: mark, widget: string, required: false, hint: "Optional — only if this exact quote also marks a moment in the video, e.g. 01:08" }
+      - label: Timestamps
+        name: timestamps
+        widget: list
+        required: false
+        hint: "Chapter markers for the video — just a time and a short label PER entry. Click 'Add' below for each new one; don't paste a whole list into a single entry."
+        fields:
+          - { label: Time, name: time, widget: string, hint: "e.g. 01:08" }
+          - { label: Label, name: label, widget: string, hint: "A short chapter title for this moment" }
 
   - name: rethinking-events
     label: "📅 Rethinking Society — Gather Online"

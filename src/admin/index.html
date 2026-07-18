@@ -120,6 +120,8 @@
       var thumbSrc = data.thumbnail ? props.getAsset(data.thumbnail).toString() : '';
       var topics   = Array.isArray(data.topics) ? data.topics : [];
       var resources = Array.isArray(data.resources) ? data.resources : [];
+      var keyQuestions = Array.isArray(data.key_questions) ? data.key_questions : [];
+      var timestamps = Array.isArray(data.timestamps) ? data.timestamps : [];
 
       return h('div', { className: 'preview-wrap' },
         h('p', { className: 'preview-label' }, 'Episode preview — ' + lang + ' · ' + (data.status || 'draft')),
@@ -137,6 +139,19 @@
         h('h2', { className: 't-h3', style: { marginBottom: '0.5rem' } }, data.title || 'Untitled episode'),
         h('p', { className: 't-lead', style: { marginBottom: '0.75rem' } }, data.question || ''),
         data.short_description ? h('p', { className: 't-body', style: { marginBottom: '0.75rem' } }, data.short_description) : null,
+        keyQuestions.length
+          ? h('ul', { style: { margin: '0 0 1rem', paddingLeft: '1.2em' } },
+              keyQuestions.map(function (q, i) { return h('li', { key: i, className: 't-body', style: { marginBottom: '0.4rem' } }, q); })
+            )
+          : null,
+        timestamps.length
+          ? h('div', { style: { marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' } },
+              timestamps.map(function (t, i) {
+                return h('p', { key: i, className: 't-body', style: { display: 'flex', gap: '0.75rem', margin: 0 } },
+                  h('span', { className: 't-meta', style: { flexShrink: 0 } }, t.time), t.label);
+              })
+            )
+          : null,
         topics.length
           ? h('div', { className: 'rs-tags', style: { marginBottom: '1rem' } },
               topics.map(function (t, i) { return h('span', { key: i }, t); })

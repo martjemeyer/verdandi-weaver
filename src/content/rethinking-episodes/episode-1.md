@@ -46,33 +46,33 @@ quotes:
   - text: The economy should serve human life. Human life should not exist to keep
       the economy running.
     mark: null
-  - text: A Country Is Not an Economy With People Attached to It
-    mark: 00:00
-  - text: A Country is not an economy with people attached to it. A Country is
-      people.
-    mark: 01:08
-  - text: Where Are the People in the Picture?
-    mark: 02:04
-  - text: We reversed the purpose
-    mark: 03:21
-  - text: Reconnection Has Consequences
-    mark: 11:52
-  - text: We Need a Compass
-    mark: 14:21
-  - text: The Economy Is a Tool
-    mark: 15:29
-  - text: How Should Success Be Measured?
-    mark: 18:21
-  - text: Can the Economy Grow While Society Falls Apart?
-    mark: 19:10
-  - text: A Society That Allows People to Remain Human
-    mark: 19:55
-  - text: Everything We Live Inside Was Created by People
-    mark: 22:14
-  - text: Put Life Back at the Centre
-    mark: 23:27
-  - text: "Next Episode: Do We Need Leaders or Councils?"
-    mark: 24:31
-  - text: What Do You See From Where You Stand?
-    mark: 25:18
+timestamps:
+  - time: "00:00"
+    label: A Country Is Not an Economy With People Attached to It
+  - time: "01:08"
+    label: A Country is not an economy with people attached to it. A Country is people.
+  - time: "02:04"
+    label: Where Are the People in the Picture?
+  - time: "03:21"
+    label: We reversed the purpose
+  - time: "11:52"
+    label: Reconnection Has Consequences
+  - time: "14:21"
+    label: We Need a Compass
+  - time: "15:29"
+    label: The Economy Is a Tool
+  - time: "18:21"
+    label: How Should Success Be Measured?
+  - time: "19:10"
+    label: Can the Economy Grow While Society Falls Apart?
+  - time: "19:55"
+    label: A Society That Allows People to Remain Human
+  - time: "22:14"
+    label: Everything We Live Inside Was Created by People
+  - time: "23:27"
+    label: Put Life Back at the Centre
+  - time: "24:31"
+    label: "Next Episode: Do We Need Leaders or Councils?"
+  - time: "25:18"
+    label: What Do You See From Where You Stand?
 ---

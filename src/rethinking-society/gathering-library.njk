@@ -73,7 +73,7 @@ navSection: rethinking-society
       <h2 class="t-h2 t-balance">Materials for each episode</h2>
     </header>
 
-    {% set episodes = collections.rethinkingEpisode | sort(false, false, "data.number") %}
+    {% set episodes = collections.rethinkingEpisodeEN | sort(false, false, "data.number") %}
     {% for ep in episodes %}
     <article class="card" id="{{ ep.data.slug }}" style="scroll-margin-top: 100px;">
       <div class="card__body">
