@@ -16,8 +16,12 @@ short_description: Avsnitt 1 frågar vad ett land egentligen är till för. Det
   viktigare än hälsa, omsorg, tid, värdighet och de liv människor faktiskt
   lever.
 topics:
-  - Ekonomi · Mänskligt välbefinnande · Omsorg · Samhällssystem · Mänsklig
-    värdighet · Att tänka om framgång
+  - Ekonomi
+  - Mänskligt välbefinnande
+  - Omsorg
+  - Samhällssystem
+  - Mänsklig värdighet
+  - Att tänka om framgång
 thumbnail: null
 videoUrl: https://youtu.be/DT885HKSy7s
 resources:

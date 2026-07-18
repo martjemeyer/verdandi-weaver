@@ -45,7 +45,7 @@
     <h3 class="t-h3">{{ ep.data.title }}</h3>
     <p class="t-body t-pretty">{{ ep.data.question }}</p>
     {% if ep.data.topics and ep.data.topics.length %}
-    <div class="rs-tags">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    <div class="rs-tags">{% for t in ep.data.topics %}<a href="/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</div>
     {% endif %}
     <div style="display:flex; gap: var(--sp-4); flex-wrap:wrap; align-items:center; margin-top:auto; padding-top: var(--sp-2);">
       {% if ep.data.videoUrl %}
@@ -135,7 +135,7 @@
     {% if ep.data.short_description %}<p class="t-body t-pretty rs-ep-section__spaced">{{ ep.data.short_description }}</p>{% endif %}
 
     {% if ep.data.topics and ep.data.topics.length %}
-    <div class="rs-tags rs-ep-section__spaced">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    <div class="rs-tags rs-ep-section__spaced">{% for t in ep.data.topics %}<a href="/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</div>
     {% endif %}
 
     {% if ep.data.themes and ep.data.themes.length %}

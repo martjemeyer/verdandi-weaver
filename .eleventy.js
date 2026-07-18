@@ -52,6 +52,37 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : url;
   });
 
+  // Turns free-typed tag text into a URL-safe slug for /tags/{slug}/.
+  // Keeps å/ä/ö (not just a-z) since Swedish tags are first-class here.
+  function slugify(input) {
+    return String(input || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9åäö]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+  eleventyConfig.addFilter("slugify", slugify);
+  eleventyConfig.addFilter("slugifyList", (arr) =>
+    (Array.isArray(arr) ? arr : []).map(slugify).filter(Boolean).join(",")
+  );
+
+  // Unique {slug, label} tags across a collection of entries — used to
+  // build the Explore page's filter chips from whatever tags editors
+  // actually typed, instead of a fixed preset list.
+  eleventyConfig.addFilter("uniqueTopics", function (entries) {
+    const bySlug = new Map();
+    (Array.isArray(entries) ? entries : []).forEach((entry) => {
+      (entry.data.topics || []).forEach((t) => {
+        const label = String(t || "").trim();
+        const slug = slugify(label);
+        if (!slug || bySlug.has(slug)) return;
+        bySlug.set(slug, label);
+      });
+    });
+    return Array.from(bySlug, ([slug, label]) => ({ slug, label })).sort((a, b) =>
+      a.label.localeCompare(b.label)
+    );
+  });
+
   // Rethinking Society episodes, scoped by language so each language
   // page only ever sees its own published entries — never a mix.
   function rsEpisodes(api, language) {
@@ -63,6 +94,60 @@ module.exports = function (eleventyConfig) {
   }
   eleventyConfig.addCollection("rethinkingEpisodeEN", (api) => rsEpisodes(api, "English"));
   eleventyConfig.addCollection("rethinkingEpisodeSV", (api) => rsEpisodes(api, "Swedish"));
+
+  // Site-wide tag index: one entry per unique tag, gathering everything
+  // — Rethinking Society episodes (both languages) and Explore/ecosystem
+  // entries — that shares it, so a single tag page can list all of it
+  // regardless of content type. Books are not included yet: their
+  // "Tags / Meta" field is a single free-text string, not a real list,
+  // so there is nothing structured to index there.
+  eleventyConfig.addCollection("tagIndex", (api) => {
+    const bySlug = new Map();
+    function add(rawLabel, item) {
+      const label = String(rawLabel || "").trim();
+      if (!label) return;
+      const slug = slugify(label);
+      if (!slug) return;
+      if (!bySlug.has(slug)) bySlug.set(slug, { slug, label, items: [] });
+      bySlug.get(slug).items.push(item);
+    }
+
+    rsEpisodes(api, "English").forEach((ep) => {
+      (ep.data.topics || []).forEach((t) =>
+        add(t, {
+          title: ep.data.title,
+          href: `/rethinking-society/episodes/${ep.data.slug}/`,
+          typeLabel: "Rethinking Society",
+          external: false,
+        })
+      );
+    });
+    rsEpisodes(api, "Swedish").forEach((ep) => {
+      (ep.data.topics || []).forEach((t) =>
+        add(t, {
+          title: ep.data.title,
+          href: `/sv/rethinking-society/#avsnitt-${ep.data.number}`,
+          typeLabel: "Rethinking Society",
+          external: false,
+        })
+      );
+    });
+
+    api.getFilteredByTag("ecosystem").forEach((entry) => {
+      const href = entry.data.href || entry.data.youtube_url || null;
+      if (!href) return;
+      (entry.data.topics || []).forEach((t) =>
+        add(t, {
+          title: entry.data.title,
+          href,
+          typeLabel: entry.data.type_label || "Explore",
+          external: /^https?:\/\//.test(href),
+        })
+      );
+    });
+
+    return Array.from(bySlug.values()).sort((a, b) => a.label.localeCompare(b.label));
+  });
 
   return {
     dir: {

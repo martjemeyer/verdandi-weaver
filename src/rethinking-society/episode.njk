@@ -51,7 +51,7 @@ eleventyComputed:
     {% endif %}
 
     {% if ep.data.topics and ep.data.topics.length %}
-    <div class="rs-tags" style="justify-content:center;">{% for t in ep.data.topics %}<span>{{ t }}</span>{% endfor %}</div>
+    <div class="rs-tags" style="justify-content:center;">{% for t in ep.data.topics %}<a href="/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</div>
     {% endif %}
 
     <span class="rule"></span>

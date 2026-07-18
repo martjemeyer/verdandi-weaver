@@ -16,16 +16,9 @@ permalink: /ecosystem.html
 
     <div class="lens" data-lens role="tablist" aria-label="Themes">
       <button class="lens__chip lens__chip--all" data-theme="all" aria-pressed="true">all of it</button>
-      <button class="lens__chip" data-theme="nervous-systems"   aria-pressed="false">nervous systems</button>
-      <button class="lens__chip" data-theme="fragmentation"     aria-pressed="false">fragmentation</button>
-      <button class="lens__chip" data-theme="awakening"         aria-pressed="false">awakening</button>
-      <button class="lens__chip" data-theme="society"           aria-pressed="false">society</button>
-      <button class="lens__chip" data-theme="relationships"     aria-pressed="false">relationships</button>
-      <button class="lens__chip" data-theme="emotional-ecology" aria-pressed="false">emotional ecology</button>
-      <button class="lens__chip" data-theme="grounded-wholeness" aria-pressed="false">grounded wholeness</button>
-      <button class="lens__chip" data-theme="collective-life"   aria-pressed="false">collective life</button>
-      <button class="lens__chip" data-theme="humanity"          aria-pressed="false">humanity</button>
-      <button class="lens__chip" data-theme="eco-wholeness"     aria-pressed="false">Eco-Wholeness</button>
+      {% for t in collections.ecosystem | uniqueTopics %}
+      <button class="lens__chip" data-theme="{{ t.slug }}" aria-pressed="false">{{ t.label }}</button>
+      {% endfor %}
     </div>
 
     <div class="tabs" data-tabs role="tablist" aria-label="Content kinds">
@@ -48,7 +41,7 @@ permalink: /ecosystem.html
       <a class="ent ent--{{ entry.data.kind }}{% if entry.data.wide %} ent--wide{% endif %}{% if entry.data.tall %} ent--tall{% endif %}"
          href="{{ cardHref }}"
          data-kind="{{ entry.data.kind }}"
-         data-tags="{{ entry.data.themes | join(',') }}">
+         data-tags="{{ entry.data.topics | slugifyList }}">
 
         <div class="ent__media{% if entry.data.orientation == 'portrait' %} ent__media--portrait{% endif %}">
           {% if entry.data.image %}
@@ -89,8 +82,8 @@ permalink: /ecosystem.html
         {% endif %}
         <div class="ent__foot">
           <div class="ent__tags">
-            {% for theme in entry.data.themes %}
-            <span>{{ theme | replace("-", " ") }}</span>
+            {% for topic in entry.data.topics %}
+            <span>{{ topic }}</span>
             {% endfor %}
           </div>
           <span>{{ entry.data.cta }}</span>
@@ -150,12 +143,9 @@ permalink: /ecosystem.html
   if (!lens || !tabs || !stream) return;
 
   let activeTheme = 'all';
+  let activeThemeLabel = '';
   let activeKind  = 'all';
   const cards = Array.from(stream.children);
-
-  function pretty(t) {
-    return t.replace(/-/g, ' ').replace(/eco wholeness/, 'Eco-Wholeness');
-  }
 
   function applyFilter() {
     let shown = 0;
@@ -169,7 +159,7 @@ permalink: /ecosystem.html
     let msg = `showing ${shown} ${shown === 1 ? 'entry' : 'entries'}`;
     const parts = [];
     if (activeKind  !== 'all') parts.push(activeKind === 'reflect' ? 'reflections' : activeKind === 'read' ? 'deep reads' : activeKind === 'video' ? 'videos' : activeKind === 'frame' ? 'frameworks' : activeKind === 'guide' ? 'guides' : 'gatherings');
-    if (activeTheme !== 'all') parts.push('through "' + pretty(activeTheme) + '"');
+    if (activeTheme !== 'all') parts.push('through "' + activeThemeLabel + '"');
     if (parts.length) msg += ' · ' + parts.join(' ');
     count.textContent = msg;
   }
@@ -178,6 +168,7 @@ permalink: /ecosystem.html
     const b = e.target.closest('[data-theme]');
     if (!b) return;
     activeTheme = b.dataset.theme;
+    activeThemeLabel = b.textContent.trim();
     lens.querySelectorAll('[data-theme]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
     applyFilter();
   });

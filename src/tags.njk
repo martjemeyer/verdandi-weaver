@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.tagIndex
+  size: 1
+  alias: tagEntry
+permalink: "/tags/{{ tagEntry.slug }}/index.html"
+eleventyComputed:
+  title: "{{ tagEntry.label }} — Tagged | Verdandi Weaver"
+  description: "Everything on Verdandi Weaver tagged “{{ tagEntry.label }}”."
+---
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Tagged</p>
+  <h1 class="t-h1 hero__title t-balance">{{ tagEntry.label }}</h1>
+  <p class="t-lead hero__lead t-pretty">{{ tagEntry.items.length }} thing{% if tagEntry.items.length != 1 %}s{% endif %} across Verdandi Weaver connected to &ldquo;{{ tagEntry.label }}&rdquo;.</p>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    <div class="grid grid-3">
+      {% for item in tagEntry.items %}
+      <a class="card" href="{{ item.href }}"{% if item.external %} target="_blank" rel="noopener noreferrer"{% endif %} style="text-decoration:none; color:inherit;">
+        <div class="card__body">
+          <p class="t-eyebrow">{{ item.typeLabel }}</p>
+          <h3 class="t-h3">{{ item.title }}</h3>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <a class="btn btn--ghost" href="/ecosystem.html">Explore everything</a>
+  </div>
+</section>
