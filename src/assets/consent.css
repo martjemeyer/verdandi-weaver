@@ -163,16 +163,20 @@
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s ease;
 }
-.vw-consent-category__label:has(input:checked) .vw-switch {
+/* The checkbox is a sibling of the label (not nested inside it) so the
+   visible switch can stay perfectly circular while the real control
+   keeps a normal, screen-reader-friendly hit target — so :has() here
+   is scoped to their shared parent row, not the label itself. */
+.vw-consent-category__row:has(input:checked) .vw-switch {
   background: var(--c-accent);
 }
-.vw-consent-category__label:has(input:checked) .vw-switch__thumb {
+.vw-consent-category__row:has(input:checked) .vw-switch__thumb {
   transform: translateX(calc(var(--sw-w) - var(--sw-h)));
 }
 .vw-switch--locked { background: var(--c-accent); opacity: 0.55; }
 .vw-switch--locked .vw-switch__thumb { transform: translateX(calc(var(--sw-w) - var(--sw-h))); }
 
-.vw-consent-category__label:has(input:focus-visible) .vw-switch {
+.vw-consent-category__row:has(input:focus-visible) .vw-switch {
   outline: 2px solid var(--c-accent);
   outline-offset: 2px;
 }
