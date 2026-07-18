@@ -32,7 +32,13 @@ topics:
     värdighet · Att tänka om framgång
 thumbnail: null
 videoUrl: https://youtu.be/DT885HKSy7s
-resources: []
+resources:
+  - language: Swedish
+    url: buymeacoffee.com/verdandiq/e/558033
+    price_type: Free
+    format: PDF
+    type: One-Page Conversation Starter
+    title: Gratis Startpaket Avsnitt 1
 translationKey: rethinking-society-episode-1
 status: published
 cta: Watch, then bring it to your next conversation.
