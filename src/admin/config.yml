@@ -4,8 +4,6 @@ backend:
   branch: main
   base_url: https://verdandi-cms-auth.martjemeyer.workers.dev
 
-publish_mode: editorial_workflow
-
 media_folder: src/assets/uploads
 public_folder: /assets/uploads
 
