@@ -14,12 +14,11 @@ permalink: /ecosystem.html
 <section class="section fade-up">
   <div class="container">
 
-    <div class="lens" data-lens role="tablist" aria-label="Themes">
-      <button class="lens__chip lens__chip--all" data-theme="all" aria-pressed="true">all of it</button>
-      {% for t in collections.ecosystem | uniqueTopics %}
-      <button class="lens__chip" data-theme="{{ t.slug }}" aria-pressed="false">{{ t.label }}</button>
+    <nav class="lens" aria-label="Browse by tag">
+      {% for t in collections.tagIndex %}
+      <a class="lens__chip" href="/tags/{{ t.slug }}/">{{ t.label }}</a>
       {% endfor %}
-    </div>
+    </nav>
 
     <div class="tabs" data-tabs role="tablist" aria-label="Content kinds">
       <button data-kind="all"     aria-pressed="true">everything</button>
@@ -40,8 +39,7 @@ permalink: /ecosystem.html
       {% if not cardHref and entry.data.kind == 'video' %}{% set cardHref = entry.data.youtube_url %}{% endif %}
       <a class="ent ent--{{ entry.data.kind }}{% if entry.data.wide %} ent--wide{% endif %}{% if entry.data.tall %} ent--tall{% endif %}"
          href="{{ cardHref }}"
-         data-kind="{{ entry.data.kind }}"
-         data-tags="{{ entry.data.topics | slugifyList }}">
+         data-kind="{{ entry.data.kind }}">
 
         <div class="ent__media{% if entry.data.orientation == 'portrait' %} ent__media--portrait{% endif %}">
           {% if entry.data.image %}
@@ -136,42 +134,28 @@ permalink: /ecosystem.html
 {% block extraScripts %}
 <script>
 (function () {
-  const lens   = document.querySelector('[data-lens]');
   const tabs   = document.querySelector('[data-tabs]');
   const stream = document.querySelector('[data-stream]');
   const count  = document.querySelector('[data-count]');
-  if (!lens || !tabs || !stream) return;
+  if (!tabs || !stream) return;
 
-  let activeTheme = 'all';
-  let activeThemeLabel = '';
   let activeKind  = 'all';
   const cards = Array.from(stream.children);
 
   function applyFilter() {
     let shown = 0;
     cards.forEach(c => {
-      const tags    = (c.dataset.tags || '').split(',');
       const okKind  = activeKind  === 'all' || activeKind  === c.dataset.kind;
-      const okTheme = activeTheme === 'all' || tags.includes(activeTheme);
-      c.hidden = !(okKind && okTheme);
+      c.hidden = !okKind;
       if (!c.hidden) shown++;
     });
     let msg = `showing ${shown} ${shown === 1 ? 'entry' : 'entries'}`;
-    const parts = [];
-    if (activeKind  !== 'all') parts.push(activeKind === 'reflect' ? 'reflections' : activeKind === 'read' ? 'deep reads' : activeKind === 'video' ? 'videos' : activeKind === 'frame' ? 'frameworks' : activeKind === 'guide' ? 'guides' : 'gatherings');
-    if (activeTheme !== 'all') parts.push('through "' + activeThemeLabel + '"');
-    if (parts.length) msg += ' · ' + parts.join(' ');
+    if (activeKind !== 'all') {
+      msg += ' · ' + (activeKind === 'reflect' ? 'reflections' : activeKind === 'read' ? 'deep reads' : activeKind === 'video' ? 'videos' : activeKind === 'frame' ? 'frameworks' : activeKind === 'guide' ? 'guides' : 'gatherings');
+    }
     count.textContent = msg;
   }
 
-  lens.addEventListener('click', e => {
-    const b = e.target.closest('[data-theme]');
-    if (!b) return;
-    activeTheme = b.dataset.theme;
-    activeThemeLabel = b.textContent.trim();
-    lens.querySelectorAll('[data-theme]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    applyFilter();
-  });
   tabs.addEventListener('click', e => {
     const b = e.target.closest('[data-kind]');
     if (!b) return;

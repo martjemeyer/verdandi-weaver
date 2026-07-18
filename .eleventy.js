@@ -61,27 +61,6 @@ module.exports = function (eleventyConfig) {
       .replace(/^-+|-+$/g, "");
   }
   eleventyConfig.addFilter("slugify", slugify);
-  eleventyConfig.addFilter("slugifyList", (arr) =>
-    (Array.isArray(arr) ? arr : []).map(slugify).filter(Boolean).join(",")
-  );
-
-  // Unique {slug, label} tags across a collection of entries — used to
-  // build the Explore page's filter chips from whatever tags editors
-  // actually typed, instead of a fixed preset list.
-  eleventyConfig.addFilter("uniqueTopics", function (entries) {
-    const bySlug = new Map();
-    (Array.isArray(entries) ? entries : []).forEach((entry) => {
-      (entry.data.topics || []).forEach((t) => {
-        const label = String(t || "").trim();
-        const slug = slugify(label);
-        if (!slug || bySlug.has(slug)) return;
-        bySlug.set(slug, label);
-      });
-    });
-    return Array.from(bySlug, ([slug, label]) => ({ slug, label })).sort((a, b) =>
-      a.label.localeCompare(b.label)
-    );
-  });
 
   // Rethinking Society episodes, scoped by language so each language
   // page only ever sees its own published entries — never a mix.
