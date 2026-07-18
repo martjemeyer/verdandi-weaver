@@ -11,7 +11,7 @@ hreflangAlternates:
   sv: https://verdandiweaver.com/sv/rethinking-society/gathering-library/
   x-default: https://verdandiweaver.com/rethinking-society/gathering-library/
 ---
-{% from "rethinking-society/macros.njk" import episodeNum %}
+{% from "rethinking-society/macros.njk" import episodeNum, resourceLabel %}
 
 <div class="rs">
 
@@ -36,6 +36,7 @@ hreflangAlternates:
 
     {% set episodes = collections.rethinkingEpisodeSV | sort(false, false, "data.number") %}
     {% if episodes.length %}
+    <div class="grid grid-3">
     {% for ep in episodes %}
     <article class="card" id="{{ ep.data.slug }}" style="scroll-margin-top: 100px;">
       <div class="card__body">
@@ -47,14 +48,14 @@ hreflangAlternates:
         <p class="t-body t-pretty">{{ ep.data.question }}</p>
 
         {% if ep.data.resources and ep.data.resources.length %}
-          <div class="grid grid-3" style="margin-top: var(--sp-3);">
+          <div style="display:flex; flex-direction:column; gap: var(--sp-4); margin-top: var(--sp-4);">
             {% for r in ep.data.resources %}
             <div class="card card--quiet"><div class="card__body">
               <p class="rs-price rs-price--{{ 'free' if r.price_type == 'Free' else 'paid' }}">{{ r.price_type }}</p>
               <h4 class="t-h4">{{ r.title or r.type }}</h4>
               <p class="t-meta">{{ r.type }}{% if r.format %} · {{ r.format }}{% endif %}</p>
               {% if r.url %}
-                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">Hämta {{ r.type }} <span class="sr-only">(öppnar Buy Me a Coffee i en ny flik)</span></a>
+                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">{{ resourceLabel(r.type, 'sv') }} <span class="sr-only">(öppnar Buy Me a Coffee i en ny flik)</span></a>
               {% else %}
                 <p class="t-meta" style="margin-top: auto;"><em>Kommer snart</em></p>
               {% endif %}
@@ -67,6 +68,7 @@ hreflangAlternates:
       </div>
     </article>
     {% endfor %}
+    </div>
     {% else %}
       <p class="t-lead t-pretty center-text">Fler material på svenska är på väg.</p>
     {% endif %}

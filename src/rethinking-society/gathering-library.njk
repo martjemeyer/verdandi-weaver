@@ -5,7 +5,7 @@ description: A growing library of discussion guides, worksheets, facilitator res
 permalink: /rethinking-society/gathering-library/index.html
 navSection: rethinking-society
 ---
-{% from "rethinking-society/macros.njk" import subnav, episodeNum %}
+{% from "rethinking-society/macros.njk" import subnav, episodeNum, resourceLabel %}
 
 <div class="rs">
 
@@ -74,6 +74,7 @@ navSection: rethinking-society
     </header>
 
     {% set episodes = collections.rethinkingEpisodeEN | sort(false, false, "data.number") %}
+    <div class="grid grid-3">
     {% for ep in episodes %}
     <article class="card" id="{{ ep.data.slug }}" style="scroll-margin-top: 100px;">
       <div class="card__body">
@@ -85,14 +86,14 @@ navSection: rethinking-society
         <p class="t-body t-pretty">{{ ep.data.question }}</p>
 
         {% if ep.data.resources and ep.data.resources.length %}
-          <div class="grid grid-3" style="margin-top: var(--sp-3);">
+          <div style="display:flex; flex-direction:column; gap: var(--sp-4); margin-top: var(--sp-4);">
             {% for r in ep.data.resources %}
             <div class="card card--quiet"><div class="card__body">
               <p class="rs-price rs-price--{{ 'free' if r.price_type == 'Free' else 'paid' }}">{{ r.price_type }}</p>
               <h4 class="t-h4">{{ r.title or r.type }}</h4>
               <p class="t-meta">{{ r.type }}{% if r.format %} · {{ r.format }}{% endif %}{% if r.language %} · {{ r.language }}{% endif %}</p>
               {% if r.url %}
-                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">Get the {{ r.type }} <span class="sr-only">(opens Buy Me a Coffee in a new tab)</span></a>
+                <a class="btn btn--ghost" href="{{ r.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: auto;">{{ resourceLabel(r.type, 'en') }} <span class="sr-only">(opens Buy Me a Coffee in a new tab)</span></a>
               {% else %}
                 <p class="t-meta" style="margin-top: auto;"><em>Available soon</em></p>
               {% endif %}
@@ -105,6 +106,7 @@ navSection: rethinking-society
       </div>
     </article>
     {% endfor %}
+    </div>
   </div>
 </section>
 

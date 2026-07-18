@@ -226,7 +226,15 @@ collections:
           - label: Resource type
             name: type
             widget: select
-            options: ["One-Page Conversation Starter", "Discussion Guide", "Worksheet Pack", "Facilitator Edition", "Circle Kit", "Print-Shop Edition", "Complete Episode Bundle"]
+            hint: "Shown to visitors as \"Free Starter Pack\" / \"Gratis startpaket\" — the label here is just this internal type name, unchanged so existing entries keep working."
+            options:
+              - { label: "Free Starter Pack", value: "One-Page Conversation Starter" }
+              - { label: "Discussion Guide", value: "Discussion Guide" }
+              - { label: "Worksheet Pack", value: "Worksheet Pack" }
+              - { label: "Facilitator Edition", value: "Facilitator Edition" }
+              - { label: "Circle Kit", value: "Circle Kit" }
+              - { label: "Print-Shop Edition", value: "Print-Shop Edition" }
+              - { label: "Complete Episode Bundle", value: "Complete Episode Bundle" }
           - { label: Title, name: title, widget: string }
           - label: Language
             name: language
