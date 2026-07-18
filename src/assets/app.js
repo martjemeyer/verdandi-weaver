@@ -33,6 +33,54 @@
   });
 
   // ----------------------------------------------------------------
+  // Newsletter ("Stay near") forms — delegated so every instance
+  // (Explore, Circles, Spaces) works identically without rebinding
+  // after an SPA navigation. Submits are real: they email the site
+  // owner via newsletter-handler.php, clearly labelled as a newsletter
+  // signup so it's never mistaken for a contact-form message.
+  // ----------------------------------------------------------------
+  document.addEventListener("submit", (e) => {
+    const form = e.target.closest(".stay__form");
+    if (!form) return;
+    e.preventDefault();
+
+    const button = form.querySelector("button");
+    const original = button.textContent;
+    const status = form.parentElement.querySelector("[data-stay-status]");
+    button.disabled = true;
+    button.textContent = "Sending…";
+
+    const data = new FormData(form);
+    data.set("page", document.title);
+
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    })
+      .then((res) => res.json().then((json) => ({ ok: res.ok, json })))
+      .then(({ ok, json }) => {
+        if (!ok || !json.ok) throw new Error(json.message || "Request failed");
+        form.reset();
+        button.textContent = "kept near";
+        if (status) {
+          status.textContent = json.message || "Thank you — you're on the list.";
+          status.setAttribute("data-state", "ok");
+        }
+      })
+      .catch((err) => {
+        button.textContent = original;
+        if (status) {
+          status.textContent = err.message || "Something went wrong. Please try again.";
+          status.setAttribute("data-state", "error");
+        }
+      })
+      .finally(() => {
+        button.disabled = false;
+      });
+  });
+
+  // ----------------------------------------------------------------
   // Path normalization — mirrors the "activeIf" Nunjucks filter so
   // client-side nav state agrees with the server-rendered state.
   // Trailing-slash directory URLs (e.g. /rethinking-society/) must

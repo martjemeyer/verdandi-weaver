@@ -3,6 +3,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/admin");
   eleventyConfig.addPassthroughCopy("src/contact-handler.php");
+  eleventyConfig.addPassthroughCopy("src/newsletter-handler.php");
   eleventyConfig.addPassthroughCopy("src/vendor");
 
   eleventyConfig.addFilter("activeIf", function (href, pageUrl) {

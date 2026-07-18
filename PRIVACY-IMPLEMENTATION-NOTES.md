@@ -94,10 +94,12 @@ site owner (and, if desired, a lawyer) to review the following, all of which are
 1. **Google Fonts** load from Google's CDN on every page view, before any consent choice is possible, and
    expose the visitor's IP address to Google. This was *disclosed*, not fixed — self-hosting the two font
    files would remove it entirely but is a build/asset change outside this task's scope.
-2. **The "Stay near" email fields** (`circles.njk`, `ecosystem.njk`, `spaces.njk`) are decorative — they do not
-   send data anywhere today. If a real newsletter provider is ever wired up, the audit, this file, the Privacy
-   Policy, and `/cookies.html` all need to be updated *before* it goes live, and it must never auto-subscribe
-   someone via another form.
+2. **The "Stay near" email fields** (`circles.njk`, `ecosystem.njk`, `spaces.njk`) now email the site owner
+   directly via `newsletter-handler.php` (added 18 July 2026) — but this is only a notification, not a real
+   mailing list: there is no automated recurring send and no unsubscribe mechanism behind it yet, even though
+   the on-page copy promises "A letter every few weeks... Unsubscribe with one tap." If a real newsletter
+   provider is wired up later, the audit, this file, the Privacy Policy, and `/cookies.html` all need to be
+   updated *before* it goes live, and it must never auto-subscribe someone via another form.
 3. **Amazon and episode-resource links** are outbound-only and require no consent, but the exact nature of the
    Amazon relationship (affiliate program or not) and the exact provider behind resource purchase links were
    not confirmed by this audit — see the audit document.

@@ -53,7 +53,7 @@ a click, not on consent.
 | Location | What it is | Wired to a real backend? |
 |---|---|---|
 | `src/contact.njk` | Contact form (Name optional, Email required, Message required) | **Yes.** Submits via `fetch` to `/contact-handler.php`, which uses vendored PHPMailer over SMTP (Titan Mail) to email `verdandi@verdandiweaver.com`. SMTP credentials come from a gitignored `src/smtp-config.php` generated at deploy time from GitHub Actions secrets. Includes a honeypot field (`_gotcha`) for spam. No analytics/marketing tool ever sees form data. |
-| `src/circles.njk`, `src/ecosystem.njk`, `src/spaces.njk` (`.stay__form`, "Stay near") | Email-collection form styled as a newsletter signup | **No.** `onsubmit="event.preventDefault(); ...textContent='kept near';"` — the handler only rewrites the button text. There is no `fetch`/`action`, no provider, no data is sent or stored anywhere. It is a visual mockup only. |
+| `src/circles.njk`, `src/ecosystem.njk`, `src/spaces.njk` (`.stay__form`, "Stay near") | Email-collection form for a newsletter signup | **Yes, as of 18 July 2026.** Submits via `fetch` to `/newsletter-handler.php`, which uses the same vendored PHPMailer/SMTP setup as the contact form to email `verdandi@verdandiweaver.com`, subject-lined `[Newsletter signup]` so it's never confused with a contact message. Includes a honeypot field (`_gotcha`). There is still no automated mailing-list/newsletter-sending service — this only notifies the site owner that someone wants to receive updates; no third party receives the address, and no recurring emails are sent automatically. |
 | `src/admin/` (Decap CMS) | Content-management backend at `/admin`, GitHub backend | Not visitor-facing — ordinary site visitors never load this path, so it is out of scope for visitor cookie consent. Loads `unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js` only on that admin path. |
 | Booking / payment / donation | — | **None found.** No booking widget, payment processor, or donation service integration exists anywhere in the codebase. |
 
@@ -105,11 +105,12 @@ input from Sara Leidelmeijer / Verdandi Weaver, and are flagged here rather than
    change outside the scope of "implement the cookie consent system" and has **not** been made as part of
    this work — it is called out here and in `PRIVACY-IMPLEMENTATION-NOTES.md` as a recommended follow-up.
    Until it's resolved, the Cookie Policy discloses this fact plainly rather than omitting it.
-2. **The "Stay near" email field** (`circles.njk`, `ecosystem.njk`, `spaces.njk`) is not wired to any
-   provider today — no data is collected. If/when it is connected to a real newsletter service, that
-   provider's name, retention period, and unsubscribe mechanism must be added to the audit and to the
-   Privacy Policy before it goes live, and it must not silently start collecting data without a matching
-   consent/notice update.
+2. **The "Stay near" email field** (`circles.njk`, `ecosystem.njk`, `spaces.njk`) now emails the address
+   straight to the site owner (as of 18 July 2026) so she knows someone wants updates — but there is still no
+   real mailing-list/newsletter-sending provider, so the "A letter every few weeks... Unsubscribe with one
+   tap" copy on these forms describes a service that doesn't exist yet as an automated system. If/when a
+   real newsletter provider is added, that provider's name, retention period, and unsubscribe mechanism must
+   be added to the audit and Privacy Policy, and this copy should be revisited so it matches reality.
 3. **Amazon links (`data-asin`) and the episode resource "Buy Me a Coffee" links** — please confirm whether
    the Amazon links are part of the Amazon Associates affiliate program (this changes what should be said in
    the Privacy Policy about affiliate tracking) and confirm the exact provider name behind the resource

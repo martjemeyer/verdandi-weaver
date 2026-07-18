@@ -114,12 +114,16 @@ permalink: /ecosystem.html
   <div class="container">
     <div class="stay__inner">
       <span class="stay__mark" aria-hidden="true"></span>
+      <p class="t-eyebrow">Newsletter</p>
       <h2 class="stay__title" id="stay-title">Stay near</h2>
       <p class="stay__sub">Slow reflections, new frameworks, future gatherings, and quiet things worth sharing.</p>
-      <form class="stay__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='kept near';">
-        <input type="email" placeholder="your email, if you'd like to stay near" aria-label="Email" required />
+      <form class="stay__form" action="/newsletter-handler.php" method="POST">
+        <label class="sr-only" for="stay-email">Your email address</label>
+        <input type="email" id="stay-email" name="email" placeholder="your email" required />
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <button type="submit">Stay near</button>
       </form>
+      <p class="t-meta" data-stay-status role="status" aria-live="polite" style="min-height:1.2em;"></p>
       <p class="stay__note">A letter every few weeks. Never a funnel. Unsubscribe with one tap.</p>
     </div>
   </div>
