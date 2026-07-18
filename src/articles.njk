@@ -22,6 +22,9 @@ permalink: /articles.html
             {% if article.data.date %}<p class="t-meta">{{ article.data.date | date("DD MMMM YYYY") }}</p>{% endif %}
             <h2 class="t-h3">{{ article.data.title }}</h2>
             {% if article.data.description %}<p class="t-body t-pretty">{{ article.data.description }}</p>{% endif %}
+            {% if article.data.topics and article.data.topics.length %}
+            <div class="rs-tags">{% for t in article.data.topics %}<a href="/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</div>
+            {% endif %}
             <a class="link-chev" href="{{ article.url }}">Read →</a>
           </div>
         </article>

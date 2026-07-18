@@ -96,11 +96,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("rethinkingEpisodeSV", (api) => rsEpisodes(api, "Swedish"));
 
   // Site-wide tag index: one entry per unique tag, gathering everything
-  // — Rethinking Society episodes (both languages) and Explore/ecosystem
-  // entries — that shares it, so a single tag page can list all of it
-  // regardless of content type. Books are not included yet: their
-  // "Tags / Meta" field is a single free-text string, not a real list,
-  // so there is nothing structured to index there.
+  // — Rethinking Society episodes (both languages), Explore/ecosystem
+  // entries, and Articles & Reflections posts — that shares it, so a
+  // single tag page can list all of it regardless of content type.
+  // Books are not included yet: their "Tags / Meta" field is a single
+  // free-text string, not a real list, so there is nothing structured
+  // to index there.
   eleventyConfig.addCollection("tagIndex", (api) => {
     const bySlug = new Map();
     function add(rawLabel, item) {
@@ -142,6 +143,17 @@ module.exports = function (eleventyConfig) {
           href,
           typeLabel: entry.data.type_label || "Explore",
           external: /^https?:\/\//.test(href),
+        })
+      );
+    });
+
+    api.getFilteredByTag("articles").forEach((article) => {
+      (article.data.topics || []).forEach((t) =>
+        add(t, {
+          title: article.data.title,
+          href: article.url,
+          typeLabel: "Article",
+          external: false,
         })
       );
     });

@@ -44,6 +44,11 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD-MM-YYYY", time_format: false, default: "2026-07-18", hint: "Defaults to today — the date picker's year scroller starts wherever this default is set, so keep it current" }
       - { label: Description, name: description, widget: text }
+      - label: Topic tags
+        name: topics
+        widget: list
+        required: false
+        hint: "Type any tags, one per line. These become clickable and connect this article to a shared tag page (e.g. /tags/care/) with everything else on the site that shares a tag."
       - { label: Body, name: body, widget: markdown }
 
   - name: ecosystem

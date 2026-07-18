@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+navSection: articles
+eleventyComputed:
+  description: "{{ description }}"
+---
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Articles &amp; Reflections</p>
+  <h1 class="t-h1 hero__title t-balance">{{ title }}</h1>
+  {% if date %}<p class="t-meta">{{ date | date("DD MMMM YYYY") }}</p>{% endif %}
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow stack-lg">
+    <div class="t-body t-pretty">{{ content | safe }}</div>
+
+    {% if topics and topics.length %}
+    <div class="rs-tags">{% for t in topics %}<a href="/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</div>
+    {% endif %}
+
+    <a class="link-chev" href="/articles.html">Back to Articles &amp; Reflections</a>
+  </div>
+</section>
