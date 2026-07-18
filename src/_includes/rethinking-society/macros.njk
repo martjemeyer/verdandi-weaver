@@ -15,14 +15,27 @@
 
 {% macro episodeNum(n) %}{% if n < 10 %}0{{ n }}{% else %}{{ n }}{% endif %}{% endmacro %}
 
+{# Shared thumbnail: a custom upload wins if set, otherwise auto-derive
+   the real YouTube thumbnail. maxresdefault is true 16:9 (no letterboxing);
+   not every video has one, so fall back to hqdefault (4:3, always
+   available) client-side if it 404s. #}
+{% macro episodeThumbImg(ep, altText) %}
+  {%- if ep.data.thumbnail -%}
+    <img src="{{ ep.data.thumbnail }}" alt="{{ altText }}" loading="lazy" />
+  {%- elif ep.data.videoUrl -%}
+    {%- set vid = ep.data.videoUrl | youtubeId -%}
+    <img src="https://img.youtube.com/vi/{{ vid }}/maxresdefault.jpg" alt="{{ altText }}" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/{{ vid }}/hqdefault.jpg';" />
+  {%- endif -%}
+{% endmacro %}
+
 {% macro statusLabel(status) %}{% if status == 'published' %}Published{% else %}Draft{% endif %}{% endmacro %}
 
 {# Compact card — used on the /episodes/ archive and the old featured-3 grid #}
 {% macro episodeCard(ep) %}
 <article class="card">
   <div class="card__media">
-    {% if ep.data.thumbnail %}
-      <img src="{{ ep.data.thumbnail }}" alt="{{ ep.data.title }}" loading="lazy" />
+    {% if ep.data.thumbnail or ep.data.videoUrl %}
+      {{ episodeThumbImg(ep, ep.data.title) }}
     {% else %}
       <div class="placeholder" style="height:100%; min-height:0;">[ episode {{ episodeNum(ep.data.number) }} thumbnail ]</div>
     {% endif %}
@@ -90,11 +103,7 @@
   <div class="rs-ep-section__media">
     {% if ep.data.videoUrl %}
       <div class="rs-video rs-yt-facade" data-yt-facade data-embed-src="https://www.youtube-nocookie.com/embed/{{ ep.data.videoUrl | youtubeId }}" role="button" tabindex="0" aria-label="{{ 'Play video' if lang == 'en' else 'Spela video' }}: {{ ep.data.title }}">
-        {% if ep.data.thumbnail %}
-          <img src="{{ ep.data.thumbnail }}" alt="" loading="lazy" />
-        {% else %}
-          <img src="https://img.youtube.com/vi/{{ ep.data.videoUrl | youtubeId }}/hqdefault.jpg" alt="" loading="lazy" />
-        {% endif %}
+        {{ episodeThumbImg(ep, '') }}
         <span class="rs-yt-facade__play" aria-hidden="true"></span>
       </div>
     {% else %}
