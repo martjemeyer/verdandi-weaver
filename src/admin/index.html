@@ -171,6 +171,18 @@
 
     CMS.registerPreviewTemplate('rethinking-episodes', EpisodePreview);
 
+    // ── After publishing, jump back to this entry's collection list ──
+    // With direct publish (no editorial workflow), Decap otherwise just
+    // shows a small toast and leaves you on the same entry, which reads
+    // as "did this actually save?" — this makes the result visible.
+    CMS.registerEventListener({
+      name: 'postSave',
+      handler: function () {
+        var match = window.location.hash.match(/^#\/collections\/[^/]+/);
+        if (match) window.location.hash = match[0];
+      },
+    });
+
     // ── Floating link back to the "Start Here" section chooser ─────
     // Appended directly to <body>, outside Decap's own mounted root,
     // so it can't interfere with its React tree.
