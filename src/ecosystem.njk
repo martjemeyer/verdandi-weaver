@@ -54,13 +54,11 @@ permalink: /ecosystem.html
           {% if entry.data.image %}
             <img src="{{ entry.data.image }}" alt="{{ entry.data.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           {% elif entry.data.kind == 'video' and entry.data.youtube_url %}
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/{{ entry.data.youtube_url | youtubeId }}?rel=0"
-              title="{{ entry.data.title }}"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-              style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+            <div class="vw-embed" data-vw-embed
+                 data-embed-src="https://www.youtube-nocookie.com/embed/{{ entry.data.youtube_url | youtubeId }}?rel=0"
+                 data-embed-title="{{ entry.data.title }}"
+                 data-embed-provider="YouTube"
+                 style="position:absolute;inset:0;width:100%;height:100%;"></div>
           {% elif entry.data.kind == 'video' %}
             <div class="cine"><div class="cine__play" aria-hidden="true"></div></div>
           {% elif entry.data.kind == 'reflect' or entry.data.kind == 'read' %}

@@ -17,7 +17,12 @@
     document.body.style.transition = "background-color 0.4s ease, color 0.4s ease";
     if (mode === "light") root.removeAttribute("data-theme");
     else root.setAttribute("data-theme", "dark");
-    localStorage.setItem("vw-theme", mode);
+    // Remembering the choice across visits is a "Preferences" cookie
+    // category — only persist it once that category has been accepted.
+    // The toggle still works for the current page view either way.
+    if (window.VWConsent && window.VWConsent.hasConsent("preferences")) {
+      localStorage.setItem("vw-theme", mode);
+    }
   }
 
   document.addEventListener("click", (e) => {
@@ -121,17 +126,20 @@
       document.title = newDoc.title;
       document.body.dataset.navSection = newDoc.body.dataset.navSection || "";
 
-      // Remove every body child except the nav and this script tag
-      // Also remove any page-specific external scripts loaded by the previous page
+      // Remove every body child except the nav, this script tag, and the
+      // persistent cookie-consent banner/panel (#vw-consent-root — its
+      // markup is identical on every page, but it must stay the SAME
+      // live DOM node so consent.js's open/close state isn't reset)
       Array.from(document.body.children).forEach((el) => {
-        if (el !== navEl && el !== appScript) el.remove();
+        if (el !== navEl && el !== appScript && el.id !== "vw-consent-root") el.remove();
       });
       document.querySelectorAll("script[data-page-script]").forEach((s) => s.remove());
 
-      // Collect incoming content (skip the new page's nav and any scripts)
+      // Collect incoming content (skip the new page's nav, scripts, and
+      // its own copy of the consent root — the live one above is kept)
       const frag = document.createDocumentFragment();
       Array.from(newDoc.body.children).forEach((el) => {
-        if (!el.matches(".nav, script")) frag.appendChild(el);
+        if (!el.matches(".nav, script, #vw-consent-root")) frag.appendChild(el);
       });
 
       // Insert before the script tag so it stays last in <body>
@@ -155,12 +163,17 @@
       // Re-load external page-specific scripts (e.g. scan.js on self-scans)
       newDoc.body.querySelectorAll("script[src]").forEach((orig) => {
         const src = orig.getAttribute("src");
-        if (!src || src.includes("app.js")) return;
+        if (!src || src.includes("app.js") || src.includes("consent.js")) return;
         const s = document.createElement("script");
         s.src = src;
         s.setAttribute("data-page-script", "");
         document.body.appendChild(s);
       });
+
+      // Let consent.js re-scan the freshly inserted content for
+      // [data-vw-embed] placeholders (it is never itself re-executed,
+      // so it can't discover new embeds on its own)
+      document.dispatchEvent(new CustomEvent("vw:content-swapped"));
     }
 
     // Use View Transition if available for a smooth content fade

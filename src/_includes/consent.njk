@@ -1,0 +1,127 @@
+{# Cookie banner + preference panel. Markup only — src/assets/consent.js
+   drives all show/hide/save behaviour and is the single source of truth
+   for what has actually been consented to. Preserved as a persistent DOM
+   node across SPA navigations by src/assets/app.js (see #vw-consent-root). #}
+<div id="vw-consent-root">
+
+  <section id="vw-consent-banner" class="vw-consent-banner" role="region" aria-label="Cookie notice" hidden>
+    <div class="vw-consent-banner__inner">
+      <div class="vw-consent-banner__text">
+        <p class="vw-consent-banner__title">Your privacy matters</p>
+        <p class="vw-consent-banner__body">
+          This site uses essential cookies to work correctly, and would like your permission to use a small
+          number of optional cookies for things like external media and, in future, basic analytics. You can
+          accept optional cookies, reject them, or choose exactly which ones to allow. Whatever you choose,
+          essential cookies stay on and the rest of the site keeps working — you can change your mind at any
+          time from "Cookie Settings" in the footer.
+        </p>
+      </div>
+      <div class="vw-consent-banner__actions">
+        <button type="button" class="btn btn--ghost" data-consent-action="reject-optional">Reject optional cookies</button>
+        <button type="button" class="btn btn--ghost" data-consent-action="open-preferences">Manage preferences</button>
+        <button type="button" class="btn btn--accent" data-consent-action="accept-optional">Accept optional cookies</button>
+      </div>
+      <a class="vw-consent-banner__link" href="/cookies.html">Read our Cookie Policy</a>
+    </div>
+  </section>
+
+  <div id="vw-consent-overlay" class="vw-consent-overlay" hidden></div>
+
+  <section
+    id="vw-consent-panel"
+    class="vw-consent-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="vw-consent-panel-title"
+    aria-describedby="vw-consent-panel-intro"
+    hidden
+  >
+    <div class="vw-consent-panel__inner">
+      <div class="vw-consent-panel__head">
+        <h2 id="vw-consent-panel-title" class="t-h3">Cookie Settings</h2>
+        <button type="button" class="btn--icon vw-consent-panel__close" data-consent-action="close" aria-label="Close cookie settings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </div>
+
+      <p id="vw-consent-panel-intro" class="t-body vw-consent-panel__intro">
+        Choose which cookies you allow. You can change these preferences at any time. Essential cookies are
+        always active because the website cannot function correctly without them.
+      </p>
+
+      <ul class="vw-consent-categories">
+
+        <li class="vw-consent-category">
+          <div class="vw-consent-category__row">
+            <label class="vw-consent-category__label" for="vw-consent-essential">
+              <span class="vw-switch vw-switch--locked" aria-hidden="true"><span class="vw-switch__thumb"></span></span>
+              Essential
+            </label>
+            <input type="checkbox" id="vw-consent-essential" checked disabled />
+            <span class="t-meta">Always active</span>
+          </div>
+          <p class="t-meta vw-consent-category__desc">
+            Required for the website to work. These remember your cookie preferences and support basic
+            navigation and security. They cannot be switched off, and nothing in this category is shared with
+            anyone outside this website.
+          </p>
+        </li>
+
+        <li class="vw-consent-category">
+          <div class="vw-consent-category__row">
+            <label class="vw-consent-category__label" for="vw-consent-analytics">
+              <span class="vw-switch" aria-hidden="true"><span class="vw-switch__thumb"></span></span>
+              Analytics
+            </label>
+            <input type="checkbox" id="vw-consent-analytics" data-consent-toggle="analytics" />
+          </div>
+          <p class="t-meta vw-consent-category__desc">
+            Would help us understand how visitors use the site, such as which pages are viewed. No analytics
+            tool is active on this site today, and no analytics request is ever made whether or not this is
+            switched on — this setting is only stored in advance, in case a privacy-respecting analytics tool
+            is added in future.
+          </p>
+        </li>
+
+        <li class="vw-consent-category">
+          <div class="vw-consent-category__row">
+            <label class="vw-consent-category__label" for="vw-consent-external-media">
+              <span class="vw-switch" aria-hidden="true"><span class="vw-switch__thumb"></span></span>
+              External media
+            </label>
+            <input type="checkbox" id="vw-consent-external-media" data-consent-toggle="externalMedia" />
+          </div>
+          <p class="t-meta vw-consent-category__desc">
+            Allows content from external providers, such as YouTube, to be embedded directly in the page.
+            Until this is switched on, embedded videos are replaced with a placeholder that you can also
+            choose to load individually. Loading this content may let the provider set cookies and see
+            information about your visit.
+          </p>
+        </li>
+
+        <li class="vw-consent-category">
+          <div class="vw-consent-category__row">
+            <label class="vw-consent-category__label" for="vw-consent-preferences">
+              <span class="vw-switch" aria-hidden="true"><span class="vw-switch__thumb"></span></span>
+              Preferences
+            </label>
+            <input type="checkbox" id="vw-consent-preferences" data-consent-toggle="preferences" />
+          </div>
+          <p class="t-meta vw-consent-category__desc">
+            Remembers optional display choices you make on this site, such as light or dark theme. Without
+            this, the site simply follows your system's light/dark setting each time you visit instead of
+            remembering your own choice.
+          </p>
+        </li>
+
+      </ul>
+
+      <div class="vw-consent-panel__actions">
+        <button type="button" class="btn btn--ghost" data-consent-action="reject-all">Reject all optional cookies</button>
+        <button type="button" class="btn btn--ghost" data-consent-action="accept-all">Accept all optional cookies</button>
+        <button type="button" class="btn btn--accent" data-consent-action="save">Save my choices</button>
+      </div>
+    </div>
+  </section>
+
+</div>

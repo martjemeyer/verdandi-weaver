@@ -31,7 +31,13 @@ eleventyComputed:
 
     <div class="rs-video">
       {% if ep.data.videoUrl %}
-        <iframe src="https://www.youtube-nocookie.com/embed/{{ ep.data.videoUrl | youtubeId }}" title="{{ ep.data.title }}" allowfullscreen loading="lazy"></iframe>
+        <div class="vw-embed" data-vw-embed
+             data-embed-src="https://www.youtube-nocookie.com/embed/{{ ep.data.videoUrl | youtubeId }}"
+             data-embed-title="{{ ep.data.title }}"
+             data-embed-provider="YouTube"
+             style="position:absolute;inset:0;width:100%;height:100%;">
+          <noscript><a href="{{ ep.data.videoUrl }}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></noscript>
+        </div>
       {% else %}
         <div class="placeholder" style="height:100%; min-height:0;">Video coming soon</div>
       {% endif %}
