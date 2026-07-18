@@ -22,10 +22,10 @@ videoUrl: https://youtu.be/X_k-rB-Xyt8
 resources:
   - language: English
     price_type: Free
-    url: https://buymeacoffee.com/verdandiq/e/558075
+    url: buymeacoffee.com/verdandiq/e/558071
     type: One-Page Conversation Starter
-    title: Gratis startpaket · Avsnitt 2 | Kanske behöver vi inte ledare. Kanske
-      behöver vi råd
+    title: Free Starter Pack · Episode 2 | Maybe We Do Not Need Leaders. Maybe We
+      Need Councils
     format: PDF
 translationKey: rethinking-society-episode-2
 status: published
