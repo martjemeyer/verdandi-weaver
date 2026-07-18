@@ -93,7 +93,7 @@
         {% if ep.data.thumbnail %}
           <img src="{{ ep.data.thumbnail }}" alt="" loading="lazy" />
         {% else %}
-          <div class="placeholder" style="height:100%; min-height:0;">[ {{ 'thumbnail' if lang == 'en' else 'miniatyrbild' }} ]</div>
+          <img src="https://img.youtube.com/vi/{{ ep.data.videoUrl | youtubeId }}/hqdefault.jpg" alt="" loading="lazy" />
         {% endif %}
         <span class="rs-yt-facade__play" aria-hidden="true"></span>
       </div>
