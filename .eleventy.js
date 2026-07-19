@@ -75,6 +75,13 @@ module.exports = function (eleventyConfig) {
   }
   eleventyConfig.addFilter("slugify", slugify);
 
+  // Nunjucks (unlike Jinja2) has no selectattr/rejectattr — this is
+  // the plain equivalent, used to split the Explore page's tag chips
+  // by language.
+  eleventyConfig.addFilter("whereLang", (tags, lang) =>
+    (Array.isArray(tags) ? tags : []).filter((t) => t.lang === lang)
+  );
+
   // Rethinking Society episodes, scoped by language so each language
   // page only ever sees its own published entries — never a mix.
   function rsEpisodes(api, language) {
@@ -96,13 +103,15 @@ module.exports = function (eleventyConfig) {
   // to index there.
   eleventyConfig.addCollection("tagIndex", (api) => {
     const bySlug = new Map();
-    function add(rawLabel, item) {
+    function add(rawLabel, item, lang) {
       const label = String(rawLabel || "").trim();
       if (!label) return;
       const slug = slugify(label);
       if (!slug) return;
-      if (!bySlug.has(slug)) bySlug.set(slug, { slug, label, items: [] });
-      bySlug.get(slug).items.push(item);
+      if (!bySlug.has(slug)) bySlug.set(slug, { slug, label, items: [], langs: new Set() });
+      const tag = bySlug.get(slug);
+      tag.items.push(item);
+      tag.langs.add(lang || "en");
     }
 
     rsEpisodes(api, "English").forEach((ep) => {
@@ -112,7 +121,7 @@ module.exports = function (eleventyConfig) {
           href: `/rethinking-society/episodes/${ep.data.slug}/`,
           typeLabel: "Rethinking Society",
           external: false,
-        })
+        }, "en")
       );
     });
     rsEpisodes(api, "Swedish").forEach((ep) => {
@@ -122,7 +131,7 @@ module.exports = function (eleventyConfig) {
           href: `/sv/rethinking-society/#avsnitt-${ep.data.number}`,
           typeLabel: "Rethinking Society",
           external: false,
-        })
+        }, "sv")
       );
     });
 
@@ -135,7 +144,7 @@ module.exports = function (eleventyConfig) {
           href,
           typeLabel: entry.data.type_label || "Explore",
           external: /^https?:\/\//.test(href),
-        })
+        }, "en")
       );
     });
 
@@ -146,11 +155,16 @@ module.exports = function (eleventyConfig) {
           href: article.url,
           typeLabel: "Article",
           external: false,
-        })
+        }, "en")
       );
     });
 
-    return Array.from(bySlug.values()).sort((a, b) => a.label.localeCompare(b.label));
+    // A tag is grouped as Swedish only if EVERY item that contributed
+    // it is Swedish — a tag shared across languages stays with English
+    // rather than being hidden away in the Swedish-only group.
+    return Array.from(bySlug.values())
+      .map((tag) => ({ ...tag, lang: tag.langs.size === 1 && tag.langs.has("sv") ? "sv" : "en" }))
+      .sort((a, b) => a.label.localeCompare(b.label));
   });
 
   return {

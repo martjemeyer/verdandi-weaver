@@ -14,11 +14,21 @@ permalink: /ecosystem.html
 <section class="section fade-up">
   <div class="container">
 
-    <nav class="lens" aria-label="Browse by tag">
-      {% for t in collections.tagIndex %}
+    {% set svTags = collections.tagIndex | whereLang('sv') %}
+    <nav class="lens" aria-label="Browse by tag — English">
+      {% for t in collections.tagIndex | whereLang('en') %}
       <a class="lens__chip" href="/tags/{{ t.slug }}/">{{ t.label }}</a>
       {% endfor %}
     </nav>
+
+    {% if svTags.length %}
+    <div class="lens-divider"><span>Svenska</span></div>
+    <nav class="lens" aria-label="Bläddra efter tagg — svenska">
+      {% for t in svTags %}
+      <a class="lens__chip" href="/tags/{{ t.slug }}/">{{ t.label }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
 
     <div class="tabs" data-tabs role="tablist" aria-label="Content kinds">
       <button data-kind="all"     aria-pressed="true">everything</button>
