@@ -49,6 +49,7 @@ collections:
         widget: list
         required: false
         hint: "Type any tags, one per line. These become clickable and connect this article to a shared tag page (e.g. /tags/care/) with everything else on the site that shares a tag."
+        field: { label: Tag, widget: string }
       - { label: Body, name: body, widget: markdown }
 
   - name: ecosystem
@@ -75,6 +76,7 @@ collections:
         widget: list
         required: false
         hint: "Type any tags, one per line. These become the filter chips on the Explore page, and connect this entry to a shared tag page (e.g. /tags/care/) with everything else on the site that shares a tag."
+        field: { label: Tag, widget: string }
       - { label: Call to action, name: cta, widget: string, required: false, hint: "e.g. Read →  or  Watch →  or  Download →" }
       - { label: Description, name: body, widget: text, required: false, hint: "Optional short text shown below the title" }
       - { label: Image, name: image, widget: image, required: false, hint: "Optional card image — if set, shows instead of the quote or video. For videos, leave empty and use the YouTube URL below." }
@@ -208,13 +210,15 @@ collections:
         name: key_questions
         widget: list
         required: false
-        hint: "Optional — supporting questions, each as its own line (not one paragraph). They'll show as a spaced-out list on the page."
+        hint: "Optional — click 'Add key questions' below for EACH question, one at a time. Don't type them all into one box."
+        field: { label: Question, widget: string }
       - { label: Short description, name: short_description, widget: text, required: false, hint: "Step 5 — a sentence or two shown under the question. Leave empty until written." }
       - label: Topic tags
         name: topics
         widget: list
         required: false
-        hint: "Step 5 — type any tags, in the same language as this episode, one per line"
+        hint: "Step 5 — click 'Add topic tags' below for EACH tag, one at a time, in the same language as this episode. Don't type them all into one box."
+        field: { label: Tag, widget: string }
       - { label: Thumbnail, name: thumbnail, widget: image, required: false, hint: "Step 6" }
       - { label: YouTube video URL, name: videoUrl, widget: string, required: false, hint: "Step 7 — leave empty to show a 'Video coming soon' state" }
       - label: PDF resources
@@ -222,6 +226,8 @@ collections:
         widget: list
         required: false
         hint: "Step 8 — discussion guides, worksheets, etc. for this episode"
+        collapsed: true
+        summary: "{{fields.title}}"
         fields:
           - label: Resource type
             name: type
@@ -263,6 +269,8 @@ collections:
         widget: list
         required: false
         hint: "Optional — extra links shown with this episode (beyond the default Support page link)"
+        collapsed: true
+        summary: "{{fields.label}}"
         fields:
           - { label: Label, name: label, widget: string }
           - { label: URL, name: url, widget: string }
@@ -272,6 +280,8 @@ collections:
         name: themes
         widget: list
         required: false
+        collapsed: true
+        summary: "{{fields.theme}}"
         fields:
           - { label: Theme, name: theme, widget: string }
       - label: Key quotations
