@@ -77,8 +77,5 @@ try {
     $mail->send();
     respond($wantsJson, true, 'Thank you — your message has been sent.');
 } catch (PHPMailerException $e) {
-    // TEMP DEBUG — remove once delivery is confirmed working
-    $u = $config['username'];
-    $plen = strlen($config['password']);
-    respond($wantsJson, false, "DEBUG: user='{$u}' passLen={$plen} | " . $mail->ErrorInfo, 500);
+    respond($wantsJson, false, 'Sorry, something went wrong sending your message. Please try again later.', 500);
 }
