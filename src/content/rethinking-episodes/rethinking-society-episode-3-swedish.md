@@ -8,6 +8,14 @@ question: Vad skulle förändras om politik sågs som vårt gemensamma ansvar at
   hand om människor, samhällen, framtida generationer och den levande världen?
 key_questions:
   - Vilka saknas i dag när politiska beslut fattas?
+  - Hur skulle politiken se ut om omsorg, förebyggande arbete och långsiktiga
+    konsekvenser kom före makt och konkurrens?
+  - Hur skulle beslut förändras om barn, omsorgsgivare, personer med
+    funktionsnedsättning, äldre och framtida generationer behandlades som
+    närvarande i rummet?
+  - Vad händer när politiken kopplas bort från människors vardag?
+  - Kan oenighet finnas utan att människor görs till fiender?
+  - Hur bör politisk framgång mätas om helhetens välmående sätts främst?
 short_description: Det här avsnittet utforskar politik som en form av gemensam
   omsorg snarare än en kamp om makt. Det frågar vad som blir möjligt när beslut
   vägleds av levd verklighet, ansvar, förebyggande tänkande och helhetens
