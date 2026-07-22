@@ -1,0 +1,12 @@
+# The CMS admin tool changes far more often than the rest of the site,
+# and none of its files are cache-busted with a ?v= query string like
+# the main site's assets are — so browsers can silently keep serving a
+# stale config.yml or index.html for a long time after a fix ships,
+# which has caused real confusion more than once. Always revalidate.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|yml|yaml)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
