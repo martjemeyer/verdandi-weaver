@@ -24,13 +24,13 @@ html[data-theme="dark"] { background: oklch(18%   0.014 160); }
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Verdandi Weaver" />
-<meta property="og:title" content="{{ title }}" />
-<meta property="og:description" content="{{ description }}" />
+<meta property="og:title" content="{{ ogTitle or title }}" />
+<meta property="og:description" content="{{ ogDescription or description }}" />
 <meta property="og:url" content="{{ canonicalUrl }}" />
 {% if ogImage %}<meta property="og:image" content="https://verdandiweaver.com{{ ogImage }}" />{% endif %}
 <meta name="twitter:card" content="{{ 'summary_large_image' if ogImage else 'summary' }}" />
-<meta name="twitter:title" content="{{ title }}" />
-<meta name="twitter:description" content="{{ description }}" />
+<meta name="twitter:title" content="{{ ogTitle or title }}" />
+<meta name="twitter:description" content="{{ ogDescription or description }}" />
 {% if ogImage %}<meta name="twitter:image" content="https://verdandiweaver.com{{ ogImage }}" />{% endif %}
 
 <script type="application/ld+json">
