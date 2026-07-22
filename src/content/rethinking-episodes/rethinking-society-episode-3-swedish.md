@@ -51,5 +51,37 @@ quotes:
       helheten tas på allvar.
   - text: Ett samhälle visar sina värderingar genom vad det skyddar, vad det
       förebygger och vilka det vägrar lämna efter sig.
-timestamps: []
+timestamps:
+  - time: 00:00
+    label: Öppning
+  - time: 04:40
+    label: Allt runt omkring oss började som en idé
+  - time: 10:06
+    label: Tänk om "realistisk" bara betyder bekant?
+  - time: 15:42
+    label: Gamla frågor fortsätter att bygga upp den gamla världen igen
+  - time: 21:21
+    label: Tänk om vi började med livet?
+  - time: 26:41
+    label: Allt påverkar allt annat
+  - time: 32:32
+    label: Tänk om vi såg förhållanden, inte bara individer?
+  - time: 37:57
+    label: Mänsklig kapacitet är inte en obegränsad resurs
+  - time: 43:31
+    label: Tänk om vi redan har mycket av det vi behöver?
+  - time: 49:26
+    label: Från ägande till förvaltning
+  - time: "53:36 "
+    label: Tänk om framsteg innebar mindre rädsla?
+  - time: 58:23
+    label: Nytänkande är inte samma sak som att ha en färdig plan
+  - time: 01:03:32
+    label: Vanliga människor föreställer sig redan framtiden
+  - time: 01:08:46
+    label: Framtiden kan börja innan vi känner igen den
+  - time: 01:13:39
+    label: Kanske börjar framtiden när vi vågar föreställa oss igen?
+  - time: 01:18:57
+    label: " INTRODUKTION TILL AVSNITT 4 Tänk om vänlighet var infrastruktur?"
 ---
