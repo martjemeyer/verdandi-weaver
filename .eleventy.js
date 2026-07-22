@@ -5,6 +5,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/contact-handler.php");
   eleventyConfig.addPassthroughCopy("src/newsletter-handler.php");
   eleventyConfig.addPassthroughCopy("src/vendor");
+  eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   eleventyConfig.addFilter("activeIf", function (href, pageUrl) {
     function norm(u) {

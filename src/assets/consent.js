@@ -292,10 +292,30 @@
   document.addEventListener("vw:content-swapped", scanEmbeds);
 
   // ---------------------------------------------------------------
+  // Analytics (Plausible) — cookieless, so there is nothing to clear
+  // on revoke; the only thing consent controls is whether the script
+  // ever loads in the first place. Once loaded it can't be un-run for
+  // the current page view, but it won't load again on a future visit
+  // once the category is off.
+  // ---------------------------------------------------------------
+  var analyticsLoaded = false;
+  function loadAnalyticsIfConsented() {
+    if (analyticsLoaded || !hasConsent("analytics")) return;
+    var s = document.createElement("script");
+    s.defer = true;
+    s.dataset.domain = "verdandiweaver.com";
+    s.src = "https://plausible.io/js/script.js";
+    document.head.appendChild(s);
+    analyticsLoaded = true;
+  }
+  window.addEventListener("vw:consent-changed", loadAnalyticsIfConsented);
+
+  // ---------------------------------------------------------------
   // Init
   // ---------------------------------------------------------------
   if (!isDecided()) showBanner();
   scanEmbeds();
+  loadAnalyticsIfConsented();
 
   window.VWConsent = {
     CONSENT_VERSION: CONSENT_VERSION,

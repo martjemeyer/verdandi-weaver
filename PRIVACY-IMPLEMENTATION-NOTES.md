@@ -34,7 +34,7 @@ show a real toggle without needing a new storage schema or re-triggering consent
 | Category | Shown in panel? | Off by default? | What it currently gates |
 |---|---|---|---|
 | Essential | Yes, locked on | N/A | The `vw-consent` record itself |
-| Analytics | Yes | Yes | Nothing yet — no analytics tool exists. Reserved for a future addition. |
+| Analytics | Yes | Yes | Plausible (`plausible.io/js/script.js`), loaded by `consent.js` only once accepted. Cookieless, no personal data. |
 | External media | Yes | Yes | YouTube iframe embeds (all three insertion points) |
 | Marketing | **Not shown** | — | Nothing — no marketing tooling exists |
 | Preferences | Yes | Yes | The `vw-theme` localStorage key |
@@ -103,7 +103,10 @@ site owner (and, if desired, a lawyer) to review the following, all of which are
 3. **Amazon and episode-resource links** are outbound-only and require no consent, but the exact nature of the
    Amazon relationship (affiliate program or not) and the exact provider behind resource purchase links were
    not confirmed by this audit — see the audit document.
-4. **The Privacy Policy and Cookie Policy body text** were drafted from the controller identity block supplied
+4. **Plausible needs a real account.** The code only loads `plausible.io/js/script.js` once a visitor
+   consents — it does not create the Plausible account or register the site. Until the site owner signs up
+   (paid) and adds `verdandiweaver.com` there, consenting visitors' data has nowhere to land.
+5. **The Privacy Policy and Cookie Policy body text** were drafted from the controller identity block supplied
    and from this audit's findings — not from a pre-written policy document, since only the identity block was
    provided. Please review both pages before relying on them.
 5. **Exact banner/panel copy**: the banner intro paragraph and the four category descriptions in

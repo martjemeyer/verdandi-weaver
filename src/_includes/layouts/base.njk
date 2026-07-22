@@ -17,9 +17,32 @@ html[data-theme="dark"] { background: oklch(18%   0.014 160); }
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{{ title }}</title>
 <meta name="description" content="{{ description }}" />
-{% if canonical %}<link rel="canonical" href="{{ canonical }}" />{% endif %}
+{% set canonicalUrl = canonical or ("https://verdandiweaver.com" + page.url) %}
+<link rel="canonical" href="{{ canonicalUrl }}" />
 {% if hreflangAlternates %}{% for lang, url in hreflangAlternates %}<link rel="alternate" hreflang="{{ lang }}" href="{{ url }}" />
 {% endfor %}{% endif %}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Verdandi Weaver" />
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:description" content="{{ description }}" />
+<meta property="og:url" content="{{ canonicalUrl }}" />
+{% if ogImage %}<meta property="og:image" content="https://verdandiweaver.com{{ ogImage }}" />{% endif %}
+<meta name="twitter:card" content="{{ 'summary_large_image' if ogImage else 'summary' }}" />
+<meta name="twitter:title" content="{{ title }}" />
+<meta name="twitter:description" content="{{ description }}" />
+{% if ogImage %}<meta name="twitter:image" content="https://verdandiweaver.com{{ ogImage }}" />{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Person", "name": "Sara Leidelmeijer", "alternateName": "Verdandi Weaver", "url": "https://verdandiweaver.com" },
+    { "@type": "WebSite", "name": "Verdandi Weaver", "url": "https://verdandiweaver.com" }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=block" rel="stylesheet" />

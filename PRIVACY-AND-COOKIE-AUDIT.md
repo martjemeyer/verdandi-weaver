@@ -23,9 +23,14 @@ No other `localStorage`/`sessionStorage` key exists anywhere in the project.
 
 ## 3. Analytics tools
 
-**None found.** Searched for `gtag`, `google-analytics`, `googletagmanager`, generic `analytics`, `fbq`,
-`matomo`, `plausible`, `hotjar`, `clarity.ms`, `mixpanel`, `segment.`, `amplitude`, `piwik` across every
-template, script, and config file. Zero matches. The site currently ships no analytics of any kind.
+**Plausible, added 22 July 2026.** `src/assets/consent.js` loads `https://plausible.io/js/script.js` with
+`data-domain="verdandiweaver.com"` — but only once the visitor accepts the "Analytics" cookie category;
+nothing loads before that. Plausible is cookieless and does not identify individual visitors. This requires
+the site owner to actually create a Plausible account and register `verdandiweaver.com` as a site there —
+the script alone does not do this; until that account exists, the script loads (once consented) but Plausible
+will have nowhere to record the data. No other analytics/marketing tool was found — same search as before
+(`gtag`, `google-analytics`, `googletagmanager`, generic `analytics`, `fbq`, `matomo`, `hotjar`, `clarity.ms`,
+`mixpanel`, `segment.`, `amplitude`, `piwik`) still comes back empty.
 
 ## 4. Marketing / advertising pixels
 
@@ -116,7 +121,10 @@ input from Sara Leidelmeijer / Verdandi Weaver, and are flagged here rather than
    the Privacy Policy about affiliate tracking) and confirm the exact provider name behind the resource
    purchase links so the Cookie Policy can name it precisely rather than saying "Buy Me a Coffee" only from
    an `sr-only` hint string.
-4. **The full body text of the Privacy Policy and Cookie Policy.** Only the controller identity block
+4. **Plausible needs an actual account.** The site now loads Plausible's script once a visitor consents, but
+   that only works once `verdandiweaver.com` is registered as a site in a real Plausible account — that step
+   requires the site owner to sign up (this is a paid service) and cannot be done by editing code.
+5. **The full body text of the Privacy Policy and Cookie Policy.** Only the controller identity block
    (name, country, email, website, last-updated date) was supplied. The policy pages have been drafted from
    the facts established by this audit — no cookie, provider, or retention period was invented — but Sara
    should review both pages before treating them as final, especially the Google Fonts and "Stay near"
