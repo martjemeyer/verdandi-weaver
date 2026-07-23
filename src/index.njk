@@ -31,6 +31,19 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
   </div>
 </section>
 
+{% set latestEpisode = collections.rethinkingEpisodeEN | sort(true, false, "data.number") | first %}
+{% if latestEpisode %}
+<section class="section compact fade-up">
+  <div class="container narrow center-text">
+    <a class="new-episode-strip" href="/rethinking-society/episodes/{{ latestEpisode.data.slug }}/">
+      <span class="new-episode-strip__badge">New episode out</span>
+      <span class="new-episode-strip__title">{{ latestEpisode.data.title }}</span>
+      <span class="new-episode-strip__cta">Watch →</span>
+    </a>
+  </div>
+</section>
+{% endif %}
+
 <section class="section compact fade-up">
   <div class="container narrow center-text">
     <p class="t-lead t-pretty">This work is for people who feel deeply, question inherited ways of living, or sense that healing, spirituality, society, and the living world cannot be understood separately.</p>
@@ -143,6 +156,43 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
     <a class="btn btn--ghost" href="/about.html" style="margin-top: var(--sp-5);">Read more →</a>
   </div>
 </section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="t-eyebrow">Follow along</p>
+    <h2 class="t-h2 t-balance">More of this, wherever you already are</h2>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
+      <a class="btn btn--ghost" href="https://novaharmonia.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>
+      <a class="btn btn--ghost" href="https://www.instagram.com/saraverdandi/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a class="btn btn--ghost" href="https://www.facebook.com/becominghumanwithverdandiweaver/" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a class="btn btn--ghost" href="https://nl.pinterest.com/verdandiweaver/" target="_blank" rel="noopener noreferrer">Pinterest</a>
+      <a class="btn btn--ghost" href="https://www.tiktok.com/@verdandiweaver" target="_blank" rel="noopener noreferrer">TikTok</a>
+    </div>
+  </div>
+</section>
+
+{% set substackItems = collections.substackFeed | limit(3) %}
+{% if substackItems.length %}
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">From the newsletter &amp; podcast</p>
+      <h2 class="t-h2 t-balance">Latest from Substack</h2>
+    </header>
+    <div class="stack-lg" style="margin-top: var(--sp-6); max-width: 60ch; margin-inline: auto;">
+      {% for item in substackItems %}
+      <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none;">
+        {% if item.date %}<p class="t-meta">{{ item.date | date("DD MMMM YYYY") }}</p>{% endif %}
+        <h3 class="t-h3" style="margin-top: var(--sp-2); color: var(--c-ink);">{{ item.title }}</h3>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="center-text" style="margin-top: var(--sp-7);">
+      <a class="btn btn--ghost" href="https://novaharmonia.substack.com" target="_blank" rel="noopener noreferrer">See everything on Substack →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <section class="section tall fade-up">
   <div class="container narrow center-text">

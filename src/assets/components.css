@@ -1978,3 +1978,42 @@ html.fade-armed .fade-up.is-in { opacity: 1; transform: none; }
   .legal-body p, .legal-body li, .legal-body td, .legal-body th { color: #000; }
   a { color: #000; text-decoration: underline; }
 }
+
+/* ------------------ Homepage "new episode" strip ------------------ */
+.new-episode-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  background: var(--c-bg-elev);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-3) var(--sp-5);
+  text-decoration: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.new-episode-strip:hover { border-color: var(--c-ink-mute); box-shadow: var(--shadow-sm); }
+.new-episode-strip__badge {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent-ink);
+  background: var(--c-accent);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.new-episode-strip__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  color: var(--c-ink);
+  flex: 1;
+  min-width: 200px;
+}
+.new-episode-strip__cta {
+  color: var(--c-ink-soft);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}

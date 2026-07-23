@@ -3,6 +3,7 @@ _site/
 .DS_Store
 old site/
 src/smtp-config.php
+.cache/
 
 # Explicitly track all content files (overrides any global gitignore rules)
 !src/content/**

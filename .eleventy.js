@@ -1,3 +1,7 @@
+const EleventyFetch = require("@11ty/eleventy-fetch");
+const RssParser = require("rss-parser");
+const rssParser = new RssParser();
+
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -94,6 +98,30 @@ module.exports = function (eleventyConfig) {
   }
   eleventyConfig.addCollection("rethinkingEpisodeEN", (api) => rsEpisodes(api, "English"));
   eleventyConfig.addCollection("rethinkingEpisodeSV", (api) => rsEpisodes(api, "Swedish"));
+
+  // Latest posts + podcast episodes from Substack's public RSS feed,
+  // fetched at build time (cached for an hour so repeated builds don't
+  // hammer Substack). If the fetch ever fails — Substack down, no
+  // network in the build environment, etc. — this degrades to an empty
+  // list rather than failing the whole site build.
+  eleventyConfig.addCollection("substackFeed", async () => {
+    try {
+      const xml = await EleventyFetch("https://novaharmonia.substack.com/feed", {
+        duration: "1h",
+        type: "text",
+      });
+      const feed = await rssParser.parseString(xml);
+      return (feed.items || []).slice(0, 6).map((item) => ({
+        title: item.title,
+        url: item.link,
+        date: item.isoDate || item.pubDate,
+        isPodcast: !!(item.enclosure && item.enclosure.url),
+      }));
+    } catch (e) {
+      console.warn("Substack feed fetch failed — showing no items:", e.message);
+      return [];
+    }
+  });
 
   // Site-wide tag index: one entry per unique tag, gathering everything
   // — Rethinking Society episodes (both languages), Explore/ecosystem
