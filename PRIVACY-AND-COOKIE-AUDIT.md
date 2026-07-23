@@ -60,7 +60,8 @@ a click, not on consent.
 | `src/contact.njk` | Contact form (Name optional, Email required, Message required) | **Yes.** Submits via `fetch` to `/contact-handler.php`, which uses vendored PHPMailer over SMTP (Titan Mail) to email `verdandi@verdandiweaver.com`. SMTP credentials come from a gitignored `src/smtp-config.php` generated at deploy time from GitHub Actions secrets. Includes a honeypot field (`_gotcha`) for spam. No analytics/marketing tool ever sees form data. |
 | `src/circles.njk`, `src/ecosystem.njk`, `src/spaces.njk` (`.stay__form`, "Stay near") | Email-collection form for a newsletter signup | **Yes, as of 18 July 2026.** Submits via `fetch` to `/newsletter-handler.php`, which uses the same vendored PHPMailer/SMTP setup as the contact form to email `verdandi@verdandiweaver.com`, subject-lined `[Newsletter signup]` so it's never confused with a contact message. Includes a honeypot field (`_gotcha`). There is still no automated mailing-list/newsletter-sending service — this only notifies the site owner that someone wants to receive updates; no third party receives the address, and no recurring emails are sent automatically. |
 | `src/admin/` (Decap CMS) | Content-management backend at `/admin`, GitHub backend | Not visitor-facing — ordinary site visitors never load this path, so it is out of scope for visitor cookie consent. Loads `unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js` only on that admin path. |
-| Booking / payment / donation | — | **None found.** No booking widget, payment processor, or donation service integration exists anywhere in the codebase. |
+| Booking | — | **None found.** No booking widget exists anywhere in the codebase. |
+| Donation / support links (added 23 July 2026) | `src/rethinking-society/support.njk`, `src/sv/rethinking-society/support.njk` | Plain outbound links to GoFundMe (`gofund.me/2f9a9cddb`) and Buy Me a Coffee (`buymeacoffee.com/verdandiq`) — nothing is contacted until clicked. See the Buy Me a Coffee floating button row above for the separate, always-loaded script. |
 
 ### Outbound-only links (not embeds, not forms)
 
@@ -81,6 +82,7 @@ visitor chooses to click.
 | `https://fonts.googleapis.com`, `https://fonts.gstatic.com` (`<link rel="preconnect">` + stylesheet) | `src/_includes/layouts/base.njk:23-25`, also `src/admin/start.html:8` (admin only) | Loads two Google Fonts (Sorts Mill Goudy, Source Sans 3) on **every** page, before any consent choice can be made. Google's font-serving infrastructure does not set cookies, but the request does send the visitor's IP address to Google's servers on every page load. See "Requires owner confirmation" below. |
 | `https://www.youtube-nocookie.com/embed/...`, `https://img.youtube.com/vi/...` | See section 5 | Covered by the External Media consent category (iframe) / disclosed as a minor asset request (thumbnail image). |
 | `https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js` | `src/admin/index.html` | Admin-only (CMS editor), never loaded for ordinary visitors. Out of scope for the visitor-facing consent system. |
+| `https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js` (added 23 July 2026) | `src/_includes/layouts/base.njk` | The floating "Buy me an ice tea" donation button, on **every** page, before any consent choice can be made — added at the site owner's explicit request. It renders a visible button linking out to Buy Me a Coffee; we have not independently confirmed whether the script itself sets any cookie or contacts Buy Me a Coffee's servers on load. See "Requires owner confirmation" below. |
 
 No other external domain is contacted anywhere in the templates, scripts, or stylesheets.
 
@@ -124,7 +126,13 @@ input from Sara Leidelmeijer / Verdandi Weaver, and are flagged here rather than
 4. **Plausible needs an actual account.** The site now loads Plausible's script once a visitor consents, but
    that only works once `verdandiweaver.com` is registered as a site in a real Plausible account — that step
    requires the site owner to sign up (this is a paid service) and cannot be done by editing code.
-5. **The full body text of the Privacy Policy and Cookie Policy.** Only the controller identity block
+5. **The Buy Me a Coffee floating button script**, loaded on every page since 23 July 2026, was added at the
+   owner's explicit request without independently confirming its cookie/tracking behaviour on Buy Me a
+   Coffee's end (their own privacy policy would need to be checked for specifics), and — unlike everything
+   else added before it — it is **not gated behind any consent category**, since it doesn't clearly fit
+   Analytics, External Media, or the (currently unused) Marketing category. This is a deliberate exception
+   made for this one script; if it turns out to set cookies, it should be revisited.
+6. **The full body text of the Privacy Policy and Cookie Policy.** Only the controller identity block
    (name, country, email, website, last-updated date) was supplied. The policy pages have been drafted from
    the facts established by this audit — no cookie, provider, or retention period was invented — but Sara
    should review both pages before treating them as final, especially the Google Fonts and "Stay near"
