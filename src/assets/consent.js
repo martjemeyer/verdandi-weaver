@@ -298,14 +298,22 @@
   // the current page view, but it won't load again on a future visit
   // once the category is off.
   // ---------------------------------------------------------------
+  // This is the exact snippet Plausible issued for this site's account
+  // (its site-specific script URL) — injected verbatim, just gated
+  // behind consent instead of always present in <head>.
   var analyticsLoaded = false;
   function loadAnalyticsIfConsented() {
     if (analyticsLoaded || !hasConsent("analytics")) return;
-    var s = document.createElement("script");
-    s.defer = true;
-    s.dataset.domain = "verdandiweaver.com";
-    s.src = "https://plausible.io/js/script.js";
-    document.head.appendChild(s);
+    var s1 = document.createElement("script");
+    s1.async = true;
+    s1.src = "https://plausible.io/js/pa-8RGDEwVRgMZFqH2PIeg0n.js";
+    document.head.appendChild(s1);
+
+    var s2 = document.createElement("script");
+    s2.textContent =
+      "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()";
+    document.head.appendChild(s2);
+
     analyticsLoaded = true;
   }
   window.addEventListener("vw:consent-changed", loadAnalyticsIfConsented);
