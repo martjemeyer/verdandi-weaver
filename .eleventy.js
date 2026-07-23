@@ -111,11 +111,17 @@ module.exports = function (eleventyConfig) {
         type: "text",
       });
       const feed = await rssParser.parseString(xml);
-      return (feed.items || []).slice(0, 6).map((item) => ({
+      // The feed carries no per-episode image or duration (Substack
+      // doesn't populate itunes:image/itunes:duration per item here,
+      // and the enclosure's length is always "0") — so those are never
+      // invented; templates fall back to a local branded image and
+      // simply omit duration.
+      return (feed.items || []).slice(0, 3).map((item, i) => ({
         title: item.title,
         url: item.link,
         date: item.isoDate || item.pubDate,
-        isPodcast: !!(item.enclosure && item.enclosure.url),
+        description: item.contentSnippet || "",
+        isNewest: i === 0,
       }));
     } catch (e) {
       console.warn("Substack feed fetch failed — showing no items:", e.message);

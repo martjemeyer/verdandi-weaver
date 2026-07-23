@@ -7,6 +7,7 @@ ogTitle: "Returning to grounded wholeness"
 ogDescription: "Soul, nervous system, body, relationship, and the living world."
 ogImage: /assets/uploads/returning-to-grounded-wholeness.png
 ---
+{% from "social-icons.njk" import icon %}
 
 <section class="hero container fade-up">
   <p class="t-eyebrow hero__eyebrow">Verdandi Weaver · A space for soul presence</p>
@@ -120,6 +121,116 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
   </div>
 </section>
 
+{% set substackItems = collections.substackFeed %}
+<section class="section section--sunk fade-up" id="latest-from-verdandi-weaver">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">What is growing now</p>
+      <h2 class="t-h2 t-balance">Latest from Verdandi Weaver</h2>
+      <p class="t-lead t-pretty">New podcast episodes, films, reflections, resources, and ways to follow or support the work.</p>
+    </header>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Latest listening</p>
+      <p class="t-body t-pretty" style="max-width: 56ch; margin: var(--sp-2) auto 0;">Reflections on being human, society, spirit, science, and the strange beauty of everything in between.</p>
+    </div>
+
+    {% if substackItems.length %}
+      <div class="grid grid-2" style="align-items:center; gap: var(--sp-7); margin-top: var(--sp-7);">
+        <div class="clearing">
+          <div class="figure" style="aspect-ratio: 4/5; max-width: 380px; margin-inline: auto;">
+            <img src="/assets/uploads/returning-to-grounded-wholeness.png" alt="Verdandi Weaver — a calm branded image, shown here since this episode has no artwork of its own" loading="lazy" />
+          </div>
+        </div>
+        <div>
+          <span class="new-episode-strip__badge" style="display:inline-block;">Newest episode</span>
+          <h3 class="t-h3" style="margin-top: var(--sp-3);">{{ substackItems[0].title }}</h3>
+          {% if substackItems[0].description %}<p class="t-body t-pretty" style="margin-top: var(--sp-2);">{{ substackItems[0].description }}</p>{% endif %}
+          {% if substackItems[0].date %}<p class="t-meta" style="margin-top: var(--sp-3);"><time datetime="{{ substackItems[0].date }}">{{ substackItems[0].date | date("DD MMMM YYYY") }}</time></p>{% endif %}
+          <a class="btn btn--ghost" href="{{ substackItems[0].url }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-5);">Listen to the episode →</a>
+        </div>
+      </div>
+
+      {% if substackItems.length > 1 %}
+      <div class="listening-row" style="margin-top: var(--sp-8);">
+        {% for item in substackItems %}
+          {% if not loop.first %}
+          <a class="listening-row__item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+            {% if item.date %}<p class="t-meta"><time datetime="{{ item.date }}">{{ item.date | date("DD MMMM YYYY") }}</time></p>{% endif %}
+            <h4 class="t-h4 listening-row__title" style="margin-top: var(--sp-2);">{{ item.title }}</h4>
+            {% if item.description %}<p class="t-meta" style="margin-top: var(--sp-1);">{{ item.description }}</p>{% endif %}
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="center-text" style="margin-top: var(--sp-7);">
+        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer">Read and listen on Substack →</a>
+      </div>
+    {% else %}
+      <div class="center-text" style="margin-top: var(--sp-6);">
+        <p class="t-body t-pretty">New episodes are available on Substack.</p>
+        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">Visit Verdandi Weaver on Substack</a>
+      </div>
+    {% endif %}
+
+    <span class="growing-divider"></span>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Follow along</p>
+      <h3 class="t-h3" style="margin-top: var(--sp-2);">Find the work wherever you already listen, watch, read, or gather.</h3>
+      <div class="social-row" style="margin-top: var(--sp-6);">
+        {% for p in socialPlatforms %}
+        <a class="social-row__item" href="{{ p.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ p.name }} — {{ p.descriptor }} (opens in a new tab)">
+          <span class="social-row__icon">{{ icon(p.icon) }}</span>
+          <span class="social-row__text">
+            <span class="social-row__name">{{ p.name }}</span>
+            <span class="social-row__descriptor">{{ p.descriptor }}</span>
+          </span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <span class="growing-divider"></span>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Help this work continue</p>
+      <h3 class="t-h3" style="margin-top: var(--sp-2);">Verdandi Weaver is independently created</h3>
+      <p class="t-body t-pretty" style="max-width: 60ch; margin: var(--sp-3) auto 0;">Support helps make space for new podcast episodes, films, books, reflection tools, translations, subtitles, Rethinking Society resources, and future online gatherings.</p>
+      <div class="grid grid-3" style="margin-top: var(--sp-7); text-align: left;">
+        {% for s in supportPlatforms %}
+        <div>
+          <span class="support-card__icon">{{ icon(s.icon) }}</span>
+          <h4 class="t-h4" style="margin-top: var(--sp-3);">{{ s.name }}</h4>
+          <p class="t-body t-pretty" style="margin-top: var(--sp-2);">{{ s.description }}</p>
+          <a class="btn btn--ghost" href="{{ s.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">{{ s.buttonText }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% if substackItems.length %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": {{ substackItems[0].title | dump | safe }},
+  "url": {{ substackItems[0].url | dump | safe }},
+  {% if substackItems[0].date %}"datePublished": {{ substackItems[0].date | dump | safe }},{% endif %}
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Verdandi Weaver",
+    "url": "https://novaharmonia.substack.com/"
+  }
+}
+</script>
+{% endif %}
+
 <section class="section fade-up">
   <div class="container">
     <header class="section-header">
@@ -156,45 +267,6 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
     <a class="btn btn--ghost" href="/about.html" style="margin-top: var(--sp-5);">Read more →</a>
   </div>
 </section>
-
-<section class="section fade-up">
-  <div class="container narrow center-text">
-    <p class="t-eyebrow">Follow along</p>
-    <h2 class="t-h2 t-balance">More of this, wherever you already are</h2>
-    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
-      <a class="btn btn--ghost" href="https://novaharmonia.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>
-      <a class="btn btn--ghost" href="https://www.instagram.com/saraverdandi/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a class="btn btn--ghost" href="https://www.facebook.com/sara.verdandi/" target="_blank" rel="noopener noreferrer">Facebook (Sara)</a>
-      <a class="btn btn--ghost" href="https://www.facebook.com/becominghumanwithverdandiweaver/" target="_blank" rel="noopener noreferrer">Facebook (Page)</a>
-      <a class="btn btn--ghost" href="https://nl.pinterest.com/verdandiweaver/" target="_blank" rel="noopener noreferrer">Pinterest</a>
-      <a class="btn btn--ghost" href="https://www.tiktok.com/@verdandiweaver" target="_blank" rel="noopener noreferrer">TikTok</a>
-      <a class="btn btn--ghost" href="https://www.patreon.com/cw/Verdandiweaver/membership" target="_blank" rel="noopener noreferrer">Patreon</a>
-    </div>
-  </div>
-</section>
-
-{% set substackItems = collections.substackFeed | limit(3) %}
-{% if substackItems.length %}
-<section class="section section--sunk fade-up">
-  <div class="container">
-    <header class="section-header">
-      <p class="t-eyebrow">From the newsletter &amp; podcast</p>
-      <h2 class="t-h2 t-balance">Latest from Substack</h2>
-    </header>
-    <div class="stack-lg" style="margin-top: var(--sp-6); max-width: 60ch; margin-inline: auto;">
-      {% for item in substackItems %}
-      <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none;">
-        {% if item.date %}<p class="t-meta">{{ item.date | date("DD MMMM YYYY") }}</p>{% endif %}
-        <h3 class="t-h3" style="margin-top: var(--sp-2); color: var(--c-ink);">{{ item.title }}</h3>
-      </a>
-      {% endfor %}
-    </div>
-    <div class="center-text" style="margin-top: var(--sp-7);">
-      <a class="btn btn--ghost" href="https://novaharmonia.substack.com" target="_blank" rel="noopener noreferrer">See everything on Substack →</a>
-    </div>
-  </div>
-</section>
-{% endif %}
 
 <section class="section tall fade-up">
   <div class="container narrow center-text">
