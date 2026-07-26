@@ -137,6 +137,13 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
 </section>
 
 {% set substackItems = collections.substackFeed %}
+{#- TEMPORARY diagnostic for the Substack fetch issue — invisible to
+    visitors, safe to view-source. Remove once resolved. -#}
+<!--
+feed-debug:
+{% for line in collections.feedDebugLog %}{{ line }}
+{% endfor %}
+-->
 <section class="section section--sunk fade-up" id="latest-from-verdandi-weaver">
   <div class="container">
     <header class="section-header">
