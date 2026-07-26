@@ -20,34 +20,20 @@ const FEED_FETCH_OPTIONS = {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// TEMPORARY — capturing the real error (status code, name, message)
-// from each attempt so it can be read from the live build output.
-// GitHub Actions job logs aren't visible without admin access to the
-// repo, so this is the only way to see what's actually failing there.
-// Rendered as an HTML comment on the homepage; remove once diagnosed.
-const feedDebugLog = [];
-
-// Retries a transient fetch failure within the SAME build (a couple of
-// seconds apart) instead of requiring a whole new deploy to get a
-// second attempt — this is what actually recovers from a momentary
-// rate-limit/blip, rather than repeatedly re-triggering full builds
-// from the outside, which just sends another burst of requests at
-// the exact moment things are already rate-limited.
+// Confirmed (18 July 2026) via temporary diagnostic logging: Substack's
+// edge returns a hard 403 Forbidden to every request from GitHub
+// Actions' runner IPs, on every one of these feeds, regardless of
+// User-Agent. That's an IP-level block, not rate-limiting — retrying
+// within a build cannot succeed against a 403. This retry only helps
+// with genuinely transient network errors (timeouts, DNS blips, a
+// real 5xx), which is why it's kept; it will not recover from a 403.
 async function fetchFeedWithRetry(url, attempts = 3, delayMs = 3000) {
   let lastError;
   for (let i = 0; i < attempts; i++) {
     try {
-      const result = await EleventyFetch(url, FEED_FETCH_OPTIONS);
-      feedDebugLog.push(`${url} -> OK on attempt ${i + 1}`);
-      return result;
+      return await EleventyFetch(url, FEED_FETCH_OPTIONS);
     } catch (e) {
       lastError = e;
-      const status = e.status || (e.cause && e.cause.status) || "";
-      feedDebugLog.push(
-        `${url} -> attempt ${i + 1} FAILED: ${e.name}: ${e.message}${status ? " | status: " + status : ""}${
-          e.cause ? " | cause: " + (e.cause.message || e.cause) : ""
-        }`
-      );
       if (i < attempts - 1) await sleep(delayMs);
     }
   }
@@ -208,9 +194,6 @@ module.exports = function (eleventyConfig) {
     }
     return results;
   });
-
-  // TEMPORARY diagnostic — see feedDebugLog declaration above.
-  eleventyConfig.addCollection("feedDebugLog", () => feedDebugLog);
 
   // Site-wide tag index: one entry per unique tag, gathering everything
   // — Rethinking Society episodes (both languages), Explore/ecosystem
