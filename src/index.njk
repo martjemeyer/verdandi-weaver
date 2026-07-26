@@ -32,6 +32,21 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
   </div>
 </section>
 
+{% set podcastLatest = collections.podcastLatest %}
+{% if podcastLatest.length %}
+<section class="section compact fade-up">
+  <div class="container narrow center-text stack">
+    {% for show in podcastLatest %}
+    <a class="new-episode-strip" href="{{ show.url }}" target="_blank" rel="noopener noreferrer">
+      <span class="new-episode-strip__badge">New: {{ show.name }}</span>
+      <span class="new-episode-strip__title">{{ show.title }}</span>
+      <span class="new-episode-strip__cta">Listen →</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
 {% set latestEpisode = collections.rethinkingEpisodeEN | sort(true, false, "data.number") | first %}
 {% if latestEpisode %}
 <section class="section compact fade-up">

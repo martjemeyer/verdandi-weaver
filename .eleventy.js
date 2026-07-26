@@ -1,6 +1,7 @@
 const EleventyFetch = require("@11ty/eleventy-fetch");
 const RssParser = require("rss-parser");
 const rssParser = new RssParser();
+const podcastShows = require("./src/_data/podcastShows.js");
 
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
@@ -127,6 +128,33 @@ module.exports = function (eleventyConfig) {
       console.warn("Substack feed fetch failed — showing no items:", e.message);
       return [];
     }
+  });
+
+  // Newest episode per podcast show (src/_data/podcastShows.js), for
+  // the homepage's "new episode" strips. Each show is fetched
+  // independently so one feed failing doesn't hide the other's strip.
+  eleventyConfig.addCollection("podcastLatest", async () => {
+    const results = [];
+    for (const show of podcastShows) {
+      try {
+        const xml = await EleventyFetch(show.feedUrl, { duration: "1h", type: "text" });
+        const feed = await rssParser.parseString(xml);
+        const item = (feed.items || [])[0];
+        if (item) {
+          results.push({
+            key: show.key,
+            name: show.name,
+            sectionUrl: show.sectionUrl,
+            title: item.title,
+            url: item.link,
+            date: item.isoDate || item.pubDate,
+          });
+        }
+      } catch (e) {
+        console.warn(`Podcast feed fetch failed for ${show.name}:`, e.message);
+      }
+    }
+    return results;
   });
 
   // Site-wide tag index: one entry per unique tag, gathering everything
