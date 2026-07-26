@@ -18,6 +18,27 @@ const FEED_FETCH_OPTIONS = {
   },
 };
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Retries a transient fetch failure within the SAME build (a couple of
+// seconds apart) instead of requiring a whole new deploy to get a
+// second attempt — this is what actually recovers from a momentary
+// rate-limit/blip, rather than repeatedly re-triggering full builds
+// from the outside, which just sends another burst of requests at
+// the exact moment things are already rate-limited.
+async function fetchFeedWithRetry(url, attempts = 3, delayMs = 3000) {
+  let lastError;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await EleventyFetch(url, FEED_FETCH_OPTIONS);
+    } catch (e) {
+      lastError = e;
+      if (i < attempts - 1) await sleep(delayMs);
+    }
+  }
+  throw lastError;
+}
+
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -122,7 +143,7 @@ module.exports = function (eleventyConfig) {
   // list rather than failing the whole site build.
   eleventyConfig.addCollection("substackFeed", async () => {
     try {
-      const xml = await EleventyFetch("https://novaharmonia.substack.com/feed", FEED_FETCH_OPTIONS);
+      const xml = await fetchFeedWithRetry("https://novaharmonia.substack.com/feed");
       const feed = await rssParser.parseString(xml);
       // The feed carries no per-episode image or duration (Substack
       // doesn't populate itunes:image/itunes:duration per item here,
@@ -149,7 +170,11 @@ module.exports = function (eleventyConfig) {
     const results = [];
     for (const show of podcastShows) {
       try {
-        const xml = await EleventyFetch(show.feedUrl, FEED_FETCH_OPTIONS);
+        // A small gap between each show's request, rather than firing
+        // both back-to-back, to go a little easier on Substack's rate
+        // limiting from a shared CI IP.
+        if (results.length > 0) await sleep(1500);
+        const xml = await fetchFeedWithRetry(show.feedUrl);
         const feed = await rssParser.parseString(xml);
         const item = (feed.items || [])[0];
         if (item) {
