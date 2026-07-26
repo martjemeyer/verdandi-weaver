@@ -3,6 +3,21 @@ const RssParser = require("rss-parser");
 const rssParser = new RssParser();
 const podcastShows = require("./src/_data/podcastShows.js");
 
+// Node's default fetch User-Agent is a common trigger for bot-blocking
+// on shared CI IP ranges (this showed up as intermittent build-time
+// fetch failures specifically from GitHub Actions, never locally) —
+// identify honestly instead of spoofing a browser.
+const FEED_FETCH_OPTIONS = {
+  duration: "1h",
+  type: "text",
+  fetchOptions: {
+    headers: {
+      "User-Agent": "VerdandiWeaverSiteBuild/1.0 (+https://verdandiweaver.com/)",
+      Accept: "application/rss+xml, application/xml, text/xml, */*",
+    },
+  },
+};
+
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -107,10 +122,7 @@ module.exports = function (eleventyConfig) {
   // list rather than failing the whole site build.
   eleventyConfig.addCollection("substackFeed", async () => {
     try {
-      const xml = await EleventyFetch("https://novaharmonia.substack.com/feed", {
-        duration: "1h",
-        type: "text",
-      });
+      const xml = await EleventyFetch("https://novaharmonia.substack.com/feed", FEED_FETCH_OPTIONS);
       const feed = await rssParser.parseString(xml);
       // The feed carries no per-episode image or duration (Substack
       // doesn't populate itunes:image/itunes:duration per item here,
@@ -137,7 +149,7 @@ module.exports = function (eleventyConfig) {
     const results = [];
     for (const show of podcastShows) {
       try {
-        const xml = await EleventyFetch(show.feedUrl, { duration: "1h", type: "text" });
+        const xml = await EleventyFetch(show.feedUrl, FEED_FETCH_OPTIONS);
         const feed = await rssParser.parseString(xml);
         const item = (feed.items || [])[0];
         if (item) {
