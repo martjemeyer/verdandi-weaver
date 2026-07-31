@@ -71,6 +71,12 @@ module.exports = function (eleventyConfig) {
     return Array.isArray(arr) && key ? arr.find((item) => item.data.translationKey === key) : undefined;
   });
 
+  // Look up one podcast show's plain data object (src/_data/podcastShows.js)
+  // by its key, for use on that show's own hub page.
+  eleventyConfig.addFilter("byShowKey", function (arr, key) {
+    return Array.isArray(arr) ? arr.find((show) => show.key === key) : undefined;
+  });
+
   // Minimal date formatter (no date library in this project). Front-matter
   // "YYYY-MM-DD" values are parsed as UTC midnight by the YAML/front-matter
   // parser, so read the UTC components back out — otherwise the displayed
@@ -144,7 +150,7 @@ module.exports = function (eleventyConfig) {
   // list rather than failing the whole site build.
   eleventyConfig.addCollection("substackFeed", async () => {
     try {
-      const xml = await fetchFeedWithRetry("https://novaharmonia.substack.com/feed");
+      const xml = await fetchFeedWithRetry("https://verdandiweaver.substack.com/feed");
       const feed = await rssParser.parseString(xml);
       // The feed carries no per-episode image or duration (Substack
       // doesn't populate itunes:image/itunes:duration per item here,
@@ -163,6 +169,24 @@ module.exports = function (eleventyConfig) {
       return [];
     }
   });
+
+  // Maps one Substack podcast RSS item into the shape templates use.
+  // itunes:episode is only present on some items (confirmed by
+  // inspecting the live feed) — omitted rather than invented when
+  // absent, same principle as the missing duration/image used to be
+  // handled under the old section feeds.
+  function mapPodcastItem(item) {
+    return {
+      title: item.title,
+      url: item.link,
+      date: item.isoDate || item.pubDate,
+      description: item.contentSnippet || "",
+      image: (item.itunes && item.itunes.image) || null,
+      duration: (item.itunes && item.itunes.duration) || null,
+      episodeNumber: (item.itunes && item.itunes.episode) || null,
+      audioUrl: (item.enclosure && item.enclosure.url) || null,
+    };
+  }
 
   // Newest episode per podcast show (src/_data/podcastShows.js), for
   // the homepage's "new episode" strips. Each show is fetched
@@ -183,9 +207,7 @@ module.exports = function (eleventyConfig) {
             key: show.key,
             name: show.name,
             sectionUrl: show.sectionUrl,
-            title: item.title,
-            url: item.link,
-            date: item.isoDate || item.pubDate,
+            ...mapPodcastItem(item),
           });
         }
       } catch (e) {
@@ -193,6 +215,26 @@ module.exports = function (eleventyConfig) {
       }
     }
     return results;
+  });
+
+  // Full episode list per show (newest first, as Substack already
+  // orders them), for each show's own hub page. Kept as one collection
+  // keyed by show so a single hub template can pull its own show's
+  // list without either hub depending on the other's fetch succeeding.
+  eleventyConfig.addCollection("podcastEpisodes", async () => {
+    const byKey = {};
+    for (const show of podcastShows) {
+      try {
+        if (Object.keys(byKey).length > 0) await sleep(1500);
+        const xml = await fetchFeedWithRetry(show.feedUrl);
+        const feed = await rssParser.parseString(xml);
+        byKey[show.key] = (feed.items || []).map(mapPodcastItem);
+      } catch (e) {
+        console.warn(`Podcast episode list fetch failed for ${show.name}:`, e.message);
+        byKey[show.key] = [];
+      }
+    }
+    return byKey;
   });
 
   // Site-wide tag index: one entry per unique tag, gathering everything

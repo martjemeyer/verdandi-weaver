@@ -166,6 +166,17 @@ strong, b { font-weight: 600; }
   height: 1px; background: var(--c-accent);
 }
 .nav__tools { display: flex; gap: var(--sp-3); align-items: center; }
+.nav__lang-switch {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
+  color: var(--c-ink-soft);
+  text-decoration: none;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav__lang-switch:hover { color: var(--c-ink); border-color: var(--c-ink); }
 
 .nav__toggle {
   display: none;

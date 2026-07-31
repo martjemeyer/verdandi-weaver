@@ -1,0 +1,134 @@
+---
+layout: layouts/base.njk
+title: Rethinking Everything with Verdandi Weaver | Podcast
+description: A podcast about life, humanity, and the world we are creating together, with episodes and resources for continuing the conversation.
+permalink: /rethinking-everything/index.html
+navSection: rethinking-everything
+pageLang: en
+translationUrl: /sv/vaga-tanka-om/
+canonical: https://verdandiweaver.com/rethinking-everything/
+hreflangAlternates:
+  en: https://verdandiweaver.com/rethinking-everything/
+  sv: https://verdandiweaver.com/sv/vaga-tanka-om/
+  x-default: https://verdandiweaver.com/rethinking-everything/
+ogTitle: Rethinking Everything with Verdandi Weaver | Podcast
+ogDescription: A podcast about life, humanity, and the world we are creating together.
+---
+{% from "social-icons.njk" import icon %}
+{% set show = podcastShows | byShowKey("rethinkingEverything") %}
+{% set episodes = collections.podcastEpisodes["rethinkingEverything"] or [] %}
+{% set newest = episodes[0] %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  {% if newest and newest.image %}
+  <img src="{{ newest.image }}" alt="{{ show.fullName }} cover art" loading="lazy" style="max-width: 220px; width:100%; border-radius: var(--radius-lg); border: 1px solid var(--c-line-soft); margin: 0 auto var(--sp-5); display:block;" />
+  {% endif %}
+  <p class="t-eyebrow hero__eyebrow">Podcast</p>
+  <h1 class="t-h1 hero__title t-balance">{{ show.fullName }}</h1>
+  <p class="t-lead hero__lead t-pretty">{{ show.byline }}</p>
+  <p class="t-body t-pretty" style="margin-top: var(--sp-4);">{{ show.invitation }}</p>
+</section>
+
+{% if newest %}
+<section class="section section--sunk fade-up">
+  <div class="container narrow">
+    <header class="section-header">
+      <p class="t-eyebrow">Latest episode</p>
+      <h2 class="t-h2 t-balance">{{ newest.title }}</h2>
+      {% if newest.date %}<p class="t-meta"><time datetime="{{ newest.date }}">{{ newest.date | date("DD MMMM YYYY") }}</time>{% if newest.duration %} · {{ (newest.duration / 60) | round }} min{% endif %}</p>{% endif %}
+    </header>
+    {% if newest.description %}<p class="t-body t-pretty">{{ newest.description }}</p>{% endif %}
+    {% if newest.audioUrl %}
+    <audio controls preload="none" style="width:100%; margin-top: var(--sp-4);" aria-label="Listen to {{ newest.title }}">
+      <source src="{{ newest.audioUrl }}" type="audio/mpeg" />
+      Your browser doesn't support the audio element. <a href="{{ newest.url }}">Listen on Substack instead</a>.
+    </audio>
+    {% endif %}
+    <p class="t-meta" style="margin-top: var(--sp-3);"><a class="link-chev" href="{{ newest.url }}" target="_blank" rel="noopener noreferrer">Listen and read on Substack</a></p>
+  </div>
+</section>
+{% else %}
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <p class="t-body">New episodes are available on Substack — the feed couldn't be reached for this preview.</p>
+    <a class="btn btn--ghost" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">Visit on Substack</a>
+  </div>
+</section>
+{% endif %}
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <header class="section-header">
+      <h2 class="t-h2 t-balance">Listen your way</h2>
+    </header>
+    <div class="social-row" style="justify-content:center;">
+      {% if show.sectionUrl %}<a class="social-row__item" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer"><span class="social-row__icon">{{ icon("substack") }}</span><span class="social-row__text">Read and listen on Substack</span></a>{% endif %}
+      {% if show.spotify %}<a class="social-row__item" href="{{ show.spotify }}" target="_blank" rel="noopener noreferrer"><span class="social-row__icon">{{ icon("spotify") }}</span><span class="social-row__text">Listen on Spotify</span></a>{% endif %}
+      {% if show.apple %}<a class="social-row__item" href="{{ show.apple }}" target="_blank" rel="noopener noreferrer"><span class="social-row__icon">{{ icon("apple") }}</span><span class="social-row__text">Listen on Apple Podcasts</span></a>{% endif %}
+      {% if show.youtubeMusic %}<a class="social-row__item" href="{{ show.youtubeMusic }}" target="_blank" rel="noopener noreferrer"><span class="social-row__icon">{{ icon("youtube") }}</span><span class="social-row__text">Listen on YouTube Music</span></a>{% endif %}
+      {% if show.facebook %}<a class="social-row__item" href="{{ show.facebook }}" target="_blank" rel="noopener noreferrer"><span class="social-row__icon">{{ icon("facebook") }}</span><span class="social-row__text">Follow Rethinking Everything on Facebook</span></a>{% endif %}
+    </div>
+  </div>
+</section>
+
+{% if episodes.length > 1 %}
+<section class="section section--sunk fade-up">
+  <div class="container">
+    <header class="section-header">
+      <h2 class="t-h2 t-balance">All episodes</h2>
+    </header>
+    <div class="grid grid-3">
+      {% for ep in episodes %}
+      <article class="card">
+        <div class="card__body">
+          <h3 class="t-h3">{{ ep.title }}</h3>
+          {% if ep.date %}<p class="t-meta"><time datetime="{{ ep.date }}">{{ ep.date | date("DD MMMM YYYY") }}</time>{% if ep.duration %} · {{ (ep.duration / 60) | round }} min{% endif %}</p>{% endif %}
+          {% if ep.description %}<p class="t-body t-pretty">{{ ep.description }}</p>{% endif %}
+          <a class="link-chev" href="{{ ep.url }}" target="_blank" rel="noopener noreferrer">Listen on Substack</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <header class="section-header">
+      <h2 class="t-h2 t-balance">Take the conversation further</h2>
+    </header>
+    <p class="t-body t-pretty">Every Rethinking Society episode can grow into a deeper conversation — discussion questions, reflection exercises, and printable materials for your own circle, group, or workplace.</p>
+    <a class="btn btn--ghost" href="/rethinking-society/gathering-library/" style="margin-top: var(--sp-4);">Visit the Gathering Library</a>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
+  <div class="container narrow center-text">
+    <header class="section-header">
+      <h2 class="t-h2 t-balance">Support the work</h2>
+    </header>
+    <p class="t-body t-pretty">Listen freely. Share freely. Go deeper if you wish. Support the work if you can.</p>
+    <a class="btn btn--accent" href="/rethinking-society/support/" style="margin-top: var(--sp-4);">Support the work</a>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container narrow center-text">
+    <p class="t-lead t-pretty"><em>{{ show.closingQuestion }}</em></p>
+  </div>
+</section>
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastSeries",
+  "name": "{{ show.fullName }}",
+  "description": "{{ show.byline }}",
+  "url": "https://verdandiweaver.com/rethinking-everything/"
+}
+</script>
