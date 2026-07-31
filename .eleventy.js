@@ -20,13 +20,16 @@ const FEED_FETCH_OPTIONS = {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Confirmed (18 July 2026) via temporary diagnostic logging: Substack's
-// edge returns a hard 403 Forbidden to every request from GitHub
-// Actions' runner IPs, on every one of these feeds, regardless of
-// User-Agent. That's an IP-level block, not rate-limiting — retrying
-// within a build cannot succeed against a 403. This retry only helps
-// with genuinely transient network errors (timeouts, DNS blips, a
-// real 5xx), which is why it's kept; it will not recover from a 403.
+// TEMPORARY (31 July 2026): the homepage's podcast strips and general
+// Substack section went silent on the live site right after switching
+// to the new verdandiweaver.substack.com feed URLs, even though every
+// one of those URLs works fine locally. Logging the real fetch error
+// here (surfaced via the feedDebugLog collection below) since GitHub
+// Actions job logs aren't reachable without repo admin rights — same
+// diagnostic technique used to find the previous dead-domain issue.
+// Remove this block once the cause is confirmed.
+const feedDebugLog = [];
+
 async function fetchFeedWithRetry(url, attempts = 3, delayMs = 3000) {
   let lastError;
   for (let i = 0; i < attempts; i++) {
@@ -34,6 +37,7 @@ async function fetchFeedWithRetry(url, attempts = 3, delayMs = 3000) {
       return await EleventyFetch(url, FEED_FETCH_OPTIONS);
     } catch (e) {
       lastError = e;
+      feedDebugLog.push(`${url} -> attempt ${i + 1} FAILED: ${e.message}`);
       if (i < attempts - 1) await sleep(delayMs);
     }
   }
@@ -309,6 +313,9 @@ module.exports = function (eleventyConfig) {
       .map((tag) => ({ ...tag, lang: tag.langs.size === 1 && tag.langs.has("sv") ? "sv" : "en" }))
       .sort((a, b) => a.label.localeCompare(b.label));
   });
+
+  // TEMPORARY — see feedDebugLog comment near the top of this file.
+  eleventyConfig.addCollection("feedDebugLog", () => feedDebugLog);
 
   return {
     dir: {
