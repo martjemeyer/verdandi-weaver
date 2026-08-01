@@ -2,10 +2,10 @@
  * Fetches podcast/Substack episode data in the visitor's own browser
  * instead of at build time. GitHub Actions' shared runner IPs get a
  * hard 403 from Substack's edge (confirmed 31 July 2026); a visitor's
- * own browser was never blocked or rate-limited. Goes through the
- * existing Cloudflare Worker (cloudflare-worker-oauth.js), which has
- * CORS enabled and only proxies its own closed allow-list of feed
- * keys — never an arbitrary URL.
+ * own browser was never blocked or rate-limited. Goes through
+ * feed-proxy.php on this same domain (same-origin, so no CORS problem
+ * — Substack's own feeds have no CORS header, which is why a direct
+ * browser fetch to substack.com doesn't work).
  *
  * Every page renders a real static fallback by default (no JS
  * required to see something reasonable); this script progressively
@@ -15,13 +15,9 @@
 (function () {
   "use strict";
 
-  var WORKER_BASE = "https://verdandi-cms-auth.martjemeyer.workers.dev/substack-feed";
+  var PROXY_BASE = "/feed-proxy.php";
   var lang = document.documentElement.lang === "sv" ? "sv" : "en";
 
-  // Substack's <description> is block-level HTML (<p>, <br>); reading
-  // .textContent directly runs paragraphs together with no space
-  // between them ("...heavy…even after..."). Insert a space at block
-  // boundaries first, then strip the remaining tags.
   function stripHtml(html) {
     var withBreaks = (html || "").replace(/<\/(p|div|li)>/gi, " ").replace(/<br\s*\/?>/gi, " ");
     var div = document.createElement("div");
@@ -41,10 +37,6 @@
     return node ? node.textContent.trim() : "";
   }
 
-  // Parses one <item> into the shape templates use — mirrors the
-  // mapping the old build-time code used to do in .eleventy.js.
-  // itunes:duration/itunes:image/enclosure are only present on some
-  // feeds or some items; omitted rather than invented when absent.
   function parseItem(item) {
     var pubDate = firstText(item, "pubDate");
     var durationNode = item.getElementsByTagName("itunes:duration")[0];
@@ -81,11 +73,8 @@
     return Math.round(n / 60) + " min";
   }
 
-  // Fetches and parses one feed. Returns a Promise of an array of
-  // items (newest first, as Substack already orders them), or an
-  // empty array if the fetch/parse fails for any reason.
   function fetchFeed(key) {
-    return fetch(WORKER_BASE + "?feed=" + encodeURIComponent(key))
+    return fetch(PROXY_BASE + "?feed=" + encodeURIComponent(key))
       .then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
         return res.text();
@@ -99,6 +88,12 @@
         console.warn("Podcast feed fetch failed for " + key + ":", e.message);
         return [];
       });
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str || "";
+    return div.innerHTML;
   }
 
   // --- Homepage: two "new episode" strips, one per podcast show ---
@@ -118,7 +113,7 @@
     });
   }
 
-  // --- Homepage: "Latest listening" panel (general feed, 3 items) ---
+  // --- Homepage: "Latest listening" panel (general feed, several items) ---
   function hydrateLatestListening() {
     var container = document.getElementById("latest-listening");
     if (!container) return;
@@ -202,12 +197,6 @@
         listContainer.hidden = false;
       }
     });
-  }
-
-  function escapeHtml(str) {
-    var div = document.createElement("div");
-    div.textContent = str || "";
-    return div.innerHTML;
   }
 
   document.addEventListener("DOMContentLoaded", function () {

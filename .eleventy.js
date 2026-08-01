@@ -1,13 +1,13 @@
-// Podcast/Substack episode data is no longer fetched at build time.
-// GitHub Actions' shared runner IPs get a hard 403 from Substack's edge
-// regardless of domain (confirmed 31 July 2026 via temporary diagnostic
-// logging), and even routing through a Cloudflare Worker proxy still
-// hit transient rate-limiting under CI. Visitors' own browsers were
-// never blocked or rate-limited, so episode data is now fetched
-// client-side instead (src/assets/podcast-feed.js), through the same
-// Worker (which has CORS enabled) — see cloudflare-worker-oauth.js.
-// Pages render a static fallback by default; the script progressively
-// enhances it once the fetch succeeds in the visitor's browser.
+// Podcast episode data is fetched client-side, in the visitor's own
+// browser, through feed-proxy.php on this same domain — never at
+// Eleventy build time. GitHub Actions' shared runner IPs get a hard
+// 403 from Substack's edge regardless of domain (confirmed 31 July
+// 2026), which ruled out build-time fetch; a visitor's own browser was
+// never blocked, but Substack's feeds have no CORS header, so a plain
+// cross-origin browser fetch fails too. feed-proxy.php fetches
+// server-side from this site's own hosting (same origin as the page
+// making the request, so no CORS needed at all) and hands the XML
+// back — see src/feed-proxy.php and src/assets/podcast-feed.js.
 
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
@@ -15,6 +15,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/admin");
   eleventyConfig.addPassthroughCopy("src/contact-handler.php");
   eleventyConfig.addPassthroughCopy("src/newsletter-handler.php");
+  eleventyConfig.addPassthroughCopy("src/feed-proxy.php");
   eleventyConfig.addPassthroughCopy("src/vendor");
   eleventyConfig.addPassthroughCopy("src/robots.txt");
 

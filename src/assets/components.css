@@ -525,6 +525,40 @@ strong, b { font-weight: 600; }
   animation: shimmer 4s ease-in-out infinite;
 }
 
+/* ------------------ First-visit language entrance ------------------ */
+/* Overlay only, no second orb — it sits on top of the existing hero
+   (orb included) via a translucent, blurred backdrop so the breathing
+   orb stays visible underneath while the choice is made. */
+.vw-entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6);
+  background: color-mix(in oklab, var(--c-bg) 78%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.vw-entrance[hidden] { display: none; }
+.vw-entrance--closing { opacity: 0; pointer-events: none; }
+.vw-entrance__welcome {
+  max-width: 46ch;
+  margin-inline: auto;
+}
+.vw-entrance__choice {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--sp-6);
+}
+body.vw-entrance-open { overflow: hidden; }
+
 /* ------------------ Living-system tree ------------------ */
 .tree {
   display: block;

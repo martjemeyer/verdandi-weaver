@@ -1,38 +1,6 @@
-// Substack's edge WAF blocks GitHub Actions' runner IPs with a hard 403
-// on every one of its feed hosts (confirmed 31 July 2026, via temporary
-// build-time diagnostic logging) — verdandiweaver.substack.com AND
-// api.substack.com alike. Cloudflare's own edge is not blocked, so this
-// Worker fetches the feed server-side and hands the XML back untouched.
-// A closed allow-list, not an open proxy — this must never forward an
-// arbitrary caller-supplied URL, only one of the publication's own known
-// feeds, so the endpoint can't be abused as a general relay.
-const ALLOWED_FEEDS = {
-  main: "https://verdandiweaver.substack.com/feed",
-  vagaTanka: "https://api.substack.com/feed/podcast/5888631/s/431727.rss",
-  rethinkingEverything: "https://api.substack.com/feed/podcast/5888631.rss",
-};
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
-    if (url.pathname === "/substack-feed") {
-      const target = ALLOWED_FEEDS[url.searchParams.get("feed")];
-      if (!target) return new Response("Not found", { status: 404 });
-
-      const upstream = await fetch(target, {
-        headers: { "User-Agent": "Mozilla/5.0 (compatible; VerdandiWeaverFeedProxy/1.0)" },
-      });
-      const body = await upstream.text();
-      return new Response(body, {
-        status: upstream.status,
-        headers: {
-          "Content-Type": upstream.headers.get("Content-Type") || "application/xml",
-          "Cache-Control": "public, max-age=1800",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
-    }
 
     // Step 1 — redirect to GitHub login
     if (url.pathname === '/auth') {

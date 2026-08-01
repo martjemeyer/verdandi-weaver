@@ -17,7 +17,7 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
 {% from "social-icons.njk" import icon %}
 
 <section class="hero container fade-up">
-  <p class="t-eyebrow hero__eyebrow">Verdandi Weaver · A space for soul presence</p>
+  <p class="t-eyebrow hero__eyebrow" id="entrance-eyebrow">Verdandi Weaver · A space for soul presence</p>
   <h1 class="t-h1 hero__title t-balance">Returning to grounded wholeness</h1>
   <p class="t-lead hero__lead t-pretty">A calm body of work exploring how we become more whole, not by rising above our humanity, but by returning to the body, the heart, relationship, and the living world.</p>
 
@@ -36,6 +36,22 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
     <a class="btn" href="/books.html">Explore the Books</a>
     <a class="btn btn--ghost" href="/self-scans.html">Begin a Self-Scan</a>
     <a class="btn btn--ghost" href="/frameworks.html">Read the Frameworks</a>
+  </div>
+
+  {#- First-visit language entrance. The homepage above and below this
+     renders in full regardless — nothing here is hidden by default, so
+     it never depends on JS for accessibility or SEO. entrance.js shows
+     this overlay only if the visitor hasn't chosen a language before,
+     and only on this page; it's built entirely from elements already
+     in the normal document, not a second copy of the orb. #}
+  <div id="vw-entrance" class="vw-entrance" role="dialog" aria-modal="true" aria-labelledby="vw-entrance-welcome" hidden>
+    <div>
+      <p class="t-lead vw-entrance__welcome" id="vw-entrance-welcome">A space for reflection, reconnection, and new ways of imagining life and society.</p>
+      <div class="vw-entrance__choice">
+        <a class="btn" href="/" id="vw-entrance-en">Enter in English</a>
+        <a class="btn btn--ghost" href="/sv/" id="vw-entrance-sv">Fortsätt på svenska</a>
+      </div>
+    </div>
   </div>
 </section>
 
