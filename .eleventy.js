@@ -20,24 +20,32 @@ const FEED_FETCH_OPTIONS = {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// TEMPORARY (31 July 2026): the homepage's podcast strips and general
-// Substack section went silent on the live site right after switching
-// to the new verdandiweaver.substack.com feed URLs, even though every
-// one of those URLs works fine locally. Logging the real fetch error
-// here (surfaced via the feedDebugLog collection below) since GitHub
-// Actions job logs aren't reachable without repo admin rights — same
-// diagnostic technique used to find the previous dead-domain issue.
-// Remove this block once the cause is confirmed.
-const feedDebugLog = [];
+// Confirmed (31 July 2026) via temporary diagnostic logging: Substack's
+// edge returns a hard 403 Forbidden to every one of these feeds from
+// GitHub Actions' runner IPs — both verdandiweaver.substack.com (the
+// publication's own domain) and api.substack.com (the podcast RSS
+// host). This is a durable IP-level block on Substack's side, not tied
+// to the specific domain that was blocked before — swapping URLs again
+// will not fix it. Retrying within a build cannot succeed against a
+// 403; this retry only helps with genuinely transient errors (timeouts,
+// DNS blips, a real 5xx), which is why it's kept.
+//
+// The actual fix: fetch through the existing Cloudflare Worker
+// (verdandi-cms-auth.martjemeyer.workers.dev, source in
+// cloudflare-worker-oauth.js) instead of hitting Substack directly.
+// Cloudflare's edge isn't blocked, so it fetches server-side and hands
+// the XML back untouched. The Worker only proxies its own closed
+// allow-list of feed keys — never an arbitrary URL.
+const FEED_PROXY_BASE = "https://verdandi-cms-auth.martjemeyer.workers.dev/substack-feed";
 
-async function fetchFeedWithRetry(url, attempts = 3, delayMs = 3000) {
+async function fetchFeedWithRetry(feedKey, attempts = 3, delayMs = 3000) {
+  const url = `${FEED_PROXY_BASE}?feed=${feedKey}`;
   let lastError;
   for (let i = 0; i < attempts; i++) {
     try {
       return await EleventyFetch(url, FEED_FETCH_OPTIONS);
     } catch (e) {
       lastError = e;
-      feedDebugLog.push(`${url} -> attempt ${i + 1} FAILED: ${e.message}`);
       if (i < attempts - 1) await sleep(delayMs);
     }
   }
@@ -154,7 +162,7 @@ module.exports = function (eleventyConfig) {
   // list rather than failing the whole site build.
   eleventyConfig.addCollection("substackFeed", async () => {
     try {
-      const xml = await fetchFeedWithRetry("https://verdandiweaver.substack.com/feed");
+      const xml = await fetchFeedWithRetry("main");
       const feed = await rssParser.parseString(xml);
       // The feed carries no per-episode image or duration (Substack
       // doesn't populate itunes:image/itunes:duration per item here,
@@ -203,7 +211,7 @@ module.exports = function (eleventyConfig) {
         // both back-to-back, to go a little easier on Substack's rate
         // limiting from a shared CI IP.
         if (results.length > 0) await sleep(1500);
-        const xml = await fetchFeedWithRetry(show.feedUrl);
+        const xml = await fetchFeedWithRetry(show.key);
         const feed = await rssParser.parseString(xml);
         const item = (feed.items || [])[0];
         if (item) {
@@ -230,7 +238,7 @@ module.exports = function (eleventyConfig) {
     for (const show of podcastShows) {
       try {
         if (Object.keys(byKey).length > 0) await sleep(1500);
-        const xml = await fetchFeedWithRetry(show.feedUrl);
+        const xml = await fetchFeedWithRetry(show.key);
         const feed = await rssParser.parseString(xml);
         byKey[show.key] = (feed.items || []).map(mapPodcastItem);
       } catch (e) {
@@ -313,9 +321,6 @@ module.exports = function (eleventyConfig) {
       .map((tag) => ({ ...tag, lang: tag.langs.size === 1 && tag.langs.has("sv") ? "sv" : "en" }))
       .sort((a, b) => a.label.localeCompare(b.label));
   });
-
-  // TEMPORARY — see feedDebugLog comment near the top of this file.
-  eleventyConfig.addCollection("feedDebugLog", () => feedDebugLog);
 
   return {
     dir: {

@@ -10,9 +10,17 @@
 // 403 CI-block), which is why episodes stopped appearing anywhere.
 // All URLs here are the user's own verified links, not guessed.
 //
+// `feedUrl` is kept here as the real, canonical source for reference —
+// the build no longer fetches it directly. Substack's edge blocks
+// GitHub Actions' IPs regardless of domain (confirmed 31 July 2026),
+// so .eleventy.js fetches by `key` through the Cloudflare Worker proxy
+// (cloudflare-worker-oauth.js) instead; `key` must match one of that
+// Worker's allow-listed feed names.
+//
 // Add a new show here and its "new episode" strip + hub page picks it
 // up automatically — no template changes needed for the strip; a new
-// hub page still needs its own route.
+// hub page still needs its own route, and the Worker's allow-list
+// needs the new feed added too.
 module.exports = [
   {
     key: "vagaTanka",
