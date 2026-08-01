@@ -4,6 +4,7 @@ _site/
 old site/
 src/smtp-config.php
 .cache/
+.claude/
 
 # Explicitly track all content files (overrides any global gitignore rules)
 !src/content/**

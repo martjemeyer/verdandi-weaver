@@ -1,56 +1,13 @@
-const EleventyFetch = require("@11ty/eleventy-fetch");
-const RssParser = require("rss-parser");
-const rssParser = new RssParser();
-const podcastShows = require("./src/_data/podcastShows.js");
-
-// Node's default fetch User-Agent is a common trigger for bot-blocking
-// on shared CI IP ranges (this showed up as intermittent build-time
-// fetch failures specifically from GitHub Actions, never locally) —
-// identify honestly instead of spoofing a browser.
-const FEED_FETCH_OPTIONS = {
-  duration: "1h",
-  type: "text",
-  fetchOptions: {
-    headers: {
-      "User-Agent": "VerdandiWeaverSiteBuild/1.0 (+https://verdandiweaver.com/)",
-      Accept: "application/rss+xml, application/xml, text/xml, */*",
-    },
-  },
-};
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// Confirmed (31 July 2026) via temporary diagnostic logging: Substack's
-// edge returns a hard 403 Forbidden to every one of these feeds from
-// GitHub Actions' runner IPs — both verdandiweaver.substack.com (the
-// publication's own domain) and api.substack.com (the podcast RSS
-// host). This is a durable IP-level block on Substack's side, not tied
-// to the specific domain that was blocked before — swapping URLs again
-// will not fix it. Retrying within a build cannot succeed against a
-// 403; this retry only helps with genuinely transient errors (timeouts,
-// DNS blips, a real 5xx), which is why it's kept.
-//
-// The actual fix: fetch through the existing Cloudflare Worker
-// (verdandi-cms-auth.martjemeyer.workers.dev, source in
-// cloudflare-worker-oauth.js) instead of hitting Substack directly.
-// Cloudflare's edge isn't blocked, so it fetches server-side and hands
-// the XML back untouched. The Worker only proxies its own closed
-// allow-list of feed keys — never an arbitrary URL.
-const FEED_PROXY_BASE = "https://verdandi-cms-auth.martjemeyer.workers.dev/substack-feed";
-
-async function fetchFeedWithRetry(feedKey, attempts = 3, delayMs = 3000) {
-  const url = `${FEED_PROXY_BASE}?feed=${feedKey}`;
-  let lastError;
-  for (let i = 0; i < attempts; i++) {
-    try {
-      return await EleventyFetch(url, FEED_FETCH_OPTIONS);
-    } catch (e) {
-      lastError = e;
-      if (i < attempts - 1) await sleep(delayMs);
-    }
-  }
-  throw lastError;
-}
+// Podcast/Substack episode data is no longer fetched at build time.
+// GitHub Actions' shared runner IPs get a hard 403 from Substack's edge
+// regardless of domain (confirmed 31 July 2026 via temporary diagnostic
+// logging), and even routing through a Cloudflare Worker proxy still
+// hit transient rate-limiting under CI. Visitors' own browsers were
+// never blocked or rate-limited, so episode data is now fetched
+// client-side instead (src/assets/podcast-feed.js), through the same
+// Worker (which has CORS enabled) — see cloudflare-worker-oauth.js.
+// Pages render a static fallback by default; the script progressively
+// enhances it once the fetch succeeds in the visitor's browser.
 
 module.exports = function (eleventyConfig) {
   // Copy static assets as-is
@@ -154,100 +111,6 @@ module.exports = function (eleventyConfig) {
   }
   eleventyConfig.addCollection("rethinkingEpisodeEN", (api) => rsEpisodes(api, "English"));
   eleventyConfig.addCollection("rethinkingEpisodeSV", (api) => rsEpisodes(api, "Swedish"));
-
-  // Latest posts + podcast episodes from Substack's public RSS feed,
-  // fetched at build time (cached for an hour so repeated builds don't
-  // hammer Substack). If the fetch ever fails — Substack down, no
-  // network in the build environment, etc. — this degrades to an empty
-  // list rather than failing the whole site build.
-  eleventyConfig.addCollection("substackFeed", async () => {
-    try {
-      const xml = await fetchFeedWithRetry("main");
-      const feed = await rssParser.parseString(xml);
-      // The feed carries no per-episode image or duration (Substack
-      // doesn't populate itunes:image/itunes:duration per item here,
-      // and the enclosure's length is always "0") — so those are never
-      // invented; templates fall back to a local branded image and
-      // simply omit duration.
-      return (feed.items || []).slice(0, 3).map((item, i) => ({
-        title: item.title,
-        url: item.link,
-        date: item.isoDate || item.pubDate,
-        description: item.contentSnippet || "",
-        isNewest: i === 0,
-      }));
-    } catch (e) {
-      console.warn("Substack feed fetch failed — showing no items:", e.message);
-      return [];
-    }
-  });
-
-  // Maps one Substack podcast RSS item into the shape templates use.
-  // itunes:episode is only present on some items (confirmed by
-  // inspecting the live feed) — omitted rather than invented when
-  // absent, same principle as the missing duration/image used to be
-  // handled under the old section feeds.
-  function mapPodcastItem(item) {
-    return {
-      title: item.title,
-      url: item.link,
-      date: item.isoDate || item.pubDate,
-      description: item.contentSnippet || "",
-      image: (item.itunes && item.itunes.image) || null,
-      duration: (item.itunes && item.itunes.duration) || null,
-      episodeNumber: (item.itunes && item.itunes.episode) || null,
-      audioUrl: (item.enclosure && item.enclosure.url) || null,
-    };
-  }
-
-  // Newest episode per podcast show (src/_data/podcastShows.js), for
-  // the homepage's "new episode" strips. Each show is fetched
-  // independently so one feed failing doesn't hide the other's strip.
-  eleventyConfig.addCollection("podcastLatest", async () => {
-    const results = [];
-    for (const show of podcastShows) {
-      try {
-        // A small gap between each show's request, rather than firing
-        // both back-to-back, to go a little easier on Substack's rate
-        // limiting from a shared CI IP.
-        if (results.length > 0) await sleep(1500);
-        const xml = await fetchFeedWithRetry(show.key);
-        const feed = await rssParser.parseString(xml);
-        const item = (feed.items || [])[0];
-        if (item) {
-          results.push({
-            key: show.key,
-            name: show.name,
-            sectionUrl: show.sectionUrl,
-            ...mapPodcastItem(item),
-          });
-        }
-      } catch (e) {
-        console.warn(`Podcast feed fetch failed for ${show.name}:`, e.message);
-      }
-    }
-    return results;
-  });
-
-  // Full episode list per show (newest first, as Substack already
-  // orders them), for each show's own hub page. Kept as one collection
-  // keyed by show so a single hub template can pull its own show's
-  // list without either hub depending on the other's fetch succeeding.
-  eleventyConfig.addCollection("podcastEpisodes", async () => {
-    const byKey = {};
-    for (const show of podcastShows) {
-      try {
-        if (Object.keys(byKey).length > 0) await sleep(1500);
-        const xml = await fetchFeedWithRetry(show.key);
-        const feed = await rssParser.parseString(xml);
-        byKey[show.key] = (feed.items || []).map(mapPodcastItem);
-      } catch (e) {
-        console.warn(`Podcast episode list fetch failed for ${show.name}:`, e.message);
-        byKey[show.key] = [];
-      }
-    }
-    return byKey;
-  });
 
   // Site-wide tag index: one entry per unique tag, gathering everything
   // — Rethinking Society episodes (both languages), Explore/ecosystem

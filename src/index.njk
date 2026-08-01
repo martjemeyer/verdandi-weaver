@@ -39,20 +39,22 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
   </div>
 </section>
 
-{% set podcastLatest = collections.podcastLatest %}
-{% if podcastLatest.length %}
-<section class="section compact fade-up">
+{#- Podcast episode data is fetched client-side (assets/podcast-feed.js)
+   rather than at build time — see .eleventy.js for why. Each strip
+   starts hidden and empty; the script fills it in and reveals it only
+   if a real newest episode is found, so a failed fetch just leaves
+   nothing here rather than an empty-looking strip. #}
+<section class="section compact fade-up" hidden>
   <div class="container narrow center-text stack">
-    {% for show in podcastLatest %}
-    <a class="new-episode-strip" href="{{ show.url }}" target="_blank" rel="noopener noreferrer">
+    {% for show in podcastShows %}
+    <a class="new-episode-strip" data-podcast-strip="{{ show.key }}" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer" hidden>
       <span class="new-episode-strip__badge">New: {{ show.name }}</span>
-      <span class="new-episode-strip__title">{{ show.title }}</span>
+      <span class="new-episode-strip__title" data-field="title"></span>
       <span class="new-episode-strip__cta">Listen →</span>
     </a>
     {% endfor %}
   </div>
 </section>
-{% endif %}
 
 {% set latestEpisode = collections.rethinkingEpisodeEN | sort(true, false, "data.number") | first %}
 {% if latestEpisode %}
@@ -143,7 +145,6 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
   </div>
 </section>
 
-{% set substackItems = collections.substackFeed %}
 <section class="section section--sunk fade-up" id="latest-from-verdandi-weaver">
   <div class="container">
     <header class="section-header">
@@ -157,45 +158,19 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
       <p class="t-body t-pretty" style="max-width: 56ch; margin: var(--sp-2) auto 0;">Reflections on being human, society, spirit, science, and the strange beauty of everything in between.</p>
     </div>
 
-    {% if substackItems.length %}
-      <div class="grid grid-2" style="align-items:center; gap: var(--sp-7); margin-top: var(--sp-7);">
-        <div class="clearing">
-          <div class="figure" style="aspect-ratio: 4/5; max-width: 380px; margin-inline: auto;">
-            <img src="/assets/uploads/returning-to-grounded-wholeness.png" alt="Verdandi Weaver — a calm branded image, shown here since this episode has no artwork of its own" loading="lazy" />
-          </div>
-        </div>
-        <div>
-          <span class="new-episode-strip__badge" style="display:inline-block;">Newest episode</span>
-          <h3 class="t-h3" style="margin-top: var(--sp-3);">{{ substackItems[0].title }}</h3>
-          {% if substackItems[0].description %}<p class="t-body t-pretty" style="margin-top: var(--sp-2);">{{ substackItems[0].description }}</p>{% endif %}
-          {% if substackItems[0].date %}<p class="t-meta" style="margin-top: var(--sp-3);"><time datetime="{{ substackItems[0].date }}">{{ substackItems[0].date | date("DD MMMM YYYY") }}</time></p>{% endif %}
-          <a class="btn btn--ghost" href="{{ substackItems[0].url }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-5);">Listen to the episode →</a>
-        </div>
-      </div>
-
-      {% if substackItems.length > 1 %}
-      <div class="listening-row" style="margin-top: var(--sp-8);">
-        {% for item in substackItems %}
-          {% if not loop.first %}
-          <a class="listening-row__item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
-            {% if item.date %}<p class="t-meta"><time datetime="{{ item.date }}">{{ item.date | date("DD MMMM YYYY") }}</time></p>{% endif %}
-            <h4 class="t-h4 listening-row__title" style="margin-top: var(--sp-2);">{{ item.title }}</h4>
-            {% if item.description %}<p class="t-meta" style="margin-top: var(--sp-1);">{{ item.description }}</p>{% endif %}
-          </a>
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      <div class="center-text" style="margin-top: var(--sp-7);">
-        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer">Read and listen on Substack →</a>
-      </div>
-    {% else %}
+    {#- Episode data is fetched client-side (assets/podcast-feed.js) —
+       see .eleventy.js for why. This fallback is the real initial
+       content (shown with no JS, or if the fetch fails); the script
+       replaces it with the live newest episode when it succeeds, and
+       always leaves the "visit Substack" link row untouched. #}
+    <div id="latest-listening" data-podcast-feed="main">
       <div class="center-text" style="margin-top: var(--sp-6);">
         <p class="t-body t-pretty">New episodes are available on Substack.</p>
-        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">Visit Verdandi Weaver on Substack</a>
       </div>
-    {% endif %}
+      <div class="center-text" style="margin-top: var(--sp-7);" data-substack-link-row>
+        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer">Read and listen on Substack →</a>
+      </div>
+    </div>
 
     <span class="growing-divider"></span>
 
@@ -235,23 +210,6 @@ ogImage: /assets/uploads/returning-to-grounded-wholeness.png
 
   </div>
 </section>
-
-{% if substackItems.length %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "PodcastEpisode",
-  "name": {{ substackItems[0].title | dump | safe }},
-  "url": {{ substackItems[0].url | dump | safe }},
-  {% if substackItems[0].date %}"datePublished": {{ substackItems[0].date | dump | safe }},{% endif %}
-  "partOfSeries": {
-    "@type": "PodcastSeries",
-    "name": "Verdandi Weaver",
-    "url": "https://novaharmonia.substack.com/"
-  }
-}
-</script>
-{% endif %}
 
 <section class="section fade-up">
   <div class="container">

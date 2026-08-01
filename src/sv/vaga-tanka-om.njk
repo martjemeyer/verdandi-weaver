@@ -16,47 +16,28 @@ ogDescription: En podcast om livet, människan och världen vi skapar tillsamman
 ---
 {% from "social-icons.njk" import icon %}
 {% set show = podcastShows | byShowKey("vagaTanka") %}
-{% set episodes = collections.podcastEpisodes["vagaTanka"] or [] %}
-{% set newest = episodes[0] %}
 
 <div class="rs">
 
 <section class="hero container fade-up">
-  {% if newest and newest.image %}
-  <img src="{{ newest.image }}" alt="Omslagsbild för {{ show.fullName }}" loading="lazy" style="max-width: 220px; width:100%; border-radius: var(--radius-lg); border: 1px solid var(--c-line-soft); margin: 0 auto var(--sp-5); display:block;" />
-  {% endif %}
   <p class="t-eyebrow hero__eyebrow">Podcast</p>
   <h1 class="t-h1 hero__title t-balance">{{ show.fullName }}</h1>
   <p class="t-lead hero__lead t-pretty">{{ show.byline }}</p>
   <p class="t-body t-pretty" style="margin-top: var(--sp-4);">{{ show.invitation }}</p>
 </section>
 
-{% if newest %}
+{#- Episode data is fetched client-side (assets/podcast-feed.js) — see
+   .eleventy.js for why. This fallback is the real initial content;
+   the script replaces it with the live newest episode when the fetch
+   succeeds (config below tells it which feed and what to say). #}
 <section class="section section--sunk fade-up">
-  <div class="container narrow">
-    <header class="section-header">
-      <p class="t-eyebrow">Senaste avsnittet</p>
-      <h2 class="t-h2 t-balance">{{ newest.title }}</h2>
-      {% if newest.date %}<p class="t-meta"><time datetime="{{ newest.date }}">{{ newest.date | date("DD MMMM YYYY") }}</time>{% if newest.duration %} · {{ (newest.duration / 60) | round }} min{% endif %}</p>{% endif %}
-    </header>
-    {% if newest.description %}<p class="t-body t-pretty">{{ newest.description }}</p>{% endif %}
-    {% if newest.audioUrl %}
-    <audio controls preload="none" style="width:100%; margin-top: var(--sp-4);" aria-label="Lyssna på {{ newest.title }}">
-      <source src="{{ newest.audioUrl }}" type="audio/mpeg" />
-      Din webbläsare stödjer inte ljudspelaren. <a href="{{ newest.url }}">Lyssna på Substack istället</a>.
-    </audio>
-    {% endif %}
-    <p class="t-meta" style="margin-top: var(--sp-3);"><a class="link-chev" href="{{ newest.url }}" target="_blank" rel="noopener noreferrer">Läs och lyssna på Substack</a></p>
+  <div class="container narrow" id="podcast-hub-latest">
+    <div class="center-text">
+      <p class="t-body">Nya avsnitt finns på Substack.</p>
+      <a class="btn btn--ghost" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">Besök på Substack</a>
+    </div>
   </div>
 </section>
-{% else %}
-<section class="section section--sunk fade-up">
-  <div class="container narrow center-text">
-    <p class="t-body">Nya avsnitt finns på Substack — flödet kunde inte hämtas för den här förhandsvisningen.</p>
-    <a class="btn btn--ghost" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">Besök på Substack</a>
-  </div>
-</section>
-{% endif %}
 
 <section class="section fade-up">
   <div class="container narrow center-text">
@@ -73,27 +54,11 @@ ogDescription: En podcast om livet, människan och världen vi skapar tillsamman
   </div>
 </section>
 
-{% if episodes.length > 1 %}
+{#- Filled in by assets/podcast-feed.js if the show has more than one
+   episode; stays hidden and empty otherwise. #}
 <section class="section section--sunk fade-up">
-  <div class="container">
-    <header class="section-header">
-      <h2 class="t-h2 t-balance">Alla avsnitt</h2>
-    </header>
-    <div class="grid grid-3">
-      {% for ep in episodes %}
-      <article class="card">
-        <div class="card__body">
-          <h3 class="t-h3">{{ ep.title }}</h3>
-          {% if ep.date %}<p class="t-meta"><time datetime="{{ ep.date }}">{{ ep.date | date("DD MMMM YYYY") }}</time>{% if ep.duration %} · {{ (ep.duration / 60) | round }} min{% endif %}</p>{% endif %}
-          {% if ep.description %}<p class="t-body t-pretty">{{ ep.description }}</p>{% endif %}
-          <a class="link-chev" href="{{ ep.url }}" target="_blank" rel="noopener noreferrer">Lyssna på Substack</a>
-        </div>
-      </article>
-      {% endfor %}
-    </div>
-  </div>
+  <div class="container" id="podcast-hub-episodes" hidden></div>
 </section>
-{% endif %}
 
 <section class="section fade-up">
   <div class="container narrow center-text">
@@ -133,3 +98,19 @@ ogDescription: En podcast om livet, människan och världen vi skapar tillsamman
   "inLanguage": "sv"
 }
 </script>
+
+{% block extraScripts %}
+<script>
+  window.VW_PODCAST_HUB = {
+    key: "vagaTanka",
+    strings: {
+      latestEpisode: "Senaste avsnittet",
+      listenTo: "Lyssna på",
+      noAudioSupport: "Din webbläsare stödjer inte ljudspelaren.",
+      readOnSubstack: "Läs och lyssna på Substack",
+      listenOnSubstack: "Lyssna på Substack",
+      allEpisodes: "Alla avsnitt"
+    }
+  };
+</script>
+{% endblock %}
