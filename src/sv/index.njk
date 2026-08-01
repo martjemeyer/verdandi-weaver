@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: Verdandi Weaver — En plats för reflektion och återanknytning
-description: En plats för reflektion, återanknytning och nya sätt att föreställa oss livet och samhället.
+title: Verdandi Weaver — Återkomst till jordad helhet
+description: Ett stillsamt samlat verk som utforskar hur vi blir mer hela – inte genom att stiga över vår mänsklighet, utan genom att återvända till kroppen, hjärtat, relationen och den levande världen.
 permalink: /sv/index.html
 pageLang: sv
 translationUrl: /
@@ -10,58 +10,262 @@ hreflangAlternates:
   en: https://verdandiweaver.com/
   sv: https://verdandiweaver.com/sv/
   x-default: https://verdandiweaver.com/
-ogTitle: "En plats för reflektion och återanknytning"
-ogDescription: "Kropp, nervsystem, relation och den levande världen."
+ogTitle: "Återkomst till jordad helhet"
+ogDescription: "Själ, nervsystem, kropp, relation och den levande världen."
+ogImage: /assets/uploads/returning-to-grounded-wholeness.png
 ---
+{% from "social-icons.njk" import icon %}
+
+{#- Mirrors src/index.njk section-for-section, translated. A few
+   interior links (Self-Scans, Explore, Articles, Videos) point at the
+   English pages since no Swedish version of those exists yet — not a
+   broken link, just an honest fallback until they're built. #}
 
 <section class="hero container fade-up">
-  <p class="t-eyebrow hero__eyebrow">Verdandi Weaver · Svenska</p>
-  <h1 class="t-h1 hero__title t-balance">En plats för reflektion och återanknytning</h1>
-  <p class="t-lead hero__lead t-pretty">En plats för reflektion, återanknytning och nya sätt att föreställa oss livet och samhället.</p>
+  <p class="t-eyebrow hero__eyebrow">Verdandi Weaver · En plats för själslig närvaro</p>
+  <h1 class="t-h1 hero__title t-balance">Återkomst till jordad helhet</h1>
+  <p class="t-lead hero__lead t-pretty">Ett stillsamt samlat verk som utforskar hur vi blir mer hela – inte genom att stiga över vår mänsklighet, utan genom att återvända till kroppen, hjärtat, relationen och den levande världen.</p>
+
+  <div class="orb" aria-hidden="true" style="margin-top: var(--sp-7);">
+    <div class="orb__ring"></div>
+    <div class="orb__ring orb__ring--2"></div>
+    <div class="orb__ring orb__ring--3"></div>
+    <div class="orb__core"></div>
+    <span class="orb__dot" style="top: 12%; left: 50%;"></span>
+    <span class="orb__dot" style="top: 50%; left: 90%; animation-delay: 1.2s;"></span>
+    <span class="orb__dot" style="top: 88%; left: 50%; animation-delay: 2s;"></span>
+    <span class="orb__dot" style="top: 50%; left: 10%; animation-delay: 0.6s;"></span>
+  </div>
 
   <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-7);">
-    <a class="btn" href="/sv/vaga-tanka-om/">Lyssna på podcasten</a>
-    <a class="btn btn--ghost" href="/sv/rethinking-society/">Utforska Rethinking Society</a>
+    <a class="btn" href="/sv/bocker/">Utforska böckerna</a>
+    <a class="btn btn--ghost" href="/self-scans.html" hreflang="en" lang="en">Börja en självscanning</a>
+    <a class="btn btn--ghost" href="/sv/ramverk.html">Läs ramverken</a>
+  </div>
+</section>
+
+{#- Podcast episode data is fetched client-side (assets/podcast-feed.js)
+   — see .eleventy.js for why. Same mechanism as the English homepage. #}
+<section class="section compact fade-up" hidden>
+  <div class="container narrow center-text stack">
+    {% for show in podcastShows %}
+    <a class="new-episode-strip" data-podcast-strip="{{ show.key }}" href="{{ show.sectionUrl }}" target="_blank" rel="noopener noreferrer" hidden>
+      <span class="new-episode-strip__badge">Nytt: {{ show.name }}</span>
+      <span class="new-episode-strip__title" data-field="title"></span>
+      <span class="new-episode-strip__cta">Lyssna →</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% set latestEpisode = collections.rethinkingEpisodeSV | sort(true, false, "data.number") | first %}
+{% if latestEpisode %}
+<section class="section compact fade-up">
+  <div class="container narrow center-text">
+    <a class="new-episode-strip" href="/sv/rethinking-society/#avsnitt-{{ latestEpisode.data.number }}">
+      <span class="new-episode-strip__badge">Nytt avsnitt ute</span>
+      <span class="new-episode-strip__title">{{ latestEpisode.data.title }}</span>
+      <span class="new-episode-strip__cta">Se →</span>
+    </a>
+  </div>
+</section>
+{% endif %}
+
+<section class="section compact fade-up">
+  <div class="container narrow center-text">
+    <p class="t-lead t-pretty">Det här arbetet är för dig som känner djupt, ifrågasätter nedärvda sätt att leva, eller anar att läkning, andlighet, samhälle och den levande världen inte kan förstås var för sig.</p>
   </div>
 </section>
 
 <section class="section section--sunk fade-up">
-  <div class="container narrow center-text">
+  <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">Podcast</p>
-      <h2 class="t-h2 t-balance">Våga Tänka Om</h2>
+      <p class="t-eyebrow">Grundtanken</p>
+      <h2 class="t-h2 t-balance">En människa är ett levande system, som växer inuti levande system</h2>
+      <span class="rule"></span>
     </header>
-    <p class="t-body t-pretty">En podcast om livet, människan och världen vi skapar tillsammans.</p>
-    <a class="btn btn--ghost" href="/sv/vaga-tanka-om/" style="margin-top: var(--sp-4);">Till podcasten</a>
+    <div class="grid grid-2" style="align-items:center; gap: var(--sp-8);">
+      <div class="clearing">
+        <div class="figure" style="aspect-ratio: 1/1; max-width: 460px; margin-inline: auto;">
+          <img src="/assets/uploads/living-system-tree.png" alt="En akvarellillustration av en människofigur vars kropp bildar trädets stam, med rötter som når nedåt och grenar som når uppåt — ett levande system." loading="lazy" />
+        </div>
+      </div>
+      <div class="stack-lg">
+        <p class="t-lead t-pretty">Du är inte en själ som lever ovanför en kropp. Du är en själ, i en kropp, i ett nervsystem, i en kultur, i en skog av andra levande system.</p>
+        <p class="t-body t-pretty">Helhet börjar när inget i dig lämnas utanför — när delarna slutar tävla om vem som får vara verklig, och rötterna, stammen och kronan minns att de är ett och samma träd.</p>
+        <p class="t-body t-pretty"><em>Du är inte skild från det du växer inuti.</em></p>
+        <a class="link-chev" href="/sv/framework-02.html">Läs hela ramverket</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section fade-up">
-  <div class="container narrow center-text">
+  <div class="container">
     <header class="section-header">
-      <p class="t-eyebrow">Rethinking Society</p>
-      <h2 class="t-h2 t-balance">Avsnitt, material och samtal</h2>
+      <p class="t-eyebrow">Vägar in</p>
+      <h2 class="t-h2 t-balance">Välj en dörr</h2>
     </header>
-    <p class="t-body t-pretty">En växande serie av samtal och reflektionsverktyg för den som vill ifrågasätta det vi tagit för givet och föreställa sig samhällen byggda mer medvetet kring människan, omsorgen och den levande världen.</p>
-    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-5);">
-      <a class="btn btn--ghost" href="/sv/rethinking-society/">Om serien</a>
-      <a class="btn btn--ghost" href="/sv/rethinking-society/gathering-library/">Samlingsbiblioteket</a>
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">Ett bibliotek</p>
+          <h3 class="t-h3">Böcker</h3>
+          <p class="t-body t-pretty">Långsam läsning för jordat uppvaknande, att vara människa, tillhörighet och den långa vägen hem till sig själv.</p>
+          <a class="btn btn--ghost" href="/sv/bocker/" style="margin-top:auto;">Utforska böckerna</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">Reflektionsverktyg</p>
+          <h3 class="t-h3">Självscanningar</h3>
+          <p class="t-body t-pretty">Milda reflektionsverktyg för att lägga märke till vad som händer inom dig. De diagnostiserar inte, poängsätter inte, och talar inte om för dig vem du är.</p>
+          <a class="btn btn--ghost" href="/self-scans.html" hreflang="en" lang="en" style="margin-top:auto;">Börja en självscanning</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="t-eyebrow">Kartor för att vara människa</p>
+          <h3 class="t-h3">Ramverk</h3>
+          <p class="t-body t-pretty">Visuella kartor för att förstå de större mönster som formar inre liv, relationer, kultur och världen omkring oss.</p>
+          <a class="btn btn--ghost" href="/sv/ramverk.html" style="margin-top:auto;">Utforska ramverken</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="section section--sunk fade-up">
   <div class="container narrow center-text">
+    <p class="t-eyebrow">Essäer &amp; samtal</p>
+    <h2 class="t-h2 t-balance">Reflektioner och samtal</h2>
+    <p class="t-lead t-pretty" style="margin-top: var(--sp-4);">Essäer, korta filmer och längre samtal om nervsystem, uppvaknande, känslomässig ekologi, samhälle och arbetet att bli mer mänsklig.</p>
+    <div style="display:flex; gap: var(--sp-3); justify-content:center; flex-wrap: wrap; margin-top: var(--sp-6);">
+      <a class="btn btn--ghost" href="/articles.html" hreflang="en" lang="en">Läs reflektioner</a>
+      <a class="btn btn--ghost" href="/videos.html" hreflang="en" lang="en">Se videor</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up" id="latest-from-verdandi-weaver">
+  <div class="container">
     <header class="section-header">
-      <h2 class="t-h2 t-balance">Stöd arbetet</h2>
+      <p class="t-eyebrow">Vad som växer just nu</p>
+      <h2 class="t-h2 t-balance">Senast från Verdandi Weaver</h2>
+      <p class="t-lead t-pretty">Nya poddavsnitt, filmer, reflektioner, resurser och sätt att följa eller stödja arbetet.</p>
     </header>
-    <p class="t-body t-pretty">Lyssna fritt. Dela fritt. Fördjupa dig om du vill. Stöd arbetet om du kan.</p>
-    <a class="btn btn--accent" href="/sv/rethinking-society/support/" style="margin-top: var(--sp-4);">Stöd arbetet</a>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Senast att lyssna på</p>
+      <p class="t-body t-pretty" style="max-width: 56ch; margin: var(--sp-2) auto 0;">Reflektioner om att vara människa, samhälle, ande, vetenskap och den märkliga skönheten i allt däremellan.</p>
+    </div>
+
+    {#- Episode data is fetched client-side (assets/podcast-feed.js) —
+       same mechanism as the English homepage, same general feed. #}
+    <div id="latest-listening" data-podcast-feed="main">
+      <div class="center-text" style="margin-top: var(--sp-6);">
+        <p class="t-body t-pretty">Nya avsnitt finns på Substack.</p>
+      </div>
+      <div class="center-text" style="margin-top: var(--sp-7);" data-substack-link-row>
+        <a class="btn btn--ghost" href="{{ links.substack }}" target="_blank" rel="noopener noreferrer">Läs och lyssna på Substack →</a>
+      </div>
+    </div>
+
+    <span class="growing-divider"></span>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Följ med</p>
+      <h3 class="t-h3" style="margin-top: var(--sp-2);">Hitta arbetet där du redan lyssnar, tittar, läser eller samlas.</h3>
+      <div class="social-row" style="margin-top: var(--sp-6);">
+        {% set svDescriptors = {
+          substack: "Podcast och reflektioner",
+          youtube: "Filmer och samtal",
+          instagram: "Bilder och kortare reflektioner",
+          facebookPage: "Uppdateringar och gemenskap",
+          facebookPersonal: "Där de flesta uppdateringar delas först",
+          tiktok: "Korta videor",
+          pinterest: "Visuella reflektioner",
+          patreon: "Medlemskap och butik"
+        } %}
+        {% for p in socialPlatforms %}
+        <a class="social-row__item" href="{{ p.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ p.name }} — {{ svDescriptors[p.key] or p.descriptor }} (öppnas i en ny flik)">
+          <span class="social-row__icon">{{ icon(p.icon) }}</span>
+          <span class="social-row__text">
+            <span class="social-row__name">{{ p.name }}</span>
+            <span class="social-row__descriptor">{{ svDescriptors[p.key] or p.descriptor }}</span>
+          </span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <span class="growing-divider"></span>
+
+    <div class="center-text">
+      <p class="t-eyebrow">Hjälp arbetet fortsätta</p>
+      <h3 class="t-h3" style="margin-top: var(--sp-2);">Verdandi Weaver skapas oberoende</h3>
+      <p class="t-body t-pretty" style="max-width: 60ch; margin: var(--sp-3) auto 0;">Stöd hjälper till att skapa utrymme för nya poddavsnitt, filmer, böcker, reflektionsverktyg, översättningar, undertexter, Rethinking Society-resurser och framtida onlinesamlingar.</p>
+      <div class="grid grid-3" style="margin-top: var(--sp-7); text-align: left;">
+        {% set svSupport = {
+          buyMeACoffee: { description: "Ge ett litet engångsbidrag eller utforska nedladdningsbara resurser.", buttonText: "Stöd via Buy Me a Coffee" },
+          goFundMe: { description: "Hjälp till att finansiera Verdandi Weavers och Rethinking Societys fortsatta växt.", buttonText: "Besök GoFundMe" },
+          patreon: { description: "Gå med, följ uppdateringar, eller utforska medlemskap och resursbutiken.", buttonText: "Utforska Patreon" }
+        } %}
+        {% for s in supportPlatforms %}
+        <div>
+          <span class="support-card__icon">{{ icon(s.icon) }}</span>
+          <h4 class="t-h4" style="margin-top: var(--sp-3);">{{ s.name }}</h4>
+          <p class="t-body t-pretty" style="margin-top: var(--sp-2);">{{ svSupport[s.key].description or s.description }}</p>
+          <a class="btn btn--ghost" href="{{ s.url }}" target="_blank" rel="noopener noreferrer" style="margin-top: var(--sp-4);">{{ svSupport[s.key].buttonText or s.buttonText }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
   </div>
 </section>
 
 <section class="section fade-up">
+  <div class="container">
+    <header class="section-header">
+      <p class="t-eyebrow">Hur det hänger ihop</p>
+      <h2 class="t-h2 t-balance">Ett levande samlat verk</h2>
+    </header>
+    <div class="stack center-text" style="max-width: 480px; margin-inline: auto;">
+      <p class="t-body">Böckerna bär de djupare resorna.</p>
+      <p class="t-body">Ramverken ger orientering.</p>
+      <p class="t-body">Självscanningarna skapar platser att pausa vid.</p>
+      <p class="t-body">Guiderna hjälper till att föra in reflektion i vardagslivet.</p>
+      <p class="t-body">Videorna öppnar samtalet utåt.</p>
+    </div>
+    <div class="eco" style="margin-top: var(--sp-6);">
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Böcker &amp; texter</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Självscanningar</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Ramverk</h4></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Guider &amp; PDF:er</h4><p class="t-meta" style="font-style: italic;">Växer härnäst</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Videor</h4><p class="t-meta" style="font-style: italic;">Växer härnäst</p></div>
+      <div class="eco__node"><span class="eco__dot"></span><h4 class="t-h4">Framtida rum</h4><p class="t-meta" style="font-style: italic;">Kommer senare</p></div>
+    </div>
+    <div class="center-text" style="margin-top: var(--sp-7);">
+      <a class="btn btn--ghost" href="/ecosystem.html" hreflang="en" lang="en">Utforska hela ekosystemet →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunk fade-up">
   <div class="container narrow center-text">
-    <p class="t-meta">Fler delar av webbplatsen finns ännu bara på engelska. <a class="link-chev" href="/" hreflang="en" lang="en">Till den engelska startsidan</a></p>
+    <p class="t-eyebrow">Om arbetet</p>
+    <span class="rule"></span>
+    <p class="t-lead t-pretty">Verdandi Weaver är det samlade verket av <strong>Sara Leidelmeijer</strong>, en författare och systemisk tänkare som utforskar hur nervsystem, inre liv, relationer, kultur och den levande världen ständigt formar varandra.</p>
+    <p class="t-body t-pretty">Hennes arbete för tillbaka andliga frågor till det vardagliga mänskliga livet, där insikt så småningom måste bli relation, val, omsorg och de världar vi bygger tillsammans.</p>
+    <a class="btn btn--ghost" href="/sv/om/" style="margin-top: var(--sp-5);">Läs mer →</a>
+  </div>
+</section>
+
+<section class="section tall fade-up">
+  <div class="container narrow center-text">
+    <p class="pull t-balance">Du vaknar inte upp ur att vara människa.<br/><em>Du vaknar djupare in i det.</em></p>
+    <p class="t-lead t-pretty" style="margin-top: var(--sp-5);">Börja där något i dig känner sig tyst igenkänt.</p>
+    <a class="btn" href="/ecosystem.html" hreflang="en" lang="en" style="margin-top: var(--sp-6);">Utforska arbetet</a>
   </div>
 </section>

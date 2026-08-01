@@ -6,13 +6,12 @@
       {% if navPageLang == 'sv' %}
       <ul class="nav__links" id="nav-links">
         <li><a href="/sv/" class="{{ currentUrl | activeIf('/sv/') }}">Start</a></li>
-        <li><a href="/sv/vaga-tanka-om/" data-section="vaga-tanka-om" class="{{ currentUrl | activeIf('/sv/vaga-tanka-om/') }}{% if navSection == 'vaga-tanka-om' %} active{% endif %}">Våga Tänka Om</a></li>
-        <li><a href="/sv/bocker/" class="{{ currentUrl | activeIf('/sv/bocker/') }}">Böcker</a></li>
+        <li><a href="/self-scans.html" hreflang="en" lang="en">Självscanningar</a></li>
         <li><a href="/sv/ramverk.html" data-section="frameworks" class="{{ currentUrl | activeIf('/sv/ramverk.html') }}{% if navSection == 'frameworks' %} active{% endif %}">Ramverk</a></li>
+        <li><a href="/sv/bocker/" class="{{ currentUrl | activeIf('/sv/bocker/') }}">Böcker</a></li>
         <li><a href="/sv/rethinking-society/" data-section="rethinking-society" class="{{ currentUrl | activeIf('/sv/rethinking-society/') }}{% if navSection == 'rethinking-society' %} active{% endif %}">Rethinking Society</a></li>
-        <li><a href="/sv/rethinking-society/avsnitt/" class="{{ currentUrl | activeIf('/sv/rethinking-society/avsnitt/') }}">Avsnitt</a></li>
-        <li><a href="/sv/rethinking-society/gathering-library/" class="{{ currentUrl | activeIf('/sv/rethinking-society/gathering-library/') }}">Material</a></li>
-        <li><a href="/sv/rethinking-society/support/" class="{{ currentUrl | activeIf('/sv/rethinking-society/support/') }}">Stöd arbetet</a></li>
+        <li><a href="/sv/vaga-tanka-om/" data-section="vaga-tanka-om" class="{{ currentUrl | activeIf('/sv/vaga-tanka-om/') }}{% if navSection == 'vaga-tanka-om' %} active{% endif %}">Podcast</a></li>
+        <li><a href="/ecosystem.html" hreflang="en" lang="en">Utforska</a></li>
         <li><a href="/sv/om/" class="{{ currentUrl | activeIf('/sv/om/') }}">Om</a></li>
         <li><a href="/contact.html" class="{{ currentUrl | activeIf('/contact.html') }}">Kontakt</a></li>
       </ul>
