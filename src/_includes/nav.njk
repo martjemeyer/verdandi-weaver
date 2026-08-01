@@ -9,8 +9,7 @@
         <li><a href="/self-scans.html" hreflang="en" lang="en">Självscanningar</a></li>
         <li><a href="/sv/ramverk.html" data-section="frameworks" class="{{ currentUrl | activeIf('/sv/ramverk.html') }}{% if navSection == 'frameworks' %} active{% endif %}">Ramverk</a></li>
         <li><a href="/sv/bocker/" class="{{ currentUrl | activeIf('/sv/bocker/') }}">Böcker</a></li>
-        <li><a href="/sv/rethinking-society/" data-section="rethinking-society" class="{{ currentUrl | activeIf('/sv/rethinking-society/') }}{% if navSection == 'rethinking-society' %} active{% endif %}">Rethinking Society</a></li>
-        <li><a href="/sv/vaga-tanka-om/" data-section="vaga-tanka-om" class="{{ currentUrl | activeIf('/sv/vaga-tanka-om/') }}{% if navSection == 'vaga-tanka-om' %} active{% endif %}">Podcast</a></li>
+        <li><a href="/sv/vaga-tanka-om/" data-section="vaga-tanka-om" class="{{ currentUrl | activeIf('/sv/vaga-tanka-om/') }}{% if navSection == 'vaga-tanka-om' or navSection == 'rethinking-society' %} active{% endif %}">Podcast</a></li>
         <li><a href="/ecosystem.html" hreflang="en" lang="en">Utforska</a></li>
         <li><a href="/sv/om/" class="{{ currentUrl | activeIf('/sv/om/') }}">Om</a></li>
         <li><a href="/contact.html" class="{{ currentUrl | activeIf('/contact.html') }}">Kontakt</a></li>
@@ -21,8 +20,7 @@
         <li><a href="/self-scans.html" class="{{ currentUrl | activeIf('/self-scans.html') }}">Self-Scans</a></li>
         <li><a href="/frameworks.html" data-section="frameworks" class="{{ currentUrl | activeIf('/frameworks.html') }}{% if navSection == 'frameworks' %} active{% endif %}">Frameworks</a></li>
         <li><a href="/books.html" class="{{ currentUrl | activeIf('/books.html') }}">Books</a></li>
-        <li><a href="/rethinking-society/" data-section="rethinking-society" class="{{ currentUrl | activeIf('/rethinking-society/') }}{% if navSection == 'rethinking-society' %} active{% endif %}">Rethinking Society</a></li>
-        <li><a href="/rethinking-everything/" data-section="rethinking-everything" class="{{ currentUrl | activeIf('/rethinking-everything/') }}{% if navSection == 'rethinking-everything' %} active{% endif %}">Podcast</a></li>
+        <li><a href="/rethinking-everything/" data-section="rethinking-everything" class="{{ currentUrl | activeIf('/rethinking-everything/') }}{% if navSection == 'rethinking-everything' or navSection == 'rethinking-society' %} active{% endif %}">Podcast</a></li>
         <li><a href="/ecosystem.html" class="{{ currentUrl | activeIf('/ecosystem.html') }}">Explore</a></li>
         <li><a href="/about.html" class="{{ currentUrl | activeIf('/about.html') }}">About</a></li>
         <li><a href="/contact.html" class="{{ currentUrl | activeIf('/contact.html') }}">Contact</a></li>
