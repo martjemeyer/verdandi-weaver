@@ -30,8 +30,14 @@
 
 {% macro statusLabel(status) %}{% if status == 'published' %}Published{% else %}Draft{% endif %}{% endmacro %}
 
-{# Compact card — used on the /episodes/ archive and the old featured-3 grid #}
-{% macro episodeCard(ep) %}
+{# Compact card — used on the episode archives (English and Swedish) and
+   the old featured-3 grid. `lang` defaults to English so the original
+   call site (episodeCard(ep), no extra args) is unaffected. Swedish
+   episodes have no individual page yet, so `episodeHref` lets the
+   caller point "episode page" at the right place instead (the anchor
+   on the main Swedish page) rather than guessing a URL that doesn't exist. #}
+{% macro episodeCard(ep, lang, episodeHref) %}
+{% set lang = lang or 'en' %}
 <article class="card">
   <div class="card__media">
     {% if ep.data.thumbnail or ep.data.videoUrl %}
@@ -49,13 +55,13 @@
     {% endif %}
     <div style="display:flex; gap: var(--sp-4); flex-wrap:wrap; align-items:center; margin-top:auto; padding-top: var(--sp-2);">
       {% if ep.data.videoUrl %}
-        <a class="btn btn--ghost" href="{{ ep.data.videoUrl }}" target="_blank" rel="noopener noreferrer">Watch</a>
+        <a class="btn btn--ghost" href="{{ ep.data.videoUrl }}" target="_blank" rel="noopener noreferrer">{{ 'Watch' if lang == 'en' else 'Titta' }}</a>
       {% else %}
-        <span class="t-meta">Video coming soon</span>
+        <span class="t-meta">{{ 'Video coming soon' if lang == 'en' else 'Video kommer snart' }}</span>
       {% endif %}
-      <a class="link-chev" href="/rethinking-society/episodes/{{ ep.data.slug }}/">Episode page</a>
+      <a class="link-chev" href="{{ episodeHref or ('/rethinking-society/episodes/' + ep.data.slug + '/') }}">{{ 'Episode page' if lang == 'en' else 'Till avsnittet' }}</a>
       {% if ep.data.resources and ep.data.resources.length %}
-        <a class="link-chev" href="/rethinking-society/gathering-library/#{{ ep.data.slug }}">Resources</a>
+        <a class="link-chev" href="{{ ('/sv/rethinking-society/gathering-library/#' + ep.data.slug) if lang == 'sv' else ('/rethinking-society/gathering-library/#' + ep.data.slug) }}">{{ 'Resources' if lang == 'en' else 'Material' }}</a>
       {% endif %}
     </div>
   </div>

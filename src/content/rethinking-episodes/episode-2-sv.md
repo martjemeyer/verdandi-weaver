@@ -31,6 +31,7 @@ resources:
     title: Gratis startpaket · Avsnitt 2 | Kanske behöver vi inte ledare. Kanske
       behöver vi råd
 translationKey: rethinking-society-episode-2
+slug: avsnitt-2
 status: published
 cta: Se avsnittet, reflektera och fråga vem som saknas i rummet.
 support_links: []

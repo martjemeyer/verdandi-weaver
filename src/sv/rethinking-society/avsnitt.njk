@@ -1,0 +1,46 @@
+---
+layout: layouts/base.njk
+title: Avsnitt | Rethinking Society på svenska
+description: Filmer och samtal som utforskar systemen, antagandena och valen som formar människors liv. Varje avsnitt börjar med en fråga snarare än ett färdigt svar.
+permalink: /sv/rethinking-society/avsnitt/index.html
+navSection: rethinking-society
+pageLang: sv
+translationUrl: /rethinking-society/episodes/
+canonical: https://verdandiweaver.com/sv/rethinking-society/avsnitt/
+hreflangAlternates:
+  en: https://verdandiweaver.com/rethinking-society/episodes/
+  sv: https://verdandiweaver.com/sv/rethinking-society/avsnitt/
+  x-default: https://verdandiweaver.com/rethinking-society/episodes/
+---
+{% from "rethinking-society/macros.njk" import episodeCard %}
+
+<div class="rs">
+
+<section class="hero container fade-up">
+  <p class="t-eyebrow hero__eyebrow">Rethinking Society · på svenska</p>
+  <h1 class="t-h1 hero__title t-balance">Se avsnitten</h1>
+  <p class="t-lead hero__lead t-pretty">Filmer och samtal som utforskar systemen, antagandena och valen som formar människors liv. Varje avsnitt börjar med en fråga snarare än ett färdigt svar.</p>
+</section>
+
+<section class="section compact fade-up">
+  <div class="container center-text">
+    <a class="link-chev" href="/sv/rethinking-society/">Tillbaka till Rethinking Society på svenska</a>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <div class="container">
+    {% set episodes = collections.rethinkingEpisodeSV | sort(false, false, "data.number") %}
+    {% if episodes.length %}
+    <div class="grid grid-3">
+      {% for ep in episodes %}
+      {{ episodeCard(ep, 'sv', '/sv/rethinking-society/#avsnitt-' + ep.data.number|string) }}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="t-lead t-pretty center-text">Fler avsnitt på svenska är på väg.</p>
+    {% endif %}
+  </div>
+</section>
+
+</div>

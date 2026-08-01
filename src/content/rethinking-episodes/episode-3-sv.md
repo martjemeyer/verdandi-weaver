@@ -38,6 +38,7 @@ resources:
     price_type: Paid
     url: https://buymeacoffee.com/verdandiq/e/558937
 translationKey: rethinking-society-episode-3
+slug: avsnitt-3
 status: published
 date: 2026-07-21
 runtime: 1:21:18
