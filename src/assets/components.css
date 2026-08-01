@@ -1930,6 +1930,20 @@ body.vw-entrance-open { overflow: hidden; }
 .rs-ep-section__list li { padding-left: 1.2em; position: relative; }
 .rs-ep-section__list li::before { content: "—"; position: absolute; left: 0; color: var(--c-ink-mute); }
 
+/* Timestamps beyond the first few — a plain disclosure, no JS needed */
+.rs-timestamps-more { margin-top: var(--sp-4); }
+.rs-timestamps-more summary {
+  cursor: pointer;
+  color: var(--c-ink-soft);
+  font-size: var(--fs-sm);
+  list-style: none;
+}
+.rs-timestamps-more summary::-webkit-details-marker { display: none; }
+.rs-timestamps-more summary::before { content: "+ "; }
+.rs-timestamps-more[open] summary::before { content: "– "; }
+.rs-timestamps-more summary:hover { color: var(--c-ink); }
+.rs-timestamps-more summary:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
 /* Compact chapter/quote list — timestamp then italic text, one tight line each */
 .rs-ep-section__quotes { display: flex; flex-direction: column; }
 .rs-ep-section__quote-line {

@@ -205,6 +205,7 @@ collections:
       - { label: Episode number, name: number, widget: number, hint: "Step 3 — e.g. 1" }
       - { label: Display order, name: displayOrder, widget: number, required: false, hint: "Optional — only needed if you want the display order to differ from the episode number" }
       - { label: Title, name: title, widget: string, hint: "Step 4" }
+      - { label: Slug (for the URL and anchors), name: slug, widget: string, hint: "Step 4 — short and URL-safe. English episodes use episode-N (e.g. episode-4); Swedish episodes use avsnitt-N (e.g. avsnitt-4). Required — the episode page URL, the Gathering Library anchor, and the homepage strip link all depend on this." }
       - { label: Central question, name: question, widget: text, hint: "Step 4 — just the ONE main question. Put any supporting questions in 'Key questions' below, not here." }
       - label: Key questions
         name: key_questions
